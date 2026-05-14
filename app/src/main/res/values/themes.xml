@@ -1,0 +1,61 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MoneyTracker" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Gán style cho Bottom Navigation toàn app ở đây -->
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+    </style>
+
+    <!-- Style cho nút đang được chọn (Filter) -->
+    <style name="FilterTabActive">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:background">@drawable/bg_filter_active</item>
+    </style>
+
+    <!-- Style cho các nút chưa được chọn -->
+    <style name="FilterTabInactive">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#004D40</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:background">@drawable/bg_filter_inactive</item>
+    </style>
+
+    <!-- Cấu hình hình dáng FAB (Nút thêm) -->
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+        <item name="indicatorColor">#50E38B</item> <item name="itemActiveIndicatorStyle">@style/App.ActiveIndicator.Square</item>
+    </style>
+
+    <style name="App.ActiveIndicator.Square" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:width">50dp</item>
+        <item name="android:height">40dp</item>
+        <item name="android:color">#50E38B</item>
+        <item name="textFillColor">@color/black</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.RoundedBox</item>
+    </style>
+
+    <style name="ShapeAppearance.RoundedBox" parent="">
+        <item name="cornerSize">16dp</item> </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorPrimary">@color/black</item> <item name="colorOnSurfaceVariant">#8E8E93</item> </style>
+    <style name="Theme.MoneyTracker" parent="Base.Theme.MoneyTracker" />
+</resources>
