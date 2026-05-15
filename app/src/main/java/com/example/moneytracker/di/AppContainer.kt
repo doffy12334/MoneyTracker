@@ -15,6 +15,7 @@ import com.example.moneytracker.domain.usecase.GetDashboardSummaryUseCase
 import com.example.moneytracker.domain.usecase.GetSettingsUseCase
 import com.example.moneytracker.domain.usecase.GetTransactionsUseCase
 import com.example.moneytracker.domain.usecase.LoginUseCase
+import com.example.moneytracker.domain.usecase.LoginWithGoogleUseCase
 import com.example.moneytracker.domain.usecase.RegisterUseCase
 import com.example.moneytracker.domain.usecase.SendPasswordResetEmailUseCase
 import com.example.moneytracker.domain.usecase.SetLanguageUseCase
@@ -57,6 +58,10 @@ object AppContainer {
 
     val loginUseCase: LoginUseCase by lazy {
         LoginUseCase(authRepository)
+    }
+
+    val loginWithGoogleUseCase: LoginWithGoogleUseCase by lazy {
+        LoginWithGoogleUseCase(authRepository)
     }
 
     val registerUseCase: RegisterUseCase by lazy {

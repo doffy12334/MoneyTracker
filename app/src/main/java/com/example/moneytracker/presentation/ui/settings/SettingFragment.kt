@@ -23,8 +23,8 @@ import com.example.moneytracker.domain.model.AppLanguage
 import com.example.moneytracker.domain.model.AppTheme
 import com.example.moneytracker.presentation.uistate.SettingsUiState
 import com.example.moneytracker.presentation.viewmodel.SettingsViewModel
-import com.google.firebase.auth.FirebaseAuth
 import com.google.android.material.materialswitch.MaterialSwitch
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class SettingFragment : Fragment() {
@@ -99,7 +99,7 @@ class SettingFragment : Fragment() {
     private fun showLanguageDialog() {
         val languages = AppLanguage.entries.toTypedArray()
         AlertDialog.Builder(requireContext())
-            .setTitle("Ngon ngu")
+            .setTitle("Ngôn ngữ")
             .setItems(languages.map { it.displayName }.toTypedArray()) { _, index ->
                 viewModel.onLanguageChanged(languages[index])
             }
@@ -109,7 +109,7 @@ class SettingFragment : Fragment() {
     private fun showThemeDialog() {
         val themes = AppTheme.entries.toTypedArray()
         AlertDialog.Builder(requireContext())
-            .setTitle("Giao dien")
+            .setTitle("Giao diện")
             .setItems(themes.map { it.displayName }.toTypedArray()) { _, index ->
                 viewModel.onThemeChanged(themes[index])
             }
@@ -124,13 +124,21 @@ class SettingFragment : Fragment() {
             R.id.loginFragment,
             null,
             NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_right)
+                .setExitAnim(R.anim.slide_out_left)
+                .setPopEnterAnim(R.anim.slide_in_left)
+                .setPopExitAnim(R.anim.slide_out_right)
                 .setPopUpTo(R.id.nav_graph, true)
                 .build()
         )
     }
 
     private fun applyLanguage(language: AppLanguage) {
-        if (appliedLanguage == language) return
+        val currentTags = AppCompatDelegate.getApplicationLocales().toLanguageTags()
+        if (appliedLanguage == language || currentTags == language.code) {
+            appliedLanguage = language
+            return
+        }
         appliedLanguage = language
         AppCompatDelegate.setApplicationLocales(
             LocaleListCompat.forLanguageTags(language.code)
@@ -138,14 +146,16 @@ class SettingFragment : Fragment() {
     }
 
     private fun applyTheme(theme: AppTheme) {
-        if (appliedTheme == theme) return
+        val nightMode = when (theme) {
+            AppTheme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
+            AppTheme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
+        }
+        if (appliedTheme == theme || AppCompatDelegate.getDefaultNightMode() == nightMode) {
+            appliedTheme = theme
+            return
+        }
         appliedTheme = theme
-        AppCompatDelegate.setDefaultNightMode(
-            when (theme) {
-                AppTheme.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-                AppTheme.DARK -> AppCompatDelegate.MODE_NIGHT_YES
-            }
-        )
+        AppCompatDelegate.setDefaultNightMode(nightMode)
     }
 
     override fun onDestroyView() {

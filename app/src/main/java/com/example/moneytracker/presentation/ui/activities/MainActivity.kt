@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -22,13 +24,13 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        binding.bottomNav.setupWithNavController(navController)
-        val currentUser = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
-        if (currentUser != null) {
+        if (savedInstanceState == null && FirebaseAuth.getInstance().currentUser != null) {
             val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
             navGraph.setStartDestination(R.id.dashboardFragment)
             navController.graph = navGraph
         }
+
+        setupBottomNavigation(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isAuthScreen = destination.id in setOf(
                 R.id.onboardingFragment,
@@ -37,12 +39,55 @@ class MainActivity : AppCompatActivity() {
                 R.id.inputEmailFragment
             )
             if (isAuthScreen) {
-                binding.bottomNav.visibility = View.GONE
-                binding.topBar.visibility = View.GONE
+                binding.bottomNav.fadeVisibility(View.GONE)
+                binding.topBar.fadeVisibility(View.GONE)
             } else {
-                binding.bottomNav.visibility = View.VISIBLE
-                binding.topBar.visibility = View.VISIBLE
+                binding.bottomNav.fadeVisibility(View.VISIBLE)
+                binding.topBar.fadeVisibility(View.VISIBLE)
+                if (binding.bottomNav.menu.findItem(destination.id) != null) {
+                    binding.bottomNav.menu.findItem(destination.id).isChecked = true
+                }
             }
+        }
+    }
+
+    private fun setupBottomNavigation(navController: NavController) {
+        binding.bottomNav.setOnItemSelectedListener { item ->
+            if (item.itemId == navController.currentDestination?.id) {
+                return@setOnItemSelectedListener true
+            }
+
+            val options = NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setEnterAnim(R.anim.slide_in_right)
+                .setExitAnim(R.anim.slide_out_left)
+                .setPopEnterAnim(R.anim.slide_in_left)
+                .setPopExitAnim(R.anim.slide_out_right)
+                .setPopUpTo(R.id.dashboardFragment, false, true)
+                .setRestoreState(true)
+                .build()
+
+            runCatching {
+                navController.navigate(item.itemId, null, options)
+            }.isSuccess
+        }
+    }
+
+    private fun View.fadeVisibility(targetVisibility: Int) {
+        if (visibility == targetVisibility) return
+        if (targetVisibility == View.VISIBLE) {
+            alpha = 0f
+            visibility = View.VISIBLE
+            animate().alpha(1f).setDuration(180L).start()
+        } else {
+            animate()
+                .alpha(0f)
+                .setDuration(140L)
+                .withEndAction {
+                    visibility = View.GONE
+                    alpha = 1f
+                }
+                .start()
         }
     }
 }

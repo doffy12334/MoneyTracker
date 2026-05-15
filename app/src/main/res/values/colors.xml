@@ -2,6 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="screen_background">#FAF8FF</color>
+    <color name="surface_card">#FFFFFF</color>
+    <color name="primary_green">#006D36</color>
     <color name="income_green">#4CAF50</color>
     <color name="expense_red">#F44336</color>
 

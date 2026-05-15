@@ -10,6 +10,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import kotlin.math.sin
 
 class PigLoginView @JvmOverloads constructor(
@@ -34,8 +35,8 @@ class PigLoginView @JvmOverloads constructor(
     private var bob = 0f
 
     private val stateAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
-        duration = 260L
-        interpolator = AccelerateDecelerateInterpolator()
+        duration = 460L
+        interpolator = OvershootInterpolator(1.5f)
         addUpdateListener {
             transition = it.animatedValue as Float
             invalidate()
@@ -163,45 +164,47 @@ class PigLoginView @JvmOverloads constructor(
         paint.alpha = 255
     }
 
-    private fun drawSunglasses(canvas: Canvas, peeking: Boolean) {
-        val peekLift = if (peeking) 13f * transition.coerceAtLeast(0.55f) else 0f
-        val tilt = if (peeking) -6f * transition else 0f
+    private fun drawSunglasses(canvas: Canvas, peeking: Boolean) {        // Nếu đang peeking, nhấc kính lên cao (peekLift), nếu không thì hạ xuống 0
+        // Sử dụng transition để tạo chuyển động trượt mượt mà
+        val peekLift = if (peeking) 18f * transition else 18f * (1f - transition)
+        val tilt = if (peeking) -8f * transition else -8f * (1f - transition)
 
-        if (peeking) {
+        // Vẽ mắt bên dưới kính
+        if (peeking || transition < 1f) {
             paint.style = Paint.Style.FILL
             paint.color = Color.rgb(45, 38, 51)
-            canvas.drawCircle(-27f, -13f, 5.5f, paint)
-            canvas.drawCircle(27f, -13f, 5.5f, paint)
-            paint.color = Color.WHITE
-            canvas.drawCircle(-29f, -15f, 1.8f, paint)
-            canvas.drawCircle(25f, -15f, 1.8f, paint)
+            // Mắt hơi mờ đi một chút khi có kính che
+            paint.alpha = (transition * 255).toInt().coerceIn(0, 255)
+            canvas.drawCircle(-27f, -13f, 6f, paint)
+            canvas.drawCircle(27f, -13f, 6f, paint)
+            paint.alpha = 255
         }
 
         canvas.save()
+        // Xoay kính một chút tạo cảm giác nhấc kính bằng tay/tai
         canvas.rotate(tilt, 0f, -15f)
+        // Di chuyển kính lên theo trục Y
         canvas.translate(0f, -peekLift)
 
+        // Vẽ gọng và tròng kính
         paint.style = Paint.Style.FILL
         paint.color = Color.rgb(22, 24, 28)
-        glassesRect.set(-52f, -30f, -7f, 0f)
-        canvas.drawRoundRect(glassesRect, 8f, 8f, paint)
-        glassesRect.set(7f, -30f, 52f, 0f)
-        canvas.drawRoundRect(glassesRect, 8f, 8f, paint)
+        glassesRect.set(-52f, -30f, -7f, 2f)
+        canvas.drawRoundRect(glassesRect, 10f, 10f, paint)
+        glassesRect.set(7f, -30f, 52f, 2f)
+        canvas.drawRoundRect(glassesRect, 10f, 10f, paint)
 
-        paint.strokeWidth = 5f
+        // Vẽ cầu nối và càng kính
         paint.style = Paint.Style.STROKE
-        paint.strokeCap = Paint.Cap.ROUND
-        canvas.drawLine(-7f, -17f, 7f, -17f, paint)
-        canvas.drawLine(-52f, -20f, -70f, -28f, paint)
-        canvas.drawLine(52f, -20f, 70f, -28f, paint)
+        paint.strokeWidth = 4f
+        canvas.drawLine(-7f, -15f, 7f, -15f, paint)
 
+        // Hiệu ứng bóng đổ/phản chiếu trên mắt kính để trông sang trọng hơn
         paint.style = Paint.Style.FILL
-        paint.color = Color.rgb(77, 86, 99)
-        paint.alpha = 130
-        glassesRect.set(-47f, -26f, -24f, -18f)
-        canvas.drawOval(glassesRect, paint)
-        glassesRect.set(12f, -26f, 35f, -18f)
-        canvas.drawOval(glassesRect, paint)
+        paint.color = Color.WHITE
+        paint.alpha = 30 // Rất mờ
+        canvas.drawCircle(-35f, -20f, 8f, paint)
+        canvas.drawCircle(25f, -20f, 8f, paint)
         paint.alpha = 255
 
         canvas.restore()

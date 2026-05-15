@@ -24,6 +24,7 @@ class SharedPrefsManager(context: Context) {
 
     fun getThemeValue(): String = sharedPref.getString(KEY_THEME_VALUE, "light") ?: "light"
 
+
     private companion object {
         const val KEY_NOTIFICATION_ENABLED = "notification_enabled"
         const val KEY_LANGUAGE_CODE = "language_code"

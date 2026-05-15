@@ -57,7 +57,15 @@ class RegisterFragment : Fragment() {
     }
 
     private fun renderState(state: RegisterUiState) {
-        binding.btnRegister.isEnabled = state !is RegisterUiState.Loading
+        val isLoading = state is RegisterUiState.Loading
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.btnRegister.isEnabled = !isLoading
+        binding.etEmail.isEnabled = !isLoading
+        binding.etPassword.isEnabled = !isLoading
+        binding.etConfirmPassword.isEnabled = !isLoading
+        binding.tvLogin.isEnabled = !isLoading
+        binding.btnRegister.text = if (isLoading) "" else "Sign Up"
+
         when (state) {
             RegisterUiState.Idle,
             RegisterUiState.Loading -> Unit

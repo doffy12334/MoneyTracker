@@ -7,6 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.credentials.exceptions.NoCredentialException
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -19,14 +24,22 @@ import com.example.moneytracker.di.AppContainer
 import com.example.moneytracker.presentation.uistate.LoginUiState
 import com.example.moneytracker.presentation.ui.views.PigLoginView.PigState
 import com.example.moneytracker.presentation.viewmodel.LoginViewModel
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private var isPasswordVisible = false
+    private lateinit var credentialManager: CredentialManager
     private val viewModel: LoginViewModel by viewModels {
-        LoginViewModel.Factory(AppContainer.loginUseCase)
+        LoginViewModel.Factory(
+            AppContainer.loginUseCase,
+            AppContainer.loginWithGoogleUseCase
+        )
     }
 
     override fun onCreateView(
@@ -40,13 +53,15 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        credentialManager = CredentialManager.create(requireContext())
 
         setupPasswordPeekAnimation()
+        setupGoogleSignIn()
 
         binding.btnLogin.setOnClickListener {
             viewModel.login(
-                email = binding.etEmail.text.toString().trim(),
-                password = binding.etPassword.text.toString().trim()
+                email = binding.etEmail.text.toString(),
+                password = binding.etPassword.text.toString()
             )
         }
 
@@ -62,6 +77,64 @@ class LoginFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect(::renderState)
             }
+        }
+    }
+
+    private fun setupGoogleSignIn() {
+        binding.tvContinue.visibility = View.VISIBLE
+        binding.btnGoogle.visibility = View.VISIBLE
+        binding.btnGoogle.setOnClickListener {
+            launchGoogleSignIn()
+        }
+    }
+
+    private fun launchGoogleSignIn() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            binding.btnGoogle.isEnabled = false
+            try {
+                val idToken = getGoogleIdToken(filterByAuthorizedAccounts = true)
+                    ?: getGoogleIdToken(filterByAuthorizedAccounts = false)
+                if (idToken == null) {
+                    viewModel.setError("Không lấy được tài khoản Google")
+                } else {
+                    viewModel.loginWithGoogle(idToken)
+                }
+            } catch (exception: GoogleIdTokenParsingException) {
+                viewModel.setError("Không đọc được thông tin tài khoản Google")
+            } catch (exception: GetCredentialException) {
+                viewModel.setError("Đăng nhập Google bị hủy hoặc thất bại")
+            } finally {
+                binding.btnGoogle.isEnabled = true
+            }
+        }
+    }
+
+    private suspend fun getGoogleIdToken(filterByAuthorizedAccounts: Boolean): String? {
+        val googleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(filterByAuthorizedAccounts)
+            .setServerClientId(getString(R.string.default_web_client_id))
+            .build()
+
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
+
+        return try {
+            val result = credentialManager.getCredential(
+                context = requireContext(),
+                request = request
+            )
+            val credential = result.credential
+            if (
+                credential is CustomCredential &&
+                credential.type == TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
+            ) {
+                GoogleIdTokenCredential.createFrom(credential.data).idToken
+            } else {
+                null
+            }
+        } catch (exception: NoCredentialException) {
+            null
         }
     }
 
@@ -108,7 +181,17 @@ class LoginFragment : Fragment() {
     }
 
     private fun renderState(state: LoginUiState) {
-        binding.btnLogin.isEnabled = state !is LoginUiState.Loading
+        val isLoading = state is LoginUiState.Loading
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.btnLogin.isEnabled = !isLoading
+        binding.etEmail.isEnabled = !isLoading
+        binding.etPassword.isEnabled = !isLoading
+        binding.btnTogglePassword.isEnabled = !isLoading
+        binding.tvForgotPassword.isEnabled = !isLoading
+        binding.tvSignUp.isEnabled = !isLoading
+        binding.btnGoogle.isEnabled = !isLoading
+        binding.btnLogin.text = if (isLoading) "" else getString(R.string.log_in)
+
         when (state) {
             LoginUiState.Idle,
             LoginUiState.Loading -> Unit

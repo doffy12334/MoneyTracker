@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.moneytracker.domain.usecase.LoginUseCase
+import com.example.moneytracker.domain.usecase.LoginWithGoogleUseCase
 import com.example.moneytracker.presentation.uistate.LoginUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,7 +12,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val loginWithGoogleUseCase: LoginWithGoogleUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<LoginUiState>(LoginUiState.Idle)
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
@@ -23,18 +25,35 @@ class LoginViewModel(
                 loginUseCase(email, password)
                 LoginUiState.Authenticated
             } catch (exception: Exception) {
-                LoginUiState.Error(exception.message ?: "Dang nhap that bai")
+                LoginUiState.Error(exception.message ?: "Đăng nhập thất bại")
             }
         }
     }
 
+    fun loginWithGoogle(idToken: String) {
+        viewModelScope.launch {
+            _uiState.value = LoginUiState.Loading
+            _uiState.value = try {
+                loginWithGoogleUseCase(idToken)
+                LoginUiState.Authenticated
+            } catch (exception: Exception) {
+                LoginUiState.Error(exception.message ?: "Đăng nhập Google thất bại")
+            }
+        }
+    }
+
+    fun setError(message: String) {
+        _uiState.value = LoginUiState.Error(message)
+    }
+
     class Factory(
-        private val loginUseCase: LoginUseCase
+        private val loginUseCase: LoginUseCase,
+        private val loginWithGoogleUseCase: LoginWithGoogleUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-                return LoginViewModel(loginUseCase) as T
+                return LoginViewModel(loginUseCase, loginWithGoogleUseCase) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

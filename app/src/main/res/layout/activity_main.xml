@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAF8FF"
+    android:background="@color/screen_background"
     android:fitsSystemWindows="true">
 
     <!-- 1. THANH TOP BAR - Đã thêm nội dung vào đây -->

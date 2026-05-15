@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAF8FF"
+    android:background="@color/screen_background"
     android:padding="24dp">
 
     <com.example.moneytracker.presentation.ui.views.PigLoginView
@@ -99,6 +99,17 @@
         app:iconGravity="textEnd"
         app:iconPadding="12dp"
         app:iconTint="@color/white"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/btnLogin"
+        app:layout_constraintEnd_toEndOf="@id/btnLogin"
+        app:layout_constraintStart_toStartOf="@id/btnLogin"
+        app:layout_constraintTop_toTopOf="@id/btnLogin" />
+
     <TextView
         android:id="@+id/tvContinue"
         android:layout_width="wrap_content"

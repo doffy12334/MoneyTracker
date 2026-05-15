@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAF8FF"
+    android:background="@color/screen_background"
     android:padding="24dp">
 
     <TextView
@@ -64,6 +64,16 @@
         android:textStyle="bold"
         app:cornerRadius="16dp"
         app:layout_constraintTop_toBottomOf="@id/etConfirmPassword" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/btnRegister"
+        app:layout_constraintEnd_toEndOf="@id/btnRegister"
+        app:layout_constraintStart_toStartOf="@id/btnRegister"
+        app:layout_constraintTop_toTopOf="@id/btnRegister" />
 
     <TextView
         android:id="@+id/tvLogin"
