@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.moneytracker.R
 import com.example.moneytracker.databinding.FragmentHistoryBinding
 import com.example.moneytracker.di.AppContainer
 import com.example.moneytracker.presentation.adapter.TransactionAdapter
@@ -42,6 +44,10 @@ class HistoryFragment : Fragment() {
         binding.rvHistory.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = transactionAdapter
+            layoutAnimation = AnimationUtils.loadLayoutAnimation(
+                context,
+                R.anim.layout_animation_fade_slide_from_right
+            )
         }
         binding.etSearch.addTextChangedListener {
             viewModel.onSearchQueryChanged(it.toString())
@@ -55,7 +61,9 @@ class HistoryFragment : Fragment() {
     }
 
     private fun renderState(state: HistoryUiState) {
-        transactionAdapter.submitList(state.transactions)
+        transactionAdapter.submitList(state.transactions) {
+            binding.rvHistory.scheduleLayoutAnimation()
+        }
         state.errorMessage?.let {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }

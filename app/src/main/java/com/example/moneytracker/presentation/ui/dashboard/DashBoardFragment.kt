@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -48,6 +49,10 @@ class DashBoardFragment : Fragment() {
         binding.rvTransactions.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = transactionAdapter
+            layoutAnimation = AnimationUtils.loadLayoutAnimation(
+                context,
+                R.anim.layout_animation_fade_slide_from_right
+            )
         }
 
         binding.fabAddTransaction.setOnClickListener {
@@ -79,7 +84,9 @@ class DashBoardFragment : Fragment() {
                 binding.tvTotalBalance.text = currencyFormatter.format(state.totalBalance)
                 binding.tvIncomeAmount.text = currencyFormatter.format(state.totalIncome)
                 binding.tvExpenseAmount.text = currencyFormatter.format(state.totalExpense)
-                transactionAdapter.submitList(state.transactions)
+                transactionAdapter.submitList(state.transactions) {
+                    binding.rvTransactions.scheduleLayoutAnimation()
+                }
             }
 
             is DashboardUiState.Error -> {

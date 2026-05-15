@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rowTheme"
     android:layout_width="match_parent"
     android:layout_height="78dp"
     android:gravity="center_vertical"
@@ -29,6 +30,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/tvThemeValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sáng"

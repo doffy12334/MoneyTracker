@@ -10,13 +10,18 @@
     <TextView
         android:id="@+id/tvBrand"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
         android:text="Financier"
         android:textColor="#006D36"
         android:textSize="30sp"
         android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_bank"
+        app:drawableTint="#006D36"
+        app:layout_constraintEnd_toStartOf="@id/btnSkip"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,10 +29,11 @@
         android:id="@+id/btnSkip"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="24dp"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
+        android:minWidth="72dp"
         android:text="Bỏ qua"
         android:textColor="#0057C2"
         android:textSize="16sp"
@@ -39,32 +45,31 @@
         android:id="@+id/heroPanel"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/bg_onboarding_panel"
         android:clipToOutline="true"
-        app:layout_constraintBottom_toTopOf="@id/bottomSheet"
-        app:layout_constraintDimensionRatio="0.72"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvBrand">
 
         <ImageView
-            android:id="@+id/imgFinance"
+            android:id="@+id/imgHero"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.95"
-            android:padding="24dp"
+            android:alpha="0.97"
+            android:contentDescription="@string/app_name"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_finance" />
+            android:src="@drawable/img_intro_finance" />
 
         <LinearLayout
             android:id="@+id/profitBadge"
             android:layout_width="138dp"
             android:layout_height="72dp"
             android:layout_gravity="top|end"
-            android:layout_marginTop="42dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="18dp"
             android:background="@drawable/bg_soft_green_card"
             android:gravity="center"
@@ -92,42 +97,131 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/walletBadge"
+            android:layout_width="130dp"
+            android:layout_height="58dp"
+            android:layout_gravity="bottom|start"
+            android:layout_marginStart="22dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_soft_green_card"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp">
+
+            <FrameLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_circle_blue_soft">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_wallet" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Wallet"
+                android:textColor="#0057C2"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/bottomSheet"
+        android:id="@+id/contentGroup"
         android:layout_width="0dp"
-        android:layout_height="142dp"
-        android:background="@drawable/bg_onboarding_bottom"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingHorizontal="40dp"
-        android:paddingTop="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/heroPanel">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Tài chính thông minh"
+            android:textColor="#08152D"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:text="Tiết kiệm dễ dàng" />
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Kiến tạo tương lai tài chính vững chắc với sự hỗ trợ từ công nghệ minh bạch và hiện đại."
+            android:textColor="#2F3340"
+            android:textSize="18sp"
+            tools:text="Thiết lập mục tiêu và theo dõi lộ trình" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/indicatorGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="6dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/btnGetStarted"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contentGroup"
+        app:layout_constraintVertical_bias="0.62">
 
         <View
-            android:layout_width="40dp"
-            android:layout_height="10dp"
+            android:id="@+id/indicatorFirst"
+            android:layout_width="24dp"
+            android:layout_height="6dp"
             android:background="@drawable/bg_indicator_active" />
 
-        <Button
-            android:id="@+id/btnGetStarted"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="38dp"
-            android:backgroundTint="#4ADE80"
-            android:text="Tiếp tục"
-            android:textAllCaps="false"
-            android:textColor="#064E3B"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:cornerRadius="30dp"
-            app:icon="@drawable/ic_arrow_right"
-            app:iconGravity="textEnd"
-            app:iconPadding="12dp"
-            app:iconTint="#064E3B" />
+        <View
+            android:id="@+id/indicatorSecond"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_indicator_inactive" />
+
+        <View
+            android:id="@+id/indicatorThird"
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_indicator_inactive" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnGetStarted"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#4ADE80"
+        android:text="Bắt đầu"
+        android:textAllCaps="false"
+        android:textColor="#064E3B"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:cornerRadius="30dp"
+        app:icon="@drawable/ic_arrow_right"
+        app:iconGravity="textEnd"
+        app:iconPadding="12dp"
+        app:iconTint="#064E3B"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

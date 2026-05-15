@@ -11,6 +11,8 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign Up</string>
     <string name="log_in">Log In</string>
     <string name="or_continue_with">"OR CONTINUE WITH "</string>
@@ -27,4 +29,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="input_email">Nhập email khôi phục mật khẩu</string>
+    <string name="info_version">Phiên bản 1.0</string>
+    <string name="info_app">Thông tin ứng dụng</string>
+    <string name="title_export">Tải về báo cáo định dạng CSV/PDF</string>
+    <string name="title_export1">Xuất dữ liệu</string>
+    <string name="text_term"><![CDATA[Điều khoản & chính sách]]></string>
+    <string name="text_term2">Chính sách &amp; Điều khoản của ứng dụng</string>
+    <string name="text_logout">Đăng xuất</string>
 </resources>
