@@ -5,88 +5,129 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FAF8FF"
-    android:padding="24dp">
+    tools:context=".presentation.ui.fragments.OnBoardingFragment">
 
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/bg_gradient_primary"
-        android:padding="16dp"
-        android:src="@drawable/ic_payment"
-        app:layout_constraintEnd_toEndOf="parent"
+    <TextView
+        android:id="@+id/tvBrand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="4dp"
+        android:text="Financier"
+        android:textColor="#006D36"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvAppTitle"
+        android:id="@+id/btnSkip"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Money Tracker"
-        android:textColor="#006D36"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivLogo" />
-
-    <ImageView
-        android:id="@+id/img_finance"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:adjustViewBounds="true"
-        android:src="@drawable/img_finance"
-        app:layout_constraintBottom_toTopOf="@+id/tv_title_app"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAppTitle" />
-
-    <TextView
-        android:id="@+id/tv_title_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/tittle_app"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btnGetStarted"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_finance" />
-
-    <Button
-        android:id="@+id/btnGetStarted"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_marginBottom="40dp"
-        android:backgroundTint="#4ADE80"
-        android:text="@string/get_started"
-        android:textColor="#00210C"
-        android:textSize="20sp"
-        app:cornerRadius="16dp"
-        app:icon="@drawable/ic_arrow_right"
-        app:iconGravity="textEnd"
-        app:iconPadding="12dp"
-        app:iconTint="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_title" />
-
-    <TextView
-        android:id="@+id/bottom_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="32dp"
         android:clickable="true"
         android:focusable="true"
-        android:text="@string/already_have_an_account_log_in"
-        android:textColor="#006D36"
-        android:textSize="15sp"
+        android:gravity="center"
+        android:text="Bỏ qua"
+        android:textColor="#0057C2"
+        android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/heroPanel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/bg_onboarding_panel"
+        android:clipToOutline="true"
+        app:layout_constraintBottom_toTopOf="@id/bottomSheet"
+        app:layout_constraintDimensionRatio="0.72"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBrand">
+
+        <ImageView
+            android:id="@+id/imgFinance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.95"
+            android:padding="24dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_finance" />
+
+        <LinearLayout
+            android:id="@+id/profitBadge"
+            android:layout_width="138dp"
+            android:layout_height="72dp"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="42dp"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/bg_soft_green_card"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="14dp">
+
+            <FrameLayout
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_circle_green_strong">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_trending_up_small" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="+12.5%"
+                android:textColor="#007A4D"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomSheet"
+        android:layout_width="0dp"
+        android:layout_height="142dp"
+        android:background="@drawable/bg_onboarding_bottom"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingHorizontal="40dp"
+        android:paddingTop="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="10dp"
+            android:background="@drawable/bg_indicator_active" />
+
+        <Button
+            android:id="@+id/btnGetStarted"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="38dp"
+            android:backgroundTint="#4ADE80"
+            android:text="Tiếp tục"
+            android:textAllCaps="false"
+            android:textColor="#064E3B"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:cornerRadius="30dp"
+            app:icon="@drawable/ic_arrow_right"
+            app:iconGravity="textEnd"
+            app:iconPadding="12dp"
+            app:iconTint="#064E3B" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

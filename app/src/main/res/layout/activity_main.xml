@@ -21,7 +21,7 @@
 
         <!-- Icon Menu bên trái -->
         <ImageView
-            android:id="@+id/ivMenu"
+            android:id="@+id/iv_Menu"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_centerVertical="true"
@@ -49,11 +49,12 @@
             app:cardElevation="0dp">
 
             <ImageView
-                android:id="@+id/ivProfile"
+                android:id="@+id/ivp_profile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_profile" />
+                android:src="@drawable/ic_profile"
+                app:tint="#006D36" />
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
 

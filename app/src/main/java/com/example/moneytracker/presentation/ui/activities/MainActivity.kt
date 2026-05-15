@@ -23,16 +23,26 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         binding.bottomNav.setupWithNavController(navController)
+        val currentUser = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
+            navGraph.setStartDestination(R.id.dashboardFragment)
+            navController.graph = navGraph
+        }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isAuthScreen = destination.id in setOf(
                 R.id.onboardingFragment,
                 R.id.loginFragment,
                 R.id.registerFragment,
-                R.id.forgotPasswordFragment
+                R.id.inputEmailFragment
             )
-
-            binding.bottomNav.visibility = if (isAuthScreen) View.GONE else View.VISIBLE
-            binding.topBar.visibility = if (isAuthScreen) View.GONE else View.VISIBLE
+            if (isAuthScreen) {
+                binding.bottomNav.visibility = View.GONE
+                binding.topBar.visibility = View.GONE
+            } else {
+                binding.bottomNav.visibility = View.VISIBLE
+                binding.topBar.visibility = View.VISIBLE
+            }
         }
     }
 }

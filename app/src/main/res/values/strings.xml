@@ -24,4 +24,7 @@
     <string name="search_transactions">Search transactions...</string>
     <string name="total_spending">TOTAL SPENDING</string>
     <string name="gui_ma">Gửi lại mã ngay</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="input_email">Nhập email khôi phục mật khẩu</string>
 </resources>

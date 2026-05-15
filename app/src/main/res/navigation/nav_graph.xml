@@ -15,8 +15,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            />
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -26,22 +25,23 @@
         <action
             android:id="@+id/action_login_to_dashboard"
             app:destination="@id/dashboardFragment"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_login_to_register"
             app:destination="@id/registerFragment" />
         <action
-            android:id="@+id/action_login_to_forgotPassword"
-            app:destination="@id/forgotPasswordFragment"
+            android:id="@+id/action_loginFragment_to_inputEmailFragment"
+            app:destination="@id/inputEmailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
     </fragment>
 
     <fragment
@@ -51,51 +51,47 @@
         <action
             android:id="@+id/action_register_to_dashboard"
             app:destination="@id/dashboardFragment"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
-
-    <fragment
-        android:id="@+id/forgotPasswordFragment"
-        android:name="com.example.moneytracker.presentation.ui.fragments.ForgotPasswordFragment"
-        tools:layout="@layout/fragment_forgot_password" />
 
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.example.moneytracker.presentation.ui.dashboard.DashBoardFragment"
-        tools:layout="@layout/fragment_dash_board" >
+        tools:layout="@layout/fragment_dash_board">
+
         <action
             android:id="@+id/action_dashboardFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_dashboardFragment_to_historyFragment"
             app:destination="@id/historyFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_dashboardFragment_to_reportsFragment"
             app:destination="@id/reportsFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_dashboardFragment_to_addTransactionFragment"
             app:destination="@id/addTransactionFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -122,5 +118,9 @@
         android:id="@+id/addTransactionFragment"
         android:name="com.example.moneytracker.presentation.ui.addtransaction.AddTransactionFragment"
         tools:layout="@layout/fragment_add_transaction" />
+    <fragment
+        android:id="@+id/inputEmailFragment"
+        android:name="com.example.moneytracker.presentation.ui.fragments.InputEmailFragment"
+        android:label="InputEmailFragment" />
 
 </navigation>
