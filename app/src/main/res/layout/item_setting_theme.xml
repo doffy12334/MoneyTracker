@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_weight="1"
-        android:text="Giao diện"
+        android:text="@string/setting_theme"
         android:textColor="#0F172A"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -33,7 +33,7 @@
         android:id="@+id/tvThemeValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sáng"
+        android:text="@string/theme_light"
         android:textColor="#0057C2"
         android:textSize="15sp"
         android:textStyle="bold" />

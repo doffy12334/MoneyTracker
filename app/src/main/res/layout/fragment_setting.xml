@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:letterSpacing="0.12"
-                android:text="TÀI KHOẢN"
+                android:text="@string/settings_section_account"
                 android:textColor="#343434"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -51,9 +51,7 @@
                 android:paddingVertical="16dp">
 
                 <include layout="@layout/item_setting_profile" />
-
                 <include layout="@layout/item_setting_security" />
-
                 <include layout="@layout/item_setting_premium" />
             </LinearLayout>
 
@@ -63,7 +61,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:letterSpacing="0.12"
-                android:text="ỨNG DỤNG"
+                android:text="@string/settings_section_app"
                 android:textColor="#343434"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -78,9 +76,7 @@
                 android:paddingVertical="16dp">
 
                 <include layout="@layout/item_setting_notification" />
-
                 <include layout="@layout/item_setting_language" />
-
                 <include layout="@layout/item_setting_theme" />
             </LinearLayout>
 
@@ -90,7 +86,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:letterSpacing="0.12"
-                android:text="DỮ LIỆU &amp; BẢO MẬT"
+                android:text="@string/settings_section_data_security"
                 android:textColor="#343434"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -105,16 +101,16 @@
                 android:paddingVertical="16dp">
 
                 <include layout="@layout/item_export_data" />
-
                 <include layout="@layout/item_delete_account" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:letterSpacing="0.12"
-                android:text="THÔNG TIN"
+                android:text="@string/settings_section_information"
                 android:textColor="#343434"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -129,7 +125,6 @@
                 android:paddingVertical="16dp">
 
                 <include layout="@layout/item_about_app" />
-
                 <include layout="@layout/item_terms" />
             </LinearLayout>
 
@@ -140,16 +135,16 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/white"
                 android:text="@string/text_logout"
+                android:textAllCaps="false"
                 android:textColor="#4D58C7"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:cornerRadius="28dp"
+                app:rippleColor="#1A006D36"
                 app:strokeColor="#4D58C7"
-                app:strokeWidth="2dp"
-                android:backgroundTint="@color/white"
-                android:textAllCaps="false"
-                app:rippleColor="#1A006D36" />
+                app:strokeWidth="2dp" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

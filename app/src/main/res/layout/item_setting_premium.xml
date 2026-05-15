@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gói Premium"
+            android:text="@string/setting_premium_title"
             android:textColor="#0F172A"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="ĐANG KÍCH HOẠT"
+            android:text="@string/setting_premium_active"
             android:textColor="#007A4D"
             android:textSize="13sp"
             android:textStyle="bold" />

@@ -90,8 +90,8 @@ class SettingFragment : Fragment() {
             switchNotification.isChecked = state.notificationsEnabled
         }
 
-        tvLanguageValue.text = state.language.displayName
-        tvThemeValue.text = state.theme.displayName
+        tvLanguageValue.text = languageLabel(state.language)
+        tvThemeValue.text = themeLabel(state.theme)
         applyLanguage(state.language)
         applyTheme(state.theme)
     }
@@ -99,8 +99,8 @@ class SettingFragment : Fragment() {
     private fun showLanguageDialog() {
         val languages = AppLanguage.entries.toTypedArray()
         AlertDialog.Builder(requireContext())
-            .setTitle("Ngôn ngữ")
-            .setItems(languages.map { it.displayName }.toTypedArray()) { _, index ->
+            .setTitle(getString(R.string.dialog_language_title))
+            .setItems(languages.map { languageLabel(it) }.toTypedArray()) { _, index ->
                 viewModel.onLanguageChanged(languages[index])
             }
             .show()
@@ -109,8 +109,8 @@ class SettingFragment : Fragment() {
     private fun showThemeDialog() {
         val themes = AppTheme.entries.toTypedArray()
         AlertDialog.Builder(requireContext())
-            .setTitle("Giao diện")
-            .setItems(themes.map { it.displayName }.toTypedArray()) { _, index ->
+            .setTitle(getString(R.string.dialog_theme_title))
+            .setItems(themes.map { themeLabel(it) }.toTypedArray()) { _, index ->
                 viewModel.onThemeChanged(themes[index])
             }
             .show()
@@ -118,7 +118,7 @@ class SettingFragment : Fragment() {
 
     private fun logout() {
         FirebaseAuth.getInstance().signOut()
-        Toast.makeText(requireContext(), "Đã đăng xuất", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), getString(R.string.text_logout), Toast.LENGTH_SHORT).show()
 
         findNavController().navigate(
             R.id.loginFragment,
@@ -156,6 +156,24 @@ class SettingFragment : Fragment() {
         }
         appliedTheme = theme
         AppCompatDelegate.setDefaultNightMode(nightMode)
+    }
+
+    private fun languageLabel(language: AppLanguage): String {
+        return getString(
+            when (language) {
+                AppLanguage.VIETNAMESE -> R.string.language_vietnamese
+                AppLanguage.ENGLISH -> R.string.language_english
+            }
+        )
+    }
+
+    private fun themeLabel(theme: AppTheme): String {
+        return getString(
+            when (theme) {
+                AppTheme.LIGHT -> R.string.theme_light
+                AppTheme.DARK -> R.string.theme_dark
+            }
+        )
     }
 
     override fun onDestroyView() {
