@@ -58,6 +58,9 @@ class DashBoardFragment : Fragment() {
         binding.fabAddTransaction.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_addTransactionFragment)
         }
+        binding.tvSeeAllTransactions.setOnClickListener {
+            viewModel.toggleShowAllTransactions()
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -78,12 +81,20 @@ class DashBoardFragment : Fragment() {
                 binding.tvTotalBalance.text = currencyFormatter.format(0.0)
                 binding.tvIncomeAmount.text = currencyFormatter.format(0.0)
                 binding.tvExpenseAmount.text = currencyFormatter.format(0.0)
+                binding.tvBalanceRate.text = formatBalanceRate(0.0)
+                binding.tvSeeAllTransactions.text = getString(R.string.xem_t_t_c)
             }
 
             is DashboardUiState.Success -> {
                 binding.tvTotalBalance.text = currencyFormatter.format(state.totalBalance)
                 binding.tvIncomeAmount.text = currencyFormatter.format(state.totalIncome)
                 binding.tvExpenseAmount.text = currencyFormatter.format(state.totalExpense)
+                binding.tvBalanceRate.text = formatBalanceRate(state.balanceRate)
+                binding.tvSeeAllTransactions.text = if (state.showAllTransactions) {
+                    getString(R.string.show_less)
+                } else {
+                    getString(R.string.xem_t_t_c)
+                }
                 transactionAdapter.submitList(state.transactions) {
                     binding.rvTransactions.scheduleLayoutAnimation()
                 }
@@ -94,7 +105,18 @@ class DashBoardFragment : Fragment() {
                 binding.tvTotalBalance.text = state.message
                 binding.tvIncomeAmount.text = currencyFormatter.format(0.0)
                 binding.tvExpenseAmount.text = currencyFormatter.format(0.0)
+                binding.tvBalanceRate.text = formatBalanceRate(0.0)
+                binding.tvSeeAllTransactions.text = getString(R.string.xem_t_t_c)
             }
+        }
+    }
+
+    private fun formatBalanceRate(rate: Double): String {
+        val formattedRate = String.format(Locale.getDefault(), "%.1f", kotlin.math.abs(rate))
+        return if (rate >= 0.0) {
+            getString(R.string.balance_rate_saved, formattedRate)
+        } else {
+            getString(R.string.balance_rate_over_income, formattedRate)
         }
     }
 

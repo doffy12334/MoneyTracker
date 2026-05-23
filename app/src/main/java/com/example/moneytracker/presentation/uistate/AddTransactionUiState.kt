@@ -7,8 +7,8 @@ data class AddTransactionUiState(
     val amount: String = "",
     val name: String = "",
     val date: String = "",
-    val selectedCategory: TransactionCategory = TransactionCategory.OTHER,
-    val selectedType: TransactionType = TransactionType.EXPENSE,
+    val selectedCategory: TransactionCategory? = null,
+    val selectedType: TransactionType? = null,
     val isSaving: Boolean = false,
     val errorMessage: String? = null,
     val isSaved: Boolean = false

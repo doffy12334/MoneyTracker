@@ -12,16 +12,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class AddTransactionViewModel(
     private val addTransactionUseCase: AddTransactionUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(
-        AddTransactionUiState(date = today())
-    )
+    private val _uiState = MutableStateFlow(AddTransactionUiState())
     val uiState: StateFlow<AddTransactionUiState> = _uiState.asStateFlow()
 
     fun onAmountChanged(amount: String) {
@@ -40,8 +35,16 @@ class AddTransactionViewModel(
         _uiState.update { it.copy(selectedCategory = category, isSaved = false) }
     }
 
+    fun onCategoryCleared() {
+        _uiState.update { it.copy(selectedCategory = null, isSaved = false) }
+    }
+
     fun onTypeSelected(type: TransactionType) {
         _uiState.update { it.copy(selectedType = type, isSaved = false) }
+    }
+
+    fun onTypeCleared() {
+        _uiState.update { it.copy(selectedType = null, isSaved = false) }
     }
 
     fun saveTransaction() {
@@ -52,6 +55,16 @@ class AddTransactionViewModel(
             _uiState.update { it.copy(errorMessage = "So tien khong hop le") }
             return
         }
+        val selectedCategory = state.selectedCategory
+        if (selectedCategory == null) {
+            _uiState.update { it.copy(errorMessage = "Vui long chon danh muc") }
+            return
+        }
+        val selectedType = state.selectedType
+        if (selectedType == null) {
+            _uiState.update { it.copy(errorMessage = "Vui long chon loai giao dich") }
+            return
+        }
 
         viewModelScope.launch {
             _uiState.update { it.copy(isSaving = true, errorMessage = null, isSaved = false) }
@@ -60,8 +73,8 @@ class AddTransactionViewModel(
                     name = state.name,
                     amount = amount,
                     date = state.date,
-                    category = state.selectedCategory,
-                    type = state.selectedType
+                    category = selectedCategory,
+                    type = selectedType
                 )
                 _uiState.update { it.copy(isSaving = false, isSaved = true) }
             } catch (exception: Exception) {
@@ -85,9 +98,5 @@ class AddTransactionViewModel(
             }
             throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
-    }
-
-    private companion object {
-        fun today(): String = SimpleDateFormat("dd MMM yyyy", Locale.US).format(Date())
     }
 }

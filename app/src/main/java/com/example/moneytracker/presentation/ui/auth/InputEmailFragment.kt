@@ -1,4 +1,4 @@
-package com.example.moneytracker.presentation.ui.fragments
+package com.example.moneytracker.presentation.ui.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater

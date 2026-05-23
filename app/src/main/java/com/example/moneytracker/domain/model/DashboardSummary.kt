@@ -6,5 +6,6 @@ data class DashboardSummary(
     val totalBalance: Double,
     val totalIncome: Double,
     val totalExpense: Double,
-    val recentTransactions: List<Transaction>
+    val balanceRate: Double,
+    val transactions: List<Transaction>
 )

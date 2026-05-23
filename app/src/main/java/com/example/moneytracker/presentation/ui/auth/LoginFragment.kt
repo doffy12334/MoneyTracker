@@ -1,4 +1,4 @@
-package com.example.moneytracker.presentation.ui.fragments
+package com.example.moneytracker.presentation.ui.auth
 
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
@@ -21,13 +21,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.FragmentLoginBinding
 import com.example.moneytracker.di.AppContainer
+import com.example.moneytracker.presentation.ui.views.PigLoginView
 import com.example.moneytracker.presentation.uistate.LoginUiState
-import com.example.moneytracker.presentation.ui.views.PigLoginView.PigState
 import com.example.moneytracker.presentation.viewmodel.LoginViewModel
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
-import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
@@ -53,7 +52,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        credentialManager = CredentialManager.create(requireContext())
+        credentialManager = CredentialManager.Companion.create(requireContext())
 
         setupPasswordPeekAnimation()
         setupGoogleSignIn()
@@ -127,7 +126,7 @@ class LoginFragment : Fragment() {
             val credential = result.credential
             if (
                 credential is CustomCredential &&
-                credential.type == TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
+                credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
             ) {
                 GoogleIdTokenCredential.createFrom(credential.data).idToken
             } else {
@@ -141,16 +140,16 @@ class LoginFragment : Fragment() {
     private fun setupPasswordPeekAnimation() {
         binding.etEmail.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                binding.pigLoginView.setPigState(PigState.NORMAL)
+                binding.pigLoginView.setPigState(PigLoginView.PigState.NORMAL)
             }
         }
 
         binding.etPassword.setOnFocusChangeListener { _, hasFocus ->
             binding.pigLoginView.setPigState(
                 when {
-                    hasFocus && isPasswordVisible -> PigState.PEEKING
-                    hasFocus -> PigState.COVERED
-                    else -> PigState.NORMAL
+                    hasFocus && isPasswordVisible -> PigLoginView.PigState.PEEKING
+                    hasFocus -> PigLoginView.PigState.COVERED
+                    else -> PigLoginView.PigState.NORMAL
                 }
             )
         }
@@ -159,7 +158,7 @@ class LoginFragment : Fragment() {
             isPasswordVisible = !isPasswordVisible
             renderPasswordVisibility()
             binding.pigLoginView.setPigState(
-                if (isPasswordVisible) PigState.PEEKING else PigState.COVERED
+                if (isPasswordVisible) PigLoginView.PigState.PEEKING else PigLoginView.PigState.COVERED
             )
         }
     }

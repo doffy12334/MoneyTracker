@@ -15,6 +15,7 @@ class DashboardViewModel(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<DashboardUiState>(DashboardUiState.Loading)
     val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
+    private var showAllTransactions = false
 
     init {
         loadDashboard()
@@ -26,10 +27,16 @@ class DashboardViewModel(
             _uiState.value = try {
                 val summary = getDashboardSummaryUseCase()
                 DashboardUiState.Success(
-                    transactions = summary.recentTransactions,
+                    transactions = if (showAllTransactions) {
+                        summary.transactions
+                    } else {
+                        summary.transactions.take(RECENT_TRANSACTION_LIMIT)
+                    },
                     totalBalance = summary.totalBalance,
                     totalIncome = summary.totalIncome,
-                    totalExpense = summary.totalExpense
+                    totalExpense = summary.totalExpense,
+                    balanceRate = summary.balanceRate,
+                    showAllTransactions = showAllTransactions
                 )
             } catch (exception: Exception) {
                 DashboardUiState.Error(
@@ -37,6 +44,11 @@ class DashboardViewModel(
                 )
             }
         }
+    }
+
+    fun toggleShowAllTransactions() {
+        showAllTransactions = !showAllTransactions
+        loadDashboard()
     }
 
     class Factory(
@@ -49,5 +61,9 @@ class DashboardViewModel(
             }
             throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
+    }
+
+    private companion object {
+        const val RECENT_TRANSACTION_LIMIT = 5
     }
 }

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/onboardingFragment"
-        android:name="com.example.moneytracker.presentation.ui.fragments.OnBoardingFragment"
+        android:name="com.example.moneytracker.presentation.ui.onboarding.OnBoardingFragment"
         tools:layout="@layout/fragment_on_boarding">
         <action
             android:id="@+id/action_onboarding_to_login"
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.moneytracker.presentation.ui.fragments.LoginFragment"
+        android:name="com.example.moneytracker.presentation.ui.auth.LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_login_to_dashboard"
@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.moneytracker.presentation.ui.fragments.RegisterFragment"
+        android:name="com.example.moneytracker.presentation.ui.auth.RegisterFragment"
         tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_register_to_dashboard"
@@ -120,7 +120,7 @@
         tools:layout="@layout/fragment_add_transaction" />
     <fragment
         android:id="@+id/inputEmailFragment"
-        android:name="com.example.moneytracker.presentation.ui.fragments.InputEmailFragment"
+        android:name="com.example.moneytracker.presentation.ui.auth.InputEmailFragment"
         android:label="InputEmailFragment" />
 
 </navigation>

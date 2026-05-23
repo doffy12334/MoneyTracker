@@ -15,12 +15,19 @@ class GetDashboardSummaryUseCase(
         val expense = transactions
             .filter { it.type == TransactionType.EXPENSE }
             .sumOf { it.amount }
+        val balance = income - expense
+        val balanceRate = if (income > 0.0) {
+            (balance / income) * 100.0
+        } else {
+            0.0
+        }
 
         return DashboardSummary(
-            totalBalance = income - expense,
+            totalBalance = balance,
             totalIncome = income,
             totalExpense = expense,
-            recentTransactions = transactions.take(5)
+            balanceRate = balanceRate,
+            transactions = transactions
         )
     }
 }

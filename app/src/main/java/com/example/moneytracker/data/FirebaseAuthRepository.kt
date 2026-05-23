@@ -17,6 +17,14 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 class FirebaseAuthRepository(
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 ) : AuthRepository {
+    override fun isUserLoggedIn(): Boolean {
+        return firebaseAuth.currentUser != null
+    }
+
+    override fun logout() {
+        firebaseAuth.signOut()
+    }
+
     override suspend fun login(email: String, password: String) {
         firebaseAuth.signInWithEmailAndPassword(email, password).await()
     }

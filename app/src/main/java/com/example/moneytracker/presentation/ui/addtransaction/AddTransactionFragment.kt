@@ -58,17 +58,21 @@ class AddTransactionFragment : Fragment() {
         binding.spType.adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
-            TransactionType.entries.map { it.name }
+            listOf(TYPE_PLACEHOLDER) + TransactionType.entries.map { it.name }
         )
         binding.spCategory.adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
-            TransactionCategory.entries.map { it.name }
+            listOf(CATEGORY_PLACEHOLDER) + TransactionCategory.entries.map { it.name }
         )
 
         binding.spType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                viewModel.onTypeSelected(TransactionType.entries[position])
+                if (position == 0) {
+                    viewModel.onTypeCleared()
+                } else {
+                    viewModel.onTypeSelected(TransactionType.entries[position - 1])
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -76,7 +80,11 @@ class AddTransactionFragment : Fragment() {
 
         binding.spCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                viewModel.onCategorySelected(TransactionCategory.entries[position])
+                if (position == 0) {
+                    viewModel.onCategoryCleared()
+                } else {
+                    viewModel.onCategorySelected(TransactionCategory.entries[position - 1])
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
@@ -103,5 +111,10 @@ class AddTransactionFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private companion object {
+        const val TYPE_PLACEHOLDER = "Select type"
+        const val CATEGORY_PLACEHOLDER = "Select category"
     }
 }

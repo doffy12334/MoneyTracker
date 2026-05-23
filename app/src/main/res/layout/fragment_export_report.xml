@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:paddingBottom="120dp">
+
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="‹"
+            android:textColor="#006D36"
+            android:textSize="36sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Xuat bao cao"
+            android:textColor="#0F172A"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Tai xuong giao dich va phan tich cua ban mot cach chi tiet."
+            android:textColor="#33423A"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Khoang thoi gian"
+            android:textColor="#0F172A"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/optionCurrentMonth"
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_input_field"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp"
+            android:text="PHO BIEN\nThang nay\n01/10 - 31/10"
+            android:textColor="#0F172A"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/optionLastMonth"
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_soft_green_card"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp"
+            android:text="LICH SU\nThang truoc\n01/09 - 30/09"
+            android:textColor="#0F172A"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/optionCustom"
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_soft_green_card"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp"
+            android:text="LINH HOAT\nTuy chinh\nChon ngay cu the"
+            android:textColor="#0F172A"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Dinh dang tep"
+            android:textColor="#0F172A"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/optionCsv"
+            android:layout_width="match_parent"
+            android:layout_height="112dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_input_field"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp"
+            android:text="Excel / CSV\nPhu hop cho viec tinh toan va nhap lieu"
+            android:textColor="#0F172A"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/optionPdf"
+            android:layout_width="match_parent"
+            android:layout_height="112dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_soft_green_card"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp"
+            android:text="Bao cao PDF\nTai lieu trinh bay dep, de in an"
+            android:textColor="#0F172A"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnExportReport"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="34dp"
+            android:backgroundTint="#47D982"
+            android:text="Xuat bao cao"
+            android:textAllCaps="false"
+            android:textColor="#006D36"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:cornerRadius="14dp"
+            app:icon="@drawable/ic_download"
+            app:iconTint="#006D36" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

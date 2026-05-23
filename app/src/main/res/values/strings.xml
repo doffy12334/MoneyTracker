@@ -21,7 +21,10 @@
     <string name="good_morning">Good Morning</string>
     <string name="ch_o_m_ng_b_n_quay_tr_l_i">Chào mừng bạn quay trở lại!</string>
     <string name="t_ng_s_d">TỔNG SỐ DƯ</string>
-    <string name="xem_t_t_c">Xem tất cả</string>
+    <string name="xem_t_t_c">See all</string>
+    <string name="show_less">Show less</string>
+    <string name="balance_rate_saved">Saved %1$s%% of income</string>
+    <string name="balance_rate_over_income">Over income by %1$s%%</string>
     <string name="giao_d_ch_g_n_y">Giao dịch gần đây</string>
     <string name="search_transactions">Search transactions...</string>
     <string name="total_spending">TOTAL SPENDING</string>

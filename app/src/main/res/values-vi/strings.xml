@@ -22,6 +22,9 @@
     <string name="ch_o_m_ng_b_n_quay_tr_l_i">Chào mừng bạn quay trở lại!</string>
     <string name="t_ng_s_d">TỔNG SỐ DƯ</string>
     <string name="xem_t_t_c">Xem tất cả</string>
+    <string name="show_less">Thu gọn</string>
+    <string name="balance_rate_saved">Giữ lại %1$s%% thu nhập</string>
+    <string name="balance_rate_over_income">Vượt thu nhập %1$s%%</string>
     <string name="giao_d_ch_g_n_y">Giao dịch gần đây</string>
     <string name="search_transactions">Tìm giao dịch...</string>
     <string name="total_spending">TỔNG CHI TIÊU</string>

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.ItemTransactionBinding
 import com.example.moneytracker.domain.model.transaction.Transaction
+import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.domain.model.transaction.TransactionType
 import java.text.NumberFormat
 import java.util.Locale
@@ -33,21 +34,35 @@ class TransactionAdapter : ListAdapter<Transaction, TransactionAdapter.ViewHolde
 
         fun bind(item: Transaction) {
             val context = binding.root.context
-
-            binding.tvTxName.text = item.name
-            // Đảm bảo bạn đã thêm thuộc tính category vào model Transaction
-            binding.tvTxDetail.text = item.category.name
-
-            // Định dạng tiền tệ theo chuẩn quốc tế
             val formatter = NumberFormat.getCurrencyInstance(Locale.US)
             val formattedAmount = formatter.format(item.amount)
+            val amountColor = if (item.type == TransactionType.INCOME) {
+                R.color.income_green
+            } else {
+                R.color.expense_red
+            }
+
+            binding.tvTxName.text = item.name
+            binding.tvTxDetail.text = "${item.date} - ${item.category.name}"
+            binding.ivTxIcon.setImageResource(item.category.iconRes())
+            binding.ivTxIcon.setColorFilter(ContextCompat.getColor(context, amountColor))
 
             if (item.type == TransactionType.INCOME) {
                 binding.tvTxAmount.text = "+$formattedAmount"
-                binding.tvTxAmount.setTextColor(ContextCompat.getColor(context, R.color.income_green))
             } else {
                 binding.tvTxAmount.text = "-$formattedAmount"
-                binding.tvTxAmount.setTextColor(ContextCompat.getColor(context, R.color.expense_red))
+            }
+            binding.tvTxAmount.setTextColor(ContextCompat.getColor(context, amountColor))
+        }
+
+        private fun TransactionCategory.iconRes(): Int {
+            return when (this) {
+                TransactionCategory.FOOD -> R.drawable.ic_food
+                TransactionCategory.TRANSPORT -> R.drawable.ic_car
+                TransactionCategory.SHOPPING -> R.drawable.ic_cart
+                TransactionCategory.SALARY -> R.drawable.ic_money_bag
+                TransactionCategory.ENTERTAINMENT -> R.drawable.ic_diamond_outline
+                TransactionCategory.OTHER -> R.drawable.ic_wallet
             }
         }
     }
