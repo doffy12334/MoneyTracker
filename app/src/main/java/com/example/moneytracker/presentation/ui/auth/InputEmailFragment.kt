@@ -67,7 +67,7 @@ class InputEmailFragment : Fragment() {
         if (state.isEmailSent) {
             Toast.makeText(
                 context,
-                "Email khôi phục mật khẩu đã được gửi. Vui lòng kiểm tra hộp thư.",
+                "Email khĂ´i phá»¥c máº­t kháº©u Ä‘Ă£ Ä‘Æ°á»£c gá»­i. Vui lĂ²ng kiá»ƒm tra há»™p thÆ°.",
                 Toast.LENGTH_LONG
             ).show()
             findNavController().popBackStack(R.id.loginFragment, false)

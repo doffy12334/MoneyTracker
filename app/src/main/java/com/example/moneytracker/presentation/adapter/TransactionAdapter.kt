@@ -37,9 +37,9 @@ class TransactionAdapter : ListAdapter<Transaction, TransactionAdapter.ViewHolde
             val formatter = NumberFormat.getCurrencyInstance(Locale.US)
             val formattedAmount = formatter.format(item.amount)
             val amountColor = if (item.type == TransactionType.INCOME) {
-                R.color.income_green
+                R.color.success_color
             } else {
-                R.color.expense_red
+                R.color.error_color
             }
 
             binding.tvTxName.text = item.name

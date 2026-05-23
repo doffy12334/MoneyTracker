@@ -17,7 +17,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_trash"
-            app:tint="@color/expense_red" />
+            app:tint="@color/error_color" />
     </FrameLayout>
 
     <LinearLayout
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/delete_account_title"
-            android:textColor="@color/expense_red"
+            android:textColor="@color/error_color"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="@string/delete_account_subtitle"
-            android:textColor="@color/expense_red"
+            android:textColor="@color/error_color"
             android:textSize="13sp" />
     </LinearLayout>
 

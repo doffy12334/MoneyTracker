@@ -15,4 +15,8 @@ class InMemoryTransactionLocalDataSource : TransactionLocalDataSource {
     override suspend fun addTransaction(transaction: Transaction) {
         transactions.add(0, transaction)
     }
+
+    override suspend fun deleteTransaction(transactionId: String) {
+        transactions.removeAll { it.id == transactionId }
+    }
 }

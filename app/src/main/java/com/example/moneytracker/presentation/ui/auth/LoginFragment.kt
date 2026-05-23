@@ -94,14 +94,14 @@ class LoginFragment : Fragment() {
                 val idToken = getGoogleIdToken(filterByAuthorizedAccounts = true)
                     ?: getGoogleIdToken(filterByAuthorizedAccounts = false)
                 if (idToken == null) {
-                    viewModel.setError("Không lấy được tài khoản Google")
+                    viewModel.setError("KhĂ´ng láº¥y Ä‘Æ°á»£c tĂ i khoáº£n Google")
                 } else {
                     viewModel.loginWithGoogle(idToken)
                 }
             } catch (exception: GoogleIdTokenParsingException) {
-                viewModel.setError("Không đọc được thông tin tài khoản Google")
+                viewModel.setError("KhĂ´ng Ä‘á»c Ä‘Æ°á»£c thĂ´ng tin tĂ i khoáº£n Google")
             } catch (exception: GetCredentialException) {
-                viewModel.setError("Đăng nhập Google bị hủy hoặc thất bại")
+                viewModel.setError("ÄÄƒng nháº­p Google bá»‹ há»§y hoáº·c tháº¥t báº¡i")
             } finally {
                 binding.btnGoogle.isEnabled = true
             }

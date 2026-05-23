@@ -1,4 +1,4 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#42D782" /> <!-- MĂ u xanh lĂ¡ -->
+    <solid android:color="@color/success_color" /> <!-- MÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â u xanh lÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¡ -->
     <corners android:radius="12dp" />
 </shape>

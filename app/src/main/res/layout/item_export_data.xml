@@ -17,7 +17,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_download"
-            app:tint="@color/primary_green" />
+            app:tint="@color/primary_color" />
     </FrameLayout>
 
     <LinearLayout

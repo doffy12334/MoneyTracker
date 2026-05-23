@@ -21,4 +21,9 @@ class TransactionRepositoryImp(
         remoteDataSource.pushTransaction(transaction)
         localDataSource.addTransaction(transaction)
     }
+
+    override suspend fun deleteTransaction(transactionId: String) {
+        remoteDataSource.deleteTransaction(transactionId)
+        localDataSource.deleteTransaction(transactionId)
+    }
 }

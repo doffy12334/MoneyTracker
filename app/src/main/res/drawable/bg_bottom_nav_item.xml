@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true">
-        <!-- Inset giĂºp táº¡o khoáº£ng cĂ¡ch, lĂ m khá»‘i xanh nhá» láº¡i -->
+        <!-- Inset giÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Âºp tĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¡o khoĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â£ng cÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¡ch, lÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â m khĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă‹Å“i xanh nhĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â lĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¡i -->
         <inset android:insetLeft="12dp" android:insetRight="12dp"
             android:insetTop="8dp" android:insetBottom="8dp">
             <shape>
-                <solid android:color="#4ADE80" /> <!-- MĂ u xanh lĂ¡ -->
+                <solid android:color="@color/primary_color" /> <!-- MÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â u xanh lÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¡ -->
                 <corners android:radius="16dp" />
             </shape>
         </inset>

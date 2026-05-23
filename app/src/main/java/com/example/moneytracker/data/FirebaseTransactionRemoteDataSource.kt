@@ -44,7 +44,12 @@ class FirebaseTransactionRemoteDataSource(
                         ?: doc.getString("date")
                         ?: return@mapNotNull null,
                     category = category,
-                    type = type
+                    type = type,
+                    createdAt = doc.getTimestamp("createdAt")?.toDate()?.let(formatter::format)
+                        ?: doc.getString("createdAt")
+                        ?: doc.getTimestamp("date")?.toDate()?.let(formatter::format)
+                        ?: doc.getString("date")
+                        ?: return@mapNotNull null
                 )
             }
     }
@@ -66,6 +71,16 @@ class FirebaseTransactionRemoteDataSource(
             .collection("transactions")
             .document(transaction.id)
             .set(data)
+            .await()
+    }
+
+    override suspend fun deleteTransaction(transactionId: String) {
+        val uid = auth.currentUser?.uid ?: throw IllegalStateException("User not logged in")
+        firestore.collection("users")
+            .document(uid)
+            .collection("transactions")
+            .document(transactionId)
+            .delete()
             .await()
     }
 

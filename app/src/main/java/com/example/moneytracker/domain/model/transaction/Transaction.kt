@@ -11,5 +11,6 @@ data class Transaction(
     val amount: Double,
     val date: String,
     val category: TransactionCategory,
-    val type: TransactionType
+    val type: TransactionType,
+    val createdAt: String = date
 )

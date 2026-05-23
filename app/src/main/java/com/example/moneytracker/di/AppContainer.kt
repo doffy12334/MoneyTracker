@@ -17,6 +17,7 @@ import com.example.moneytracker.domain.repository.SecuritySettingsRepository
 import com.example.moneytracker.domain.repository.SettingsRepository
 import com.example.moneytracker.domain.repository.TransactionRepository
 import com.example.moneytracker.domain.usecase.AddTransactionUseCase
+import com.example.moneytracker.domain.usecase.DeleteTransactionUseCase
 import com.example.moneytracker.domain.usecase.ExportReportUseCase
 import com.example.moneytracker.domain.usecase.GetDashboardSummaryUseCase
 import com.example.moneytracker.domain.usecase.GetProfileUseCase
@@ -64,6 +65,10 @@ object AppContainer {
 
     val addTransactionUseCase: AddTransactionUseCase by lazy {
         AddTransactionUseCase(transactionRepository)
+    }
+
+    val deleteTransactionUseCase: DeleteTransactionUseCase by lazy {
+        DeleteTransactionUseCase(transactionRepository)
     }
 
     val getDashboardSummaryUseCase: GetDashboardSummaryUseCase by lazy {

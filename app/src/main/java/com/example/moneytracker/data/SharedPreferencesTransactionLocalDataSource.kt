@@ -38,6 +38,10 @@ class SharedPreferencesTransactionLocalDataSource(
         saveTransactions(listOf(transaction) + getTransactions().filterNot { it.id == transaction.id })
     }
 
+    override suspend fun deleteTransaction(transactionId: String) {
+        saveTransactions(getTransactions().filterNot { it.id == transactionId })
+    }
+
     private fun currentTransactionsKey(): String {
         val uid = auth.currentUser?.uid ?: GUEST_USER_ID
         return "$KEY_TRANSACTIONS_PREFIX$uid"
@@ -52,6 +56,7 @@ class SharedPreferencesTransactionLocalDataSource(
                         .put("name", transaction.name)
                         .put("amount", transaction.amount)
                         .put("date", transaction.date)
+                        .put("createdAt", transaction.createdAt)
                         .put("category", transaction.category.name)
                         .put("type", transaction.type.name)
                 )
@@ -72,7 +77,8 @@ class SharedPreferencesTransactionLocalDataSource(
             type = enumValueOrDefault(
                 value = optString("type"),
                 defaultValue = TransactionType.EXPENSE
-            )
+            ),
+            createdAt = optString("createdAt", getString("date"))
         )
     }
 

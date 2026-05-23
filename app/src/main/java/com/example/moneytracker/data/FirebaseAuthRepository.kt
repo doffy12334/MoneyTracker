@@ -59,13 +59,13 @@ private suspend fun <T> Task<T>.await(): T = suspendCancellableCoroutine { conti
 
 private fun Exception?.toAuthException(): IllegalArgumentException {
     val message = when (this) {
-        is FirebaseAuthInvalidUserException -> "Tài khoản không tồn tại hoặc đã bị vô hiệu hóa"
-        is FirebaseAuthInvalidCredentialsException -> "Email hoặc mật khẩu không đúng"
-        is FirebaseAuthUserCollisionException -> "Email này đã được đăng ký"
-        is FirebaseAuthWeakPasswordException -> "Mật khẩu quá yếu, vui lòng dùng ít nhất 6 ký tự"
-        is FirebaseNetworkException -> "Không có kết nối mạng, vui lòng thử lại"
-        is FirebaseTooManyRequestsException -> "Bạn thao tác quá nhiều lần, vui lòng thử lại sau"
-        else -> this?.message ?: "Không thể xác thực tài khoản"
+        is FirebaseAuthInvalidUserException -> "TĂ i khoáº£n khĂ´ng tá»“n táº¡i hoáº·c Ä‘Ă£ bá»‹ vĂ´ hiá»‡u hĂ³a"
+        is FirebaseAuthInvalidCredentialsException -> "Email hoáº·c máº­t kháº©u khĂ´ng Ä‘Ăºng"
+        is FirebaseAuthUserCollisionException -> "Email nĂ y Ä‘Ă£ Ä‘Æ°á»£c Ä‘Äƒng kĂ½"
+        is FirebaseAuthWeakPasswordException -> "Máº­t kháº©u quĂ¡ yáº¿u, vui lĂ²ng dĂ¹ng Ă­t nháº¥t 6 kĂ½ tá»±"
+        is FirebaseNetworkException -> "KhĂ´ng cĂ³ káº¿t ná»‘i máº¡ng, vui lĂ²ng thá»­ láº¡i"
+        is FirebaseTooManyRequestsException -> "Báº¡n thao tĂ¡c quĂ¡ nhiá»u láº§n, vui lĂ²ng thá»­ láº¡i sau"
+        else -> this?.message ?: "KhĂ´ng thá»ƒ xĂ¡c thá»±c tĂ i khoáº£n"
     }
     return IllegalArgumentException(message)
 }

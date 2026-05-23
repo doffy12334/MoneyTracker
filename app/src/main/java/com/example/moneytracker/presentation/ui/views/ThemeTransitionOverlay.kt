@@ -35,8 +35,8 @@ class ThemeTransitionOverlay(
     private var sparklePhase = if (startsCovered) 1f else 0f
     private var callbackFired = false
 
-    private val overlayColor = if (darkMode) Color.rgb(11, 16, 32) else Color.rgb(250, 248, 255)
-    private val accentColor = if (darkMode) Color.rgb(52, 211, 153) else Color.rgb(0, 109, 54)
+    private val overlayColor = if (darkMode) Color.rgb(28, 27, 46) else Color.rgb(255, 249, 238)
+    private val accentColor = if (darkMode) Color.rgb(255, 159, 28) else Color.rgb(255, 183, 3)
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -111,7 +111,7 @@ class ThemeTransitionOverlay(
         if (visible <= 0.02f) return
 
         paint.style = Paint.Style.FILL
-        paint.color = if (darkMode) Color.rgb(250, 204, 21) else Color.rgb(52, 211, 153)
+        paint.color = if (darkMode) Color.rgb(255, 240, 138) else Color.rgb(255, 183, 3)
         paint.alpha = (visible * 170).toInt().coerceIn(0, 170)
 
         for (i in 0 until 10) {
@@ -182,7 +182,7 @@ class ThemeTransitionOverlay(
             val x = ((i * 83 + 37) % width.coerceAtLeast(1)).toFloat()
             val y = ((i * 47 + 29) % height.coerceAtLeast(1)).toFloat()
             val pulse = 0.55f + 0.45f * sin(sparklePhase * Math.PI * 2f + i).toFloat()
-            paint.color = if (i % 5 == 0) Color.rgb(250, 204, 21) else Color.WHITE
+            paint.color = if (i % 5 == 0) Color.rgb(255, 240, 138) else Color.WHITE
             paint.alpha = (90 + pulse * 130).toInt().coerceIn(70, 220)
             canvas.drawCircle(x, y, if (i % 4 == 0) 3.2f else 2f, paint)
         }

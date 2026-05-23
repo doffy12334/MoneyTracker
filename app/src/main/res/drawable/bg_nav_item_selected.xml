@@ -5,7 +5,7 @@
     android:insetTop="8dp"
     android:insetBottom="8dp">
     <shape>
-        <solid android:color="#42D782" /> <!-- MĂ u xanh cá»§a báº¡n -->
+        <solid android:color="@color/success_color" /> <!-- MÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â u xanh cĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â§a bĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¡n -->
         <corners android:radius="16dp" />
     </shape>
 </inset>

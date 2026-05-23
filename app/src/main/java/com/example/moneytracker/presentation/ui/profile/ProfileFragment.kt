@@ -119,7 +119,7 @@ class ProfileFragment : Fragment() {
     private fun renderAvatar(avatarUri: String) {
         if (avatarUri.isBlank()) {
             binding.ivAvatar.setImageResource(com.example.moneytracker.R.drawable.ic_profile)
-            binding.ivAvatar.setColorFilter(ContextCompat.getColor(requireContext(), com.example.moneytracker.R.color.primary_green))
+            binding.ivAvatar.setColorFilter(ContextCompat.getColor(requireContext(), com.example.moneytracker.R.color.primary_color))
         } else {
             binding.ivAvatar.clearColorFilter()
             binding.ivAvatar.setImageURI(Uri.parse(avatarUri))

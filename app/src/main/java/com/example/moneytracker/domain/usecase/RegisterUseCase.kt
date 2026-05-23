@@ -8,15 +8,15 @@ class RegisterUseCase(
     suspend operator fun invoke(email: String, password: String, confirmPassword: String) {
         val normalizedEmail = email.trim()
 
-        require(normalizedEmail.isNotBlank()) { "Email không được để trống" }
-        require(EMAIL_REGEX.matches(normalizedEmail)) { "Email không hợp lệ" }
+        require(normalizedEmail.isNotBlank()) { "Email khĂ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng" }
+        require(EMAIL_REGEX.matches(normalizedEmail)) { "Email khĂ´ng há»£p lá»‡" }
         require(normalizedEmail.substringAfter("@") !in BLACKLISTED_DOMAINS) {
-            "Không hỗ trợ email tạm thời"
+            "KhĂ´ng há»— trá»£ email táº¡m thá»i"
         }
         require(password.length >= MIN_PASSWORD_LENGTH) {
-            "Mật khẩu phải có ít nhất $MIN_PASSWORD_LENGTH ký tự"
+            "Máº­t kháº©u pháº£i cĂ³ Ă­t nháº¥t $MIN_PASSWORD_LENGTH kĂ½ tá»±"
         }
-        require(password == confirmPassword) { "Mật khẩu xác nhận không khớp" }
+        require(password == confirmPassword) { "Máº­t kháº©u xĂ¡c nháº­n khĂ´ng khá»›p" }
 
         authRepository.register(normalizedEmail, password)
     }

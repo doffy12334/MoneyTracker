@@ -18,8 +18,8 @@
             android:layout_width="48dp"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:text="Ă„â€Ă‚Â¢Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¬Ä‚â€Ă‚Â¹"
-            android:textColor="@color/primary_green"
+            android:text="Ä‚â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂĂ„â€Ă‚Â¢Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¬Ä‚â€Ă‚ÂÄ‚â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂĂ„â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¢Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂĂ„â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¢Ä‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¢Ă„â€Ă‚Â¢Ä‚Â¢Ă¢â€Â¬Ă‚ÂÄ‚â€Ă‚Â¬Ă„â€Ă¢â‚¬ÂÄ‚â€Ă‚ÂÄ‚â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂĂ„â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¬Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂĂ„â€Ă‚Â¢Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¬Ä‚â€Ă‚ÂÄ‚â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂĂ„â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¹"
+            android:textColor="@color/primary_color"
             android:textSize="36sp" />
 
         <TextView
@@ -127,15 +127,15 @@
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:layout_marginTop="34dp"
-            android:backgroundTint="#47D982"
+            android:backgroundTint="@color/success_color"
             android:text="Xuat bao cao"
             android:textAllCaps="false"
-            android:textColor="@color/primary_green"
+            android:textColor="@color/primary_color"
             android:textSize="20sp"
             android:textStyle="bold"
             app:cornerRadius="14dp"
             app:icon="@drawable/ic_download"
-            app:iconTint="@color/primary_green" />
+            app:iconTint="@color/primary_color" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
 

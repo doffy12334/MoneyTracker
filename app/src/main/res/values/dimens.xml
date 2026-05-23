@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="swipe_delete_action_width">96dp</dimen>
+    <dimen name="swipe_delete_corner_radius">24dp</dimen>
+    <dimen name="swipe_delete_icon_size">22dp</dimen>
+    <dimen name="swipe_delete_content_gap">6dp</dimen>
+    <dimen name="swipe_delete_text_size">12sp</dimen>
+</resources>

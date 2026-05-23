@@ -164,16 +164,16 @@ class PigLoginView @JvmOverloads constructor(
         paint.alpha = 255
     }
 
-    private fun drawSunglasses(canvas: Canvas, peeking: Boolean) {        // Nếu đang peeking, nhấc kính lên cao (peekLift), nếu không thì hạ xuống 0
-        // Sử dụng transition để tạo chuyển động trượt mượt mà
+    private fun drawSunglasses(canvas: Canvas, peeking: Boolean) {        // Náº¿u Ä‘ang peeking, nháº¥c kĂ­nh lĂªn cao (peekLift), náº¿u khĂ´ng thĂ¬ háº¡ xuá»‘ng 0
+        // Sá»­ dá»¥ng transition Ä‘á»ƒ táº¡o chuyá»ƒn Ä‘á»™ng trÆ°á»£t mÆ°á»£t mĂ 
         val peekLift = if (peeking) 18f * transition else 18f * (1f - transition)
         val tilt = if (peeking) -8f * transition else -8f * (1f - transition)
 
-        // Vẽ mắt bên dưới kính
+        // Váº½ máº¯t bĂªn dÆ°á»›i kĂ­nh
         if (peeking || transition < 1f) {
             paint.style = Paint.Style.FILL
             paint.color = Color.rgb(45, 38, 51)
-            // Mắt hơi mờ đi một chút khi có kính che
+            // Máº¯t hÆ¡i má» Ä‘i má»™t chĂºt khi cĂ³ kĂ­nh che
             paint.alpha = (transition * 255).toInt().coerceIn(0, 255)
             canvas.drawCircle(-27f, -13f, 6f, paint)
             canvas.drawCircle(27f, -13f, 6f, paint)
@@ -181,12 +181,12 @@ class PigLoginView @JvmOverloads constructor(
         }
 
         canvas.save()
-        // Xoay kính một chút tạo cảm giác nhấc kính bằng tay/tai
+        // Xoay kĂ­nh má»™t chĂºt táº¡o cáº£m giĂ¡c nháº¥c kĂ­nh báº±ng tay/tai
         canvas.rotate(tilt, 0f, -15f)
-        // Di chuyển kính lên theo trục Y
+        // Di chuyá»ƒn kĂ­nh lĂªn theo trá»¥c Y
         canvas.translate(0f, -peekLift)
 
-        // Vẽ gọng và tròng kính
+        // Váº½ gá»ng vĂ  trĂ²ng kĂ­nh
         paint.style = Paint.Style.FILL
         paint.color = Color.rgb(22, 24, 28)
         glassesRect.set(-52f, -30f, -7f, 2f)
@@ -194,15 +194,15 @@ class PigLoginView @JvmOverloads constructor(
         glassesRect.set(7f, -30f, 52f, 2f)
         canvas.drawRoundRect(glassesRect, 10f, 10f, paint)
 
-        // Vẽ cầu nối và càng kính
+        // Váº½ cáº§u ná»‘i vĂ  cĂ ng kĂ­nh
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 4f
         canvas.drawLine(-7f, -15f, 7f, -15f, paint)
 
-        // Hiệu ứng bóng đổ/phản chiếu trên mắt kính để trông sang trọng hơn
+        // Hiá»‡u á»©ng bĂ³ng Ä‘á»•/pháº£n chiáº¿u trĂªn máº¯t kĂ­nh Ä‘á»ƒ trĂ´ng sang trá»ng hÆ¡n
         paint.style = Paint.Style.FILL
         paint.color = Color.WHITE
-        paint.alpha = 30 // Rất mờ
+        paint.alpha = 30 // Ráº¥t má»
         canvas.drawCircle(-35f, -20f, 8f, paint)
         canvas.drawCircle(25f, -20f, 8f, paint)
         paint.alpha = 255

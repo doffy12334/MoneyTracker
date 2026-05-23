@@ -6,7 +6,7 @@ class LoginWithGoogleUseCase(
     private val authRepository: AuthRepository
 ) {
     suspend operator fun invoke(idToken: String) {
-        require(idToken.isNotBlank()) { "Không lấy được tài khoản Google" }
+        require(idToken.isNotBlank()) { "KhĂ´ng láº¥y Ä‘Æ°á»£c tĂ i khoáº£n Google" }
         authRepository.loginWithGoogle(idToken)
     }
 }

@@ -79,7 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/forgot_password"
-        android:textColor="@color/primary_green"
+        android:textColor="@color/primary_color"
         android:textStyle="bold"
         android:clickable="true"
         android:focusable="true"
@@ -92,8 +92,8 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:text="@string/log_in"
-        android:backgroundTint="@color/primary_green"
-        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/primary_color"
+        android:textColor="@color/inverse_text"
         app:layout_constraintTop_toBottomOf="@id/tvForgotPassword"
         android:layout_marginTop="28dp"
         app:cornerRadius="16dp"
@@ -102,7 +102,7 @@
         app:icon="@drawable/ic_arrow_right"
         app:iconGravity="textEnd"
         app:iconPadding="12dp"
-        app:iconTint="@color/white"/>
+        app:iconTint="@color/inverse_text"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -133,8 +133,8 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/primary_green"
-        android:textColor="@color/white"
+        android:backgroundTint="@color/primary_color"
+        android:textColor="@color/inverse_text"
         android:text="@string/google"
         android:textSize="20sp"
         android:textStyle="bold"

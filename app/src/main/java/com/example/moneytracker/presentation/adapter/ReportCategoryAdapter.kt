@@ -48,12 +48,12 @@ class ReportCategoryAdapter : RecyclerView.Adapter<ReportCategoryAdapter.ReportC
 
     companion object {
         val colors = listOf(
-            Color.parseColor("#47D982"),
-            Color.parseColor("#2277E8"),
-            Color.parseColor("#4A5B51"),
-            Color.parseColor("#B8AAFF"),
-            Color.parseColor("#F6C453"),
-            Color.parseColor("#FF7A90")
+            Color.parseColor("#6BCB77"),
+            Color.parseColor("#4D96FF"),
+            Color.parseColor("#A78BFA"),
+            Color.parseColor("#FFB703"),
+            Color.parseColor("#FFD166"),
+            Color.parseColor("#FF6B6B")
         )
     }
 }

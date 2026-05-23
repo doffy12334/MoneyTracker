@@ -7,26 +7,65 @@
     </item>
 
     <item
-        android:width="150dp"
-        android:height="52dp"
-        android:gravity="top|start"
-        android:left="-18dp"
-        android:top="72dp">
-        <shape>
-            <corners android:radius="28dp" />
-            <solid android:color="#CCFFFFFF" />
+        android:width="190dp"
+        android:height="190dp"
+        android:gravity="top|end"
+        android:right="-72dp"
+        android:top="-76dp">
+        <shape android:shape="oval">
+            <solid android:color="#33FFD166" />
         </shape>
     </item>
 
     <item
-        android:width="116dp"
-        android:height="42dp"
+        android:width="86dp"
+        android:height="86dp"
+        android:gravity="top|end"
+        android:right="18dp"
+        android:top="34dp"
+        android:drawable="@drawable/deco_sun" />
+
+    <item
+        android:width="24dp"
+        android:height="24dp"
         android:gravity="top|start"
-        android:left="82dp"
-        android:top="132dp">
+        android:left="38dp"
+        android:top="34dp"
+        android:drawable="@drawable/deco_star" />
+
+    <item
+        android:width="128dp"
+        android:height="46dp"
+        android:gravity="top|start"
+        android:left="-14dp"
+        android:top="72dp">
         <shape>
             <corners android:radius="24dp" />
-            <solid android:color="#80FFFFFF" />
+            <solid android:color="#E6FFFFFF" />
+        </shape>
+    </item>
+
+    <item
+        android:width="86dp"
+        android:height="34dp"
+        android:gravity="top|start"
+        android:left="76dp"
+        android:top="102dp">
+        <shape>
+            <corners android:radius="20dp" />
+            <solid android:color="#BFFFFFFF" />
+        </shape>
+    </item>
+
+    <item
+        android:width="132dp"
+        android:height="42dp"
+        android:gravity="top|end"
+        android:right="-26dp"
+        android:top="168dp">
+        <shape>
+            <corners android:radius="24dp" />
+            <solid android:color="#66FFD166" />
         </shape>
     </item>
 </layer-list>
