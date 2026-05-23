@@ -25,7 +25,7 @@
         android:layout_marginStart="20dp"
         android:layout_weight="1"
         android:text="@string/setting_theme"
-        android:textColor="#0F172A"
+        android:textColor="@color/text_primary"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/theme_light"
-        android:textColor="#0057C2"
+        android:textColor="@color/accent_blue"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -44,3 +44,4 @@
         android:layout_marginStart="8dp"
         android:src="@drawable/ic_chevron_right" />
 </LinearLayout>
+

@@ -2,6 +2,7 @@ package com.example.moneytracker.presentation.ui.activities
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -9,6 +10,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.ActivityMainBinding
+import com.example.moneytracker.presentation.ui.views.ThemeTransitionOverlay
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         setupBottomNavigation(navController)
+        revealPendingThemeTransition()
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isAuthScreen = destination.id in setOf(
                 R.id.onboardingFragment,
@@ -48,6 +51,29 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNav.menu.findItem(destination.id).isChecked = true
                 }
             }
+        }
+    }
+
+    fun playThemeTransition(anchor: View, darkMode: Boolean, onCovered: () -> Unit) {
+        val decor = window.decorView as ViewGroup
+        val location = IntArray(2)
+        anchor.getLocationOnScreen(location)
+        val originX = location[0] + anchor.width / 2f
+        val originY = location[1] + anchor.height / 2f
+
+        pendingThemeTransitionDark = darkMode
+        pendingThemeTransitionTime = System.currentTimeMillis()
+        pendingThemeTransitionOriginX = originX
+        pendingThemeTransitionOriginY = originY
+
+        ThemeTransitionOverlay(this, originX, originY, darkMode).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            isClickable = true
+            decor.addView(this)
+            playCover(onCovered)
         }
     }
 
@@ -89,5 +115,45 @@ class MainActivity : AppCompatActivity() {
                 }
                 .start()
         }
+    }
+
+    private fun revealPendingThemeTransition() {
+        val darkMode = pendingThemeTransitionDark ?: return
+        if (System.currentTimeMillis() - pendingThemeTransitionTime > THEME_TRANSITION_WINDOW_MS) {
+            pendingThemeTransitionDark = null
+            return
+        }
+
+        binding.root.post {
+            val decor = window.decorView as ViewGroup
+            val overlay = ThemeTransitionOverlay(
+                this,
+                pendingThemeTransitionOriginX.takeIf { it > 0f } ?: binding.root.width * 0.74f,
+                pendingThemeTransitionOriginY.takeIf { it > 0f } ?: binding.root.height * 0.36f,
+                darkMode,
+                startsCovered = true
+            ).apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                alpha = 1f
+                isClickable = true
+            }
+            decor.addView(overlay)
+            overlay.playReveal {
+                pendingThemeTransitionDark = null
+                pendingThemeTransitionOriginX = 0f
+                pendingThemeTransitionOriginY = 0f
+            }
+        }
+    }
+
+    companion object {
+        private const val THEME_TRANSITION_WINDOW_MS = 2_000L
+        private var pendingThemeTransitionDark: Boolean? = null
+        private var pendingThemeTransitionTime: Long = 0L
+        private var pendingThemeTransitionOriginX: Float = 0f
+        private var pendingThemeTransitionOriginY: Float = 0f
     }
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_background"
+    android:background="@drawable/bg_screen_background"
     android:fillViewport="true">
 
     <LinearLayout
@@ -19,8 +19,8 @@
             android:layout_width="48dp"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:text="‹"
-            android:textColor="#006D36"
+            android:text="Ă„â€Ă‚Â¢Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¬Ä‚â€Ă‚Â¹"
+            android:textColor="@color/primary_green"
             android:textSize="36sp" />
 
         <FrameLayout
@@ -59,7 +59,7 @@
             android:layout_marginTop="18dp"
             android:gravity="center"
             android:text="Ho so ca nhan"
-            android:textColor="#0F172A"
+            android:textColor="@color/text_primary"
             android:textSize="32sp"
             android:textStyle="bold" />
 
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Cap nhat thong tin tai khoan cua ban"
-            android:textColor="#33423A"
+            android:textColor="@color/text_secondary"
             android:textSize="18sp" />
 
         <TextView
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="HO VA TEN"
-            android:textColor="#33423A"
+            android:textColor="@color/text_secondary"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -88,19 +88,20 @@
             android:background="@drawable/bg_input_field"
             android:drawableEnd="@drawable/ic_profile"
             android:drawablePadding="12dp"
-            android:drawableTint="#8E968E"
+            android:drawableTint="@color/text_secondary"
             android:hint="Nguyen Minh Anh"
             android:inputType="textPersonName"
             android:paddingHorizontal="16dp"
-            android:textColor="#0F172A"
-            android:textSize="18sp" />
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textColorHint="@color/text_secondary" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:text="EMAIL"
-            android:textColor="#33423A"
+            android:textColor="@color/text_secondary"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -112,19 +113,20 @@
             android:background="@drawable/bg_input_field"
             android:drawableEnd="@drawable/ic_mail"
             android:drawablePadding="12dp"
-            android:drawableTint="#8E968E"
+            android:drawableTint="@color/text_secondary"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:paddingHorizontal="16dp"
-            android:textColor="#0F172A"
-            android:textSize="18sp" />
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textColorHint="@color/text_secondary" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:text="SO DIEN THOAI"
-            android:textColor="#33423A"
+            android:textColor="@color/text_secondary"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -136,19 +138,20 @@
             android:background="@drawable/bg_input_field"
             android:drawableEnd="@drawable/ic_phone"
             android:drawablePadding="12dp"
-            android:drawableTint="#8E968E"
+            android:drawableTint="@color/text_secondary"
             android:hint="+84 901 234 567"
             android:inputType="phone"
             android:paddingHorizontal="16dp"
-            android:textColor="#0F172A"
-            android:textSize="18sp" />
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textColorHint="@color/text_secondary" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:text="NGAY SINH"
-            android:textColor="#33423A"
+            android:textColor="@color/text_secondary"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -160,12 +163,13 @@
             android:background="@drawable/bg_input_field"
             android:drawableEnd="@drawable/ic_calendar"
             android:drawablePadding="12dp"
-            android:drawableTint="#111827"
+            android:drawableTint="@color/text_primary"
             android:hint="MM/DD/YYYY"
             android:inputType="date"
             android:paddingHorizontal="16dp"
-            android:textColor="#0F172A"
-            android:textSize="18sp" />
+            android:textColor="@color/text_primary"
+            android:textSize="18sp"
+            android:textColorHint="@color/text_secondary" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSaveProfile"
@@ -175,12 +179,13 @@
             android:backgroundTint="#47D982"
             android:text="Luu thay doi"
             android:textAllCaps="false"
-            android:textColor="#006D36"
+            android:textColor="@color/primary_green"
             android:textSize="20sp"
             android:textStyle="bold"
             app:cornerRadius="14dp"
             app:icon="@drawable/ic_check"
             app:iconGravity="textEnd"
-            app:iconTint="#006D36" />
+            app:iconTint="@color/primary_green" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
+

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_background"
+    android:background="@drawable/bg_screen_background"
     tools:context=".presentation.ui.onboarding.OnBoardingFragment">
 
     <TextView
@@ -16,11 +16,11 @@
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:text="Financier"
-        android:textColor="#006D36"
+        android:textColor="@color/primary_green"
         android:textSize="30sp"
         android:textStyle="bold"
         app:drawableStartCompat="@drawable/ic_bank"
-        app:drawableTint="#006D36"
+        app:drawableTint="@color/primary_green"
         app:layout_constraintEnd_toStartOf="@id/btnSkip"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,8 +34,8 @@
         android:focusable="true"
         android:gravity="center"
         android:minWidth="72dp"
-        android:text="Bỏ qua"
-        android:textColor="#0057C2"
+        android:text="BĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â qua"
+        android:textColor="@color/accent_blue"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="Wallet"
-                android:textColor="#0057C2"
+                android:textColor="@color/accent_blue"
                 android:textSize="15sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -151,11 +151,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Tài chính thông minh"
+            android:text="TÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â i chÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â­nh thÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â´ng minh"
             android:textColor="#08152D"
             android:textSize="30sp"
             android:textStyle="bold"
-            tools:text="Tiết kiệm dễ dàng" />
+            tools:text="TiĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¿t kiĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă‚Â¡m dĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă‚Â¦ dÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â ng" />
 
         <TextView
             android:id="@+id/tvSubtitle"
@@ -163,10 +163,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="Kiến tạo tương lai tài chính vững chắc với sự hỗ trợ từ công nghệ minh bạch và hiện đại."
+            android:text="KiĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¿n tĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¡o tĂ„â€Ă¢â‚¬Â Ä‚â€Ă‚Â°Ă„â€Ă¢â‚¬Â Ä‚â€Ă‚Â¡ng lai tÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â i chÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â­nh vĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â¯ng chĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¯c vĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă‚Âºi sĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â± hĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă¢â‚¬Â trĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â£ tĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â« cÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â´ng nghĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă‚Â¡ minh bĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¡ch vÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â  hiĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă‚Â¡n Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‹Å“Ă„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¡i."
             android:textColor="#2F3340"
             android:textSize="18sp"
-            tools:text="Thiết lập mục tiêu và theo dõi lộ trình" />
+            tools:text="ThiĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¿t lĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â­p mĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â¥c tiÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Âªu vÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â  theo dÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Âµi lĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¢ trÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¬nh" />
     </LinearLayout>
 
     <LinearLayout
@@ -210,7 +210,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:backgroundTint="#4ADE80"
-        android:text="Bắt đầu"
+        android:text="BĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¯t Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‹Å“Ă„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â§u"
         android:textAllCaps="false"
         android:textColor="#064E3B"
         android:textSize="20sp"
@@ -225,3 +225,4 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

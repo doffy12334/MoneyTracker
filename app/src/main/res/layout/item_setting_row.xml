@@ -11,12 +11,12 @@
     android:paddingHorizontal="16dp"
     android:paddingVertical="12dp">
 
-    <!-- Hình tròn chứa Icon -->
+    <!-- HÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¬nh trÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â²n chĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â©a Icon -->
     <View
         android:id="@+id/icon_bg"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/bg_circle_light_green" /> <!-- Tạo drawable hình tròn xanh nhạt -->
+        android:background="@drawable/bg_circle_light_green" /> <!-- TĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¡o drawable hÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¬nh trÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â²n xanh nhĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¡t -->
 
     <TextView
         android:id="@+id/tv_title"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_weight="1"
-        android:text="Ngôn ngữ"
+        android:text="NgÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â´n ngĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â¯"
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="bold" />
@@ -34,8 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Tiếng Việt"
-        android:textColor="#4D58C7"
+        android:text="TiĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¿ng ViĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă‚Â¡t"
+        android:textColor="@color/accent_blue"
         android:textSize="14sp" />
 
     <ImageView

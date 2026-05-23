@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="74dp"
     android:gravity="center_vertical"
@@ -15,7 +16,8 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_export" />
+            android:src="@drawable/ic_export"
+            app:tint="@color/primary_green" />
     </FrameLayout>
 
     <LinearLayout
@@ -29,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_term"
-            android:textColor="#0F172A"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -38,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="@string/text_term2"
-            android:textColor="#8A8F8F"
+            android:textColor="@color/text_secondary"
             android:textSize="13sp" />
     </LinearLayout>
 
@@ -47,3 +49,4 @@
         android:layout_height="24dp"
         android:src="@drawable/ic_chevron_right" />
 </LinearLayout>
+

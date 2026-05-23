@@ -2,6 +2,11 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MoneyTracker" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:navigationBarColor">@color/screen_background</item>
         <item name="android:statusBarColor">@color/screen_background</item>

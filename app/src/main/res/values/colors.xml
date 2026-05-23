@@ -4,6 +4,14 @@
     <color name="white">#FFFFFFFF</color>
     <color name="screen_background">#FAF8FF</color>
     <color name="surface_card">#FFFFFF</color>
+    <color name="nav_surface">#F2EAFE</color>
+    <color name="text_primary">#0F172A</color>
+    <color name="text_secondary">#64748B</color>
+    <color name="divider_color">#E2E8F0</color>
+    <color name="input_background">#EEF2FF</color>
+    <color name="input_stroke">#CBD5E1</color>
+    <color name="icon_circle">#C8F8DB</color>
+    <color name="accent_blue">#2563EB</color>
     <color name="primary_green">#006D36</color>
     <color name="income_green">#4CAF50</color>
     <color name="expense_red">#F44336</color>

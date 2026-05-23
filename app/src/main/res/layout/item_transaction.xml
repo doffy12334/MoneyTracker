@@ -18,7 +18,7 @@
         android:background="@drawable/bg_white_rounded"
         android:padding="12dp">
 
-        <!-- Container chứa Icon -->
+        <!-- Container chĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â©a Icon -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvIconBackground"
             android:layout_width="56dp"
@@ -33,10 +33,10 @@
                 android:layout_height="24dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_cart"
-                app:tint="#131B2E" />
+                app:tint="@color/text_primary" />
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Container chứa Text -->
+        <!-- Container chĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â©a Text -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Whole Foods"
-                android:textColor="#131B2E"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -58,12 +58,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="09:41 AM  •  GROCERIES"
-                android:textColor="#8E8E93"
+                android:text="09:41 AM  Ă„â€Ă‚Â¢Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¬Ä‚â€Ă‚Â¢  GROCERIES"
+                android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
         </LinearLayout>
 
-        <!-- Số tiền -->
+        <!-- SĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă‹Å“ tiĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Ân -->
         <TextView
             android:id="@+id/tvTxAmount"
             android:layout_width="wrap_content"

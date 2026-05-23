@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_background"
+    android:background="@drawable/bg_screen_background"
     android:fillViewport="true">
 
     <LinearLayout
@@ -18,8 +18,8 @@
             android:layout_width="48dp"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:text="‹"
-            android:textColor="#006D36"
+            android:text="Ă„â€Ă‚Â¢Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¬Ä‚â€Ă‚Â¹"
+            android:textColor="@color/primary_green"
             android:textSize="36sp" />
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Xuat bao cao"
-            android:textColor="#0F172A"
+            android:textColor="@color/text_primary"
             android:textSize="34sp"
             android:textStyle="bold" />
 
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Tai xuong giao dich va phan tich cua ban mot cach chi tiet."
-            android:textColor="#33423A"
+            android:textColor="@color/text_secondary"
             android:textSize="18sp" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Khoang thoi gian"
-            android:textColor="#0F172A"
+            android:textColor="@color/text_primary"
             android:textSize="26sp"
             android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp"
             android:text="PHO BIEN\nThang nay\n01/10 - 31/10"
-            android:textColor="#0F172A"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -70,7 +70,7 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp"
             android:text="LICH SU\nThang truoc\n01/09 - 30/09"
-            android:textColor="#0F172A"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -83,7 +83,7 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp"
             android:text="LINH HOAT\nTuy chinh\nChon ngay cu the"
-            android:textColor="#0F172A"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Dinh dang tep"
-            android:textColor="#0F172A"
+            android:textColor="@color/text_primary"
             android:textSize="26sp"
             android:textStyle="bold" />
 
@@ -105,7 +105,7 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp"
             android:text="Excel / CSV\nPhu hop cho viec tinh toan va nhap lieu"
-            android:textColor="#0F172A"
+            android:textColor="@color/text_primary"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -118,7 +118,7 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp"
             android:text="Bao cao PDF\nTai lieu trinh bay dep, de in an"
-            android:textColor="#0F172A"
+            android:textColor="@color/text_primary"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -130,11 +130,12 @@
             android:backgroundTint="#47D982"
             android:text="Xuat bao cao"
             android:textAllCaps="false"
-            android:textColor="#006D36"
+            android:textColor="@color/primary_green"
             android:textSize="20sp"
             android:textStyle="bold"
             app:cornerRadius="14dp"
             app:icon="@drawable/ic_download"
-            app:iconTint="#006D36" />
+            app:iconTint="@color/primary_green" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
+

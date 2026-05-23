@@ -37,15 +37,15 @@
                     android:id="@+id/tvBudgetName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ăn uống"
+                    android:text="Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚Ân uĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă‹Å“ng"
                     android:textStyle="bold"
-                    android:textColor="#131B2E" />
+                    android:textColor="@color/text_primary" />
 
                 <TextView
                     android:id="@+id/tvBudgetLimit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Giới hạn: 5.000.000đ"
+                    android:text="GiĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă‚Âºi hĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¡n: 5.000.000Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‹Å“"
                     android:textSize="12sp"
                     android:textColor="#6D7B6D" />
             </LinearLayout>
@@ -57,7 +57,7 @@
                 android:text="80%"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="#006D36"
+                android:textColor="@color/primary_green"
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
@@ -73,7 +73,7 @@
             android:id="@+id/tvSpentInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Đã tiêu: 4.000.000đ"
+            android:text="Ă„â€Ă¢â‚¬ÂÄ‚â€Ă‚ÂÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â£ tiÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Âªu: 4.000.000Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‹Å“"
             android:textSize="12sp"
             android:layout_marginTop="8dp"
             android:textColor="#3D4A3E" />

@@ -34,7 +34,9 @@
                 android:background="@null"
                 android:hint="@string/search_transactions"
                 android:paddingStart="12dp"
-                tools:ignore="RtlSymmetry" />
+                tools:ignore="RtlSymmetry"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/filter_cardview"
@@ -53,7 +55,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_tune"
-                    app:tint="#006D36" />
+                    app:tint="@color/primary_green" />
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
 
@@ -84,10 +86,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="TODAY"
-            android:textColor="#8E8E93"
+            android:textColor="@color/text_secondary"
             android:textStyle="bold" />
 
-        <!-- Dùng lại RecyclerView hoặc List Item bạn đã làm ở Dashboard -->
+        <!-- DÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¹ng lĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¡i RecyclerView hoĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â·c List Item bĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¡n Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‹Å“Ä‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â£ lÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â m Ă„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€¦Ă‚Â¸ Dashboard -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvHistory"
             android:layout_width="match_parent"
@@ -98,3 +100,4 @@
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
+

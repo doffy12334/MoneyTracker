@@ -4,7 +4,8 @@
     <solid android:color="#F0FDF4" />
     <stroke
         android:width="2dp"
-        android:color="#006D36"
+        android:color="@color/primary_green"
         android:dashWidth="8dp"
         android:dashGap="4dp" />
 </shape>
+

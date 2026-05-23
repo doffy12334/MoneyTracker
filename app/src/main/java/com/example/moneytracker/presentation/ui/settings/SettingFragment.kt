@@ -21,6 +21,7 @@ import com.example.moneytracker.databinding.FragmentSettingBinding
 import com.example.moneytracker.di.AppContainer
 import com.example.moneytracker.domain.model.AppLanguage
 import com.example.moneytracker.domain.model.AppTheme
+import com.example.moneytracker.presentation.ui.activities.MainActivity
 import com.example.moneytracker.presentation.uistate.SettingsUiState
 import com.example.moneytracker.presentation.viewmodel.SettingsViewModel
 import com.google.android.material.materialswitch.MaterialSwitch
@@ -110,8 +111,11 @@ class SettingFragment : Fragment() {
         val themes = AppTheme.entries.toTypedArray()
         AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.dialog_theme_title))
-            .setItems(themes.map { themeLabel(it) }.toTypedArray()) { _, index ->
-                viewModel.onThemeChanged(themes[index])
+            .setItems(themes.map { themeLabel(it) }.toTypedArray()) { dialog, index ->
+                dialog.dismiss()
+                rowTheme.postDelayed({
+                    viewModel.onThemeChanged(themes[index])
+                }, THEME_DIALOG_DISMISS_DELAY_MS)
             }
             .show()
     }
@@ -155,7 +159,14 @@ class SettingFragment : Fragment() {
             return
         }
         appliedTheme = theme
-        AppCompatDelegate.setDefaultNightMode(nightMode)
+        val mainActivity = activity as? MainActivity
+        if (mainActivity == null || !isResumed) {
+            AppCompatDelegate.setDefaultNightMode(nightMode)
+            return
+        }
+        mainActivity.playThemeTransition(rowTheme, theme == AppTheme.DARK) {
+            AppCompatDelegate.setDefaultNightMode(nightMode)
+        }
     }
 
     private fun languageLabel(language: AppLanguage): String {
@@ -179,5 +190,9 @@ class SettingFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val THEME_DIALOG_DISMISS_DELAY_MS = 90L
     }
 }

@@ -3,6 +3,11 @@
     <style name="Base.Theme.MoneyTracker" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Gán style cho Bottom Navigation toàn app ở đây -->
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
     </style>
 
     <!-- Style cho nút đang được chọn (Filter) -->

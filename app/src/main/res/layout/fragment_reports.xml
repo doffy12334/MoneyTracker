@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_background"
+    android:background="@drawable/bg_screen_background"
     android:padding="24dp">
 
-    <!-- Tiêu đề màn hình -->
+    <!-- TiÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Âªu Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‹Å“Ă„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â mÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â n hÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¬nh -->
     <TextView
         android:id="@+id/tvReportsTitle"
         android:layout_width="wrap_content"
@@ -14,7 +14,7 @@
         android:text="Spending Reports"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="#131B2E"
+        android:textColor="@color/text_primary"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Analyze your expenses by category."
-        android:textColor="#8E8E93"
+        android:textColor="@color/text_secondary"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/tvReportsTitle"
         app:layout_constraintStart_toStartOf="parent" />
@@ -47,7 +47,7 @@
             android:gravity="center"
             android:paddingVertical="10dp"
             android:text="Week"
-            android:textColor="#8E8E93"
+            android:textColor="@color/text_secondary"
             android:textStyle="bold"
             android:clickable="true"
             android:focusable="true"
@@ -75,14 +75,14 @@
             android:gravity="center"
             android:paddingVertical="10dp"
             android:text="Year"
-            android:textColor="#8E8E93"
+            android:textColor="@color/text_secondary"
             android:textStyle="bold"
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless"/>
     </LinearLayout>
 
-    <!-- Card chứa Biểu đồ tròn (Donut Chart) -->
+    <!-- Card chĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â©a BiĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€ Ă¢â‚¬â„¢u Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‹Å“Ă„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă…â€œ trÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â²n (Donut Chart) -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardChart"
         android:layout_width="match_parent"
@@ -105,13 +105,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TOTAL SPENDING"
-                android:textColor="#8E8E93"
+                android:textColor="@color/text_secondary"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.1"
                 android:layout_gravity="start"/>
 
-            <!-- Sử dụng MPAndroidChart thay cho ProgressBar -->
+            <!-- SĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â­ dĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â¥ng MPAndroidChart thay cho ProgressBar -->
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/spendingPieChart"
                 android:layout_width="220dp"
@@ -121,7 +121,7 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Danh sách chi tiết phía dưới biểu đồ -->
+    <!-- Danh sÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¡ch chi tiĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â¿t phÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â­a dĂ„â€Ă¢â‚¬Â Ä‚â€Ă‚Â°Ă„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă‚Âºi biĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€ Ă¢â‚¬â„¢u Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‹Å“Ă„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă…â€œ -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvBreakdown"
         android:layout_width="match_parent"
@@ -132,3 +132,4 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

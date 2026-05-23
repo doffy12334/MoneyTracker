@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Xóa tài khoản"
+            android:text="@string/delete_account_title"
             android:textColor="@color/expense_red"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="Hành động này không thể hoàn tác"
+            android:text="@string/delete_account_subtitle"
             android:textColor="@color/expense_red"
             android:textSize="13sp" />
     </LinearLayout>

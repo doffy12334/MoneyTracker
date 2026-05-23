@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_background"
+    android:background="@drawable/bg_screen_background"
     android:fillViewport="true">
 
     <LinearLayout
@@ -18,8 +18,8 @@
             android:layout_width="48dp"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:text="‹"
-            android:textColor="#006D36"
+            android:text="Ă„â€Ă‚Â¢Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¬Ä‚â€Ă‚Â¹"
+            android:textColor="@color/primary_green"
             android:textSize="36sp" />
 
         <FrameLayout
@@ -34,7 +34,7 @@
                 android:layout_height="58dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_wallet"
-                app:tint="#006D36" />
+                app:tint="@color/primary_green" />
         </FrameLayout>
 
         <TextView
@@ -43,7 +43,7 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="Financier"
-            android:textColor="#0F172A"
+            android:textColor="@color/text_primary"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="VERSION V2.4.0"
-            android:textColor="#006D36"
+            android:textColor="@color/primary_green"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nhat ky thay doi"
-                android:textColor="#0F172A"
+                android:textColor="@color/text_primary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -76,8 +76,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:text="v2.4.0 - Moi nhat\n• Cap nhat giao dien Radiant Finance moi\n• Tich hop bieu do phan tich Glassmorphism\n\nv2.3.5\n• Sua loi dong bo hoa du lieu dam may"
-                android:textColor="#33423A"
+                android:text="v2.4.0 - Moi nhat\nĂ„â€Ă‚Â¢Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¬Ä‚â€Ă‚Â¢ Cap nhat giao dien Radiant Finance moi\nĂ„â€Ă‚Â¢Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¬Ä‚â€Ă‚Â¢ Tich hop bieu do phan tich Glassmorphism\n\nv2.3.5\nĂ„â€Ă‚Â¢Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¬Ä‚â€Ă‚Â¢ Sua loi dong bo hoa du lieu dam may"
+                android:textColor="@color/text_secondary"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Danh gia"
-                android:textColor="#0F172A"
+                android:textColor="@color/text_primary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="4.9\nGiup chung toi phat trien hon"
-                android:textColor="#0F172A"
+                android:textColor="@color/text_primary"
                 android:textSize="24sp" />
         </LinearLayout>
 
@@ -121,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Phap ly va Bao mat"
-                android:textColor="#0F172A"
+                android:textColor="@color/text_primary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -132,7 +132,7 @@
                 android:layout_marginTop="14dp"
                 android:gravity="center_vertical"
                 android:text="Chinh sach bao mat"
-                android:textColor="#0F172A"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp" />
 
             <TextView
@@ -141,7 +141,7 @@
                 android:layout_height="56dp"
                 android:gravity="center_vertical"
                 android:text="Dieu khoan su dung"
-                android:textColor="#0F172A"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -171,9 +171,10 @@
                 android:background="@drawable/bg_input_field"
                 android:gravity="center"
                 android:text="Email ho tro"
-                android:textColor="#006D36"
+                android:textColor="@color/primary_green"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
+

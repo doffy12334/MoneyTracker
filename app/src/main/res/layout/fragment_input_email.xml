@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_background">
+    android:background="@drawable/bg_screen_background">
 
     <ImageButton
         android:id="@+id/btnBack"
@@ -16,14 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrow_back"
-        app:tint="#006D36" />
+        app:tint="@color/primary_green" />
 
     <TextView
         android:id="@+id/tvAppTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/money_tracker"
-        android:textColor="#006D36"
+        android:textColor="@color/primary_green"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/btnBack"
@@ -38,7 +38,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="#4ADE80"
-        android:text="Xác nhận"
+        android:text="XÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¡c nhĂ„â€Ă‚Â¡Ä‚â€Ă‚ÂºÄ‚â€Ă‚Â­n"
         android:textAllCaps="false"
         android:textColor="#005E2D"
         android:textSize="18sp"
@@ -88,7 +88,7 @@
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/input_email"
-        android:textColor="#131B2E"
+        android:textColor="@color/text_primary"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +108,9 @@
         android:paddingHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/tvHeader"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary" />
 
     <!-- Help Card -->
     <androidx.cardview.widget.CardView
@@ -124,3 +126,4 @@
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -17,7 +17,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_download"
-            app:tint="#006D36" />
+            app:tint="@color/primary_green" />
     </FrameLayout>
 
     <LinearLayout
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_export1"
-            android:textColor="#0F172A"
+            android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="@string/title_export"
-            android:textColor="#8A8F8F"
+            android:textColor="@color/text_secondary"
             android:textSize="13sp" />
     </LinearLayout>
 
@@ -49,3 +49,4 @@
         android:layout_height="24dp"
         android:src="@drawable/ic_chevron_right" />
 </LinearLayout>
+

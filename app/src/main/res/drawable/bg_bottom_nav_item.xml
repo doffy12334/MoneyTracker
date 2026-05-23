@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true">
-        <!-- Inset giúp tạo khoảng cách, làm khối xanh nhỏ lại -->
+        <!-- Inset giĂºp táº¡o khoáº£ng cĂ¡ch, lĂ m khá»‘i xanh nhá» láº¡i -->
         <inset android:insetLeft="12dp" android:insetRight="12dp"
             android:insetTop="8dp" android:insetBottom="8dp">
             <shape>
-                <solid android:color="#4ADE80" /> <!-- Màu xanh lá -->
+                <solid android:color="#4ADE80" /> <!-- MĂ u xanh lĂ¡ -->
                 <corners android:radius="16dp" />
             </shape>
         </inset>

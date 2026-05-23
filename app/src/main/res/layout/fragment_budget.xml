@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_background">
+    android:background="@drawable/bg_screen_background">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="TỔNG NGÂN SÁCH THÁNG 10"
+                        android:text="TĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚Â¢Ă¢â€Â¬Ă‚ÂNG NGÄ‚â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂN SÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚ÂCH THÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚ÂNG 10"
                         android:textColor="#CCFFFFFF"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -41,7 +41,7 @@
                         android:id="@+id/tvTotalBudgetValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="15.000.000đ"
+                        android:text="15.000.000Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‹Å“"
                         android:textColor="#FFFFFF"
                         android:textSize="32sp"
                         android:textStyle="bold"
@@ -60,10 +60,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Danh mục chi tiêu"
+                android:text="Danh mĂ„â€Ă‚Â¡Ä‚â€Ă‚Â»Ä‚â€Ă‚Â¥c chi tiÄ‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Âªu"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#131B2E"
+                android:textColor="@color/text_primary"
                 android:layout_marginTop="32dp" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -78,3 +78,4 @@
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

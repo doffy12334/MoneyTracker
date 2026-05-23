@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_background"
+    android:background="@drawable/bg_screen_background"
     android:padding="24dp">
 
     <TextView
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:text="Create account"
-        android:textColor="#131B2E"
+        android:textColor="@color/text_primary"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,9 @@
         android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:paddingHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tvRegisterTitle" />
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterTitle"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -39,7 +41,9 @@
         android:hint="@string/password"
         android:inputType="textPassword"
         android:paddingHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@id/etEmail" />
+        app:layout_constraintTop_toBottomOf="@id/etEmail"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary" />
 
     <EditText
         android:id="@+id/etConfirmPassword"
@@ -50,14 +54,16 @@
         android:hint="Confirm password"
         android:inputType="textPassword"
         android:paddingHorizontal="16dp"
-        app:layout_constraintTop_toBottomOf="@id/etPassword" />
+        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary" />
 
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_marginTop="40dp"
-        android:backgroundTint="#006D36"
+        android:backgroundTint="@color/primary_green"
         android:text="Sign Up"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -83,7 +89,7 @@
         android:clickable="true"
         android:focusable="true"
         android:text="@string/already_have_an_account_log_in"
-        android:textColor="#006D36"
+        android:textColor="@color/primary_green"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,3 +97,4 @@
         app:layout_constraintTop_toBottomOf="@id/btnRegister" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_background"
+    android:background="@drawable/bg_screen_background"
     android:fillViewport="true">
 
     <LinearLayout
@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add transaction"
-            android:textColor="#131B2E"
+            android:textColor="@color/text_primary"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -28,7 +28,9 @@
             android:background="@drawable/bg_input_field"
             android:hint="Transaction name"
             android:inputType="textCapSentences"
-            android:paddingHorizontal="16dp" />
+            android:paddingHorizontal="16dp"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary" />
 
         <EditText
             android:id="@+id/etAmount"
@@ -38,7 +40,9 @@
             android:background="@drawable/bg_input_field"
             android:hint="Amount"
             android:inputType="numberDecimal"
-            android:paddingHorizontal="16dp" />
+            android:paddingHorizontal="16dp"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary" />
 
         <EditText
             android:id="@+id/etDate"
@@ -48,7 +52,9 @@
             android:background="@drawable/bg_input_field"
             android:hint="Date"
             android:inputType="text"
-            android:paddingHorizontal="16dp" />
+            android:paddingHorizontal="16dp"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary" />
 
         <Spinner
             android:id="@+id/spType"
@@ -71,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:layout_marginTop="32dp"
-            android:backgroundTint="#006D36"
+            android:backgroundTint="@color/primary_green"
             android:text="Save Transaction"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
@@ -80,3 +86,4 @@
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
+

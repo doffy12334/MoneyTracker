@@ -58,4 +58,6 @@
     <string name="setting_security_subtitle">Xác thực 2 yếu tố, đổi mật khẩu</string>
     <string name="setting_premium_title">Gói Premium</string>
     <string name="setting_premium_active">Đang kích hoạt</string>
+    <string name="delete_account_title">Xóa tài khoản</string>
+    <string name="delete_account_subtitle">Hành động này không thể hoàn tác</string>
 </resources>

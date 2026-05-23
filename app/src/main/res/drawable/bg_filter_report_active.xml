@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#42D782" /> <!-- Màu xanh lá như ảnh -->
+    <solid android:color="#42D782" /> <!-- MĂ u xanh lĂ¡ nhÆ° áº£nh -->
     <corners android:radius="20dp" />
 </shape>
