@@ -110,6 +110,16 @@
         tools:layout="@layout/fragment_setting" />
 
     <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.moneytracker.presentation.ui.profile.ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/securityCenterFragment"
+        android:name="com.example.moneytracker.presentation.ui.security.SecurityCenterFragment"
+        tools:layout="@layout/fragment_security_center" />
+
+    <fragment
         android:id="@+id/budgetFragment"
         android:name="com.example.moneytracker.presentation.ui.budget.BudgetFragment"
         tools:layout="@layout/fragment_budget" />

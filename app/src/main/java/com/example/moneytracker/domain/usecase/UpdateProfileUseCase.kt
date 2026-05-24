@@ -12,7 +12,7 @@ class UpdateProfileUseCase(
             fullName = profile.fullName.trim(),
             email = profile.email.trim(),
             phone = profile.phone.trim(),
-            birthday = profile.birthday.trim(),
+            occupation = profile.occupation.trim(),
             avatarUri = profile.avatarUri.trim()
         )
 
@@ -21,9 +21,6 @@ class UpdateProfileUseCase(
         require(normalized.phone.isBlank() || PHONE_REGEX.matches(normalized.phone)) {
             "So dien thoai khong hop le"
         }
-        require(normalized.birthday.isBlank() || BIRTHDAY_REGEX.matches(normalized.birthday)) {
-            "Ngay sinh phai co dinh dang MM/DD/YYYY"
-        }
 
         return profileRepository.updateProfile(normalized)
     }
@@ -31,6 +28,5 @@ class UpdateProfileUseCase(
     private companion object {
         val EMAIL_REGEX = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
         val PHONE_REGEX = Regex("^[+0-9][0-9 ]{7,18}$")
-        val BIRTHDAY_REGEX = Regex("^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\\d{4}$")
     }
 }

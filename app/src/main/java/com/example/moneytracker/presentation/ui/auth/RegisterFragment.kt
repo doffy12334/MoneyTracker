@@ -64,7 +64,7 @@ class RegisterFragment : Fragment() {
         binding.etPassword.isEnabled = !isLoading
         binding.etConfirmPassword.isEnabled = !isLoading
         binding.tvLogin.isEnabled = !isLoading
-        binding.btnRegister.text = if (isLoading) "" else "Sign Up"
+        binding.btnRegister.text = if (isLoading) "" else getString(R.string.sign_up)
 
         when (state) {
             RegisterUiState.Idle,

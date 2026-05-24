@@ -26,6 +26,7 @@ import com.example.moneytracker.domain.usecase.GetSettingsUseCase
 import com.example.moneytracker.domain.usecase.GetSpendingReportUseCase
 import com.example.moneytracker.domain.usecase.GetTransactionsUseCase
 import com.example.moneytracker.domain.usecase.IsUserLoggedInUseCase
+import com.example.moneytracker.domain.usecase.IsCurrentUserGoogleAccountUseCase
 import com.example.moneytracker.domain.usecase.LoginUseCase
 import com.example.moneytracker.domain.usecase.LoginWithGoogleUseCase
 import com.example.moneytracker.domain.usecase.LogoutUseCase
@@ -39,6 +40,7 @@ import com.example.moneytracker.domain.usecase.SetNotificationsEnabledUseCase
 import com.example.moneytracker.domain.usecase.SetThemeUseCase
 import com.example.moneytracker.domain.usecase.SetTwoFactorEnabledUseCase
 import com.example.moneytracker.domain.usecase.UpdateProfileUseCase
+import com.example.moneytracker.domain.usecase.UpdatePasswordUseCase
 import com.example.moneytracker.domain.usecase.VerifyPasswordResetCodeUseCase
 
 object AppContainer {
@@ -92,6 +94,10 @@ object AppContainer {
         IsUserLoggedInUseCase(authRepository)
     }
 
+    val isCurrentUserGoogleAccountUseCase: IsCurrentUserGoogleAccountUseCase by lazy {
+        IsCurrentUserGoogleAccountUseCase(authRepository)
+    }
+
     val logoutUseCase: LogoutUseCase by lazy {
         LogoutUseCase(authRepository)
     }
@@ -110,6 +116,10 @@ object AppContainer {
 
     val verifyPasswordResetCodeUseCase: VerifyPasswordResetCodeUseCase by lazy {
         VerifyPasswordResetCodeUseCase(authRepository)
+    }
+
+    val updatePasswordUseCase: UpdatePasswordUseCase by lazy {
+        UpdatePasswordUseCase(authRepository)
     }
 
     private val sharedPrefsManager: SharedPrefsManager by lazy {

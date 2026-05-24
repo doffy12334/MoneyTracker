@@ -33,8 +33,9 @@ class ProfileViewModel(
                         fullName = profile.fullName,
                         email = profile.email,
                         phone = profile.phone,
-                        birthday = profile.birthday,
+                        occupation = profile.occupation,
                         avatarUri = profile.avatarUri,
+                        isEditing = false,
                         isLoading = false
                     )
                 }
@@ -53,7 +54,7 @@ class ProfileViewModel(
         fullName: String,
         email: String,
         phone: String,
-        birthday: String,
+        occupation: String,
         avatarUri: String = _uiState.value.avatarUri
     ) {
         _uiState.update {
@@ -61,7 +62,7 @@ class ProfileViewModel(
                 fullName = fullName,
                 email = email,
                 phone = phone,
-                birthday = birthday,
+                occupation = occupation,
                 avatarUri = avatarUri,
                 isSaved = false,
                 successMessage = null,
@@ -74,6 +75,18 @@ class ProfileViewModel(
         _uiState.update {
             it.copy(
                 avatarUri = avatarUri,
+                isEditing = true,
+                isSaved = false,
+                successMessage = null,
+                errorMessage = null
+            )
+        }
+    }
+
+    fun startEditing() {
+        _uiState.update {
+            it.copy(
+                isEditing = true,
                 isSaved = false,
                 successMessage = null,
                 errorMessage = null
@@ -91,7 +104,7 @@ class ProfileViewModel(
                         fullName = state.fullName,
                         email = state.email,
                         phone = state.phone,
-                        birthday = state.birthday,
+                        occupation = state.occupation,
                         avatarUri = state.avatarUri
                     )
                 )
@@ -99,13 +112,10 @@ class ProfileViewModel(
                 _uiState.update {
                     it.copy(
                         email = if (result.emailVerificationSent) state.email else it.email,
+                        isEditing = false,
                         isSaving = false,
                         isSaved = true,
-                        successMessage = if (result.emailVerificationSent) {
-                            "Da gui email xac minh. Email dang nhap se doi sau khi ban bam link xac minh"
-                        } else {
-                            "Da luu ho so"
-                        },
+                        successMessage = null,
                         errorMessage = null
                     )
                 }

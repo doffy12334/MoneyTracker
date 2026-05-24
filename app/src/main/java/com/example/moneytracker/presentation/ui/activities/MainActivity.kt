@@ -33,6 +33,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         setupBottomNavigation(navController)
+        binding.ivpProfile.setOnClickListener {
+            if (navController.currentDestination?.id != R.id.profileFragment) {
+                navController.navigate(R.id.profileFragment)
+            }
+        }
         revealPendingThemeTransition()
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isAuthScreen = destination.id in setOf(
@@ -41,8 +46,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.registerFragment,
                 R.id.inputEmailFragment
             )
+            val isAccountDetailScreen = destination.id in setOf(
+                R.id.profileFragment,
+                R.id.securityCenterFragment
+            )
             if (isAuthScreen) {
                 binding.bottomNav.fadeVisibility(View.GONE)
+                binding.topBar.fadeVisibility(View.GONE)
+            } else if (isAccountDetailScreen) {
+                binding.bottomNav.fadeVisibility(View.VISIBLE)
                 binding.topBar.fadeVisibility(View.GONE)
             } else {
                 binding.bottomNav.fadeVisibility(View.VISIBLE)

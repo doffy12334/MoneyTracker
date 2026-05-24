@@ -7,6 +7,7 @@ import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.GoogleAuthProvider
@@ -19,6 +20,11 @@ class FirebaseAuthRepository(
 ) : AuthRepository {
     override fun isUserLoggedIn(): Boolean {
         return firebaseAuth.currentUser != null
+    }
+
+    override fun isCurrentUserGoogleAccount(): Boolean {
+        return firebaseAuth.currentUser?.providerData
+            ?.any { it.providerId == GoogleAuthProvider.PROVIDER_ID } == true
     }
 
     override fun logout() {
@@ -40,6 +46,11 @@ class FirebaseAuthRepository(
 
     override suspend fun sendPasswordResetEmail(email: String) {
         firebaseAuth.sendPasswordResetEmail(email).await()
+    }
+
+    override suspend fun updatePassword(newPassword: String) {
+        val user = firebaseAuth.currentUser ?: throw IllegalArgumentException("Tài khoản chưa đăng nhập")
+        user.updatePassword(newPassword).await()
     }
 
     override suspend fun verifyPasswordResetCode(code: String): String {

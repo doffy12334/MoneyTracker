@@ -30,38 +30,44 @@ class SharedPrefsManager(context: Context) {
 
     fun getCurrencyCode(): String = sharedPref.getString(KEY_CURRENCY_CODE, "VND") ?: "VND"
 
-    fun setProfileFullName(fullName: String) {
-        sharedPref.edit { putString(KEY_PROFILE_FULL_NAME, fullName) }
+    fun setProfileFullName(fullName: String, userId: String = "") {
+        sharedPref.edit { putString(profileKey(KEY_PROFILE_FULL_NAME, userId), fullName) }
     }
 
-    fun getProfileFullName(): String = sharedPref.getString(KEY_PROFILE_FULL_NAME, "Nguyen Minh Anh")
-        ?: "Nguyen Minh Anh"
+    fun getProfileFullName(userId: String = ""): String =
+        sharedPref.getString(profileKey(KEY_PROFILE_FULL_NAME, userId), "") ?: ""
 
-    fun setProfileEmail(email: String) {
-        sharedPref.edit { putString(KEY_PROFILE_EMAIL, email) }
+    fun setProfileEmail(email: String, userId: String = "") {
+        sharedPref.edit { putString(profileKey(KEY_PROFILE_EMAIL, userId), email) }
     }
 
-    fun getProfileEmail(): String = sharedPref.getString(KEY_PROFILE_EMAIL, "") ?: ""
+    fun getProfileEmail(userId: String = ""): String =
+        sharedPref.getString(profileKey(KEY_PROFILE_EMAIL, userId), "") ?: ""
 
-    fun setProfilePhone(phone: String) {
-        sharedPref.edit { putString(KEY_PROFILE_PHONE, phone) }
+    fun setProfilePhone(phone: String, userId: String = "") {
+        sharedPref.edit { putString(profileKey(KEY_PROFILE_PHONE, userId), phone) }
     }
 
-    fun getProfilePhone(): String = sharedPref.getString(KEY_PROFILE_PHONE, "+84 901 234 567")
-        ?: "+84 901 234 567"
+    fun getProfilePhone(userId: String = ""): String =
+        sharedPref.getString(profileKey(KEY_PROFILE_PHONE, userId), "") ?: ""
 
-    fun setProfileBirthday(birthday: String) {
-        sharedPref.edit { putString(KEY_PROFILE_BIRTHDAY, birthday) }
+    fun setProfileOccupation(occupation: String, userId: String = "") {
+        sharedPref.edit { putString(profileKey(KEY_PROFILE_OCCUPATION, userId), occupation) }
     }
 
-    fun getProfileBirthday(): String = sharedPref.getString(KEY_PROFILE_BIRTHDAY, "08/15/1995")
-        ?: "08/15/1995"
+    fun getProfileOccupation(userId: String = ""): String =
+        sharedPref.getString(profileKey(KEY_PROFILE_OCCUPATION, userId), "") ?: ""
 
-    fun setProfileAvatarUri(avatarUri: String) {
-        sharedPref.edit { putString(KEY_PROFILE_AVATAR_URI, avatarUri) }
+    fun setProfileAvatarUri(avatarUri: String, userId: String = "") {
+        sharedPref.edit { putString(profileKey(KEY_PROFILE_AVATAR_URI, userId), avatarUri) }
     }
 
-    fun getProfileAvatarUri(): String = sharedPref.getString(KEY_PROFILE_AVATAR_URI, "") ?: ""
+    fun getProfileAvatarUri(userId: String = ""): String =
+        sharedPref.getString(profileKey(KEY_PROFILE_AVATAR_URI, userId), "") ?: ""
+
+    private fun profileKey(baseKey: String, userId: String): String {
+        return if (userId.isBlank()) baseKey else "${baseKey}_$userId"
+    }
 
     fun setTwoFactorEnabled(enabled: Boolean) {
         sharedPref.edit { putBoolean(KEY_TWO_FACTOR_ENABLED, enabled) }
@@ -91,7 +97,7 @@ class SharedPrefsManager(context: Context) {
         const val KEY_PROFILE_FULL_NAME = "profile_full_name"
         const val KEY_PROFILE_EMAIL = "profile_email"
         const val KEY_PROFILE_PHONE = "profile_phone"
-        const val KEY_PROFILE_BIRTHDAY = "profile_birthday"
+        const val KEY_PROFILE_OCCUPATION = "profile_occupation"
         const val KEY_PROFILE_AVATAR_URI = "profile_avatar_uri"
         const val KEY_TWO_FACTOR_ENABLED = "two_factor_enabled"
         const val KEY_BIOMETRIC_ENABLED = "biometric_enabled"

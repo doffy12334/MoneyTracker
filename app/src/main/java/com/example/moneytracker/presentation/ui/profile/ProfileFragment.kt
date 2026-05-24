@@ -3,7 +3,6 @@ package com.example.moneytracker.presentation.ui.profile
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.example.moneytracker.R
 import com.example.moneytracker.databinding.FragmentProfileBinding
 import com.example.moneytracker.di.AppContainer
 import com.example.moneytracker.presentation.uistate.ProfileUiState
@@ -56,14 +56,18 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
-        binding.ivAvatar.setOnClickListener { openAvatarPicker() }
-        binding.btnEditAvatar.setOnClickListener { openAvatarPicker() }
+        binding.ivAvatar.setOnClickListener { openAvatarPickerIfEditing() }
+        binding.btnEditAvatar.setOnClickListener { openAvatarPickerIfEditing() }
+        binding.btnEditProfile.setOnClickListener {
+            hasTriedToSave = false
+            viewModel.startEditing()
+        }
         binding.btnSaveProfile.setOnClickListener {
             hasTriedToSave = true
             if (renderValidationErrors()) {
                 viewModel.saveProfile()
             } else {
-                Toast.makeText(requireContext(), "Vui long kiem tra email va so dien thoai", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.profile_validation_check), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -71,17 +75,16 @@ class ProfileFragment : Fragment() {
             if (!isRendering) {
                 viewModel.onProfileChanged(
                     fullName = binding.etFullName.text.toString(),
-                    email = binding.etEmail.text.toString(),
+                    email = viewModel.uiState.value.email,
                     phone = binding.etPhone.text.toString(),
-                    birthday = binding.etBirthday.text.toString()
+                    occupation = binding.etOccupation.text.toString()
                 )
                 if (hasTriedToSave) renderValidationErrors()
             }
         }
         binding.etFullName.addTextChangedListener(onTextChanged = textWatcher)
-        binding.etEmail.addTextChangedListener(onTextChanged = textWatcher)
         binding.etPhone.addTextChangedListener(onTextChanged = textWatcher)
-        binding.etBirthday.addTextChangedListener(onTextChanged = textWatcher)
+        binding.etOccupation.addTextChangedListener(onTextChanged = textWatcher)
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -95,11 +98,16 @@ class ProfileFragment : Fragment() {
         updateTextIfChanged(binding.etFullName, state.fullName)
         updateTextIfChanged(binding.etEmail, state.email)
         updateTextIfChanged(binding.etPhone, state.phone)
-        updateTextIfChanged(binding.etBirthday, state.birthday)
+        updateTextIfChanged(binding.etOccupation, state.occupation)
         renderAvatar(state.avatarUri)
+        renderEditMode(state)
         isRendering = false
-        binding.btnSaveProfile.isEnabled = !state.isSaving && !state.isLoading
-        binding.btnSaveProfile.text = if (state.isSaving) "Dang luu..." else "Luu thay doi"
+        binding.btnSaveProfile.isEnabled = state.isEditing && !state.isSaving && !state.isLoading
+        binding.btnSaveProfile.text = if (state.isSaving) {
+            getString(R.string.profile_saving)
+        } else {
+            getString(R.string.profile_save)
+        }
         if (hasTriedToSave) renderValidationErrors()
 
         state.errorMessage?.let {
@@ -109,7 +117,7 @@ class ProfileFragment : Fragment() {
         if (state.isSaved) {
             Toast.makeText(
                 requireContext(),
-                state.successMessage ?: "Da luu ho so",
+                state.successMessage ?: getString(R.string.profile_save_success),
                 Toast.LENGTH_LONG
             ).show()
             viewModel.consumeSaveResult()
@@ -130,6 +138,14 @@ class ProfileFragment : Fragment() {
         avatarPicker.launch(arrayOf("image/*"))
     }
 
+    private fun openAvatarPickerIfEditing() {
+        if (viewModel.uiState.value.isEditing) {
+            openAvatarPicker()
+        } else {
+            Toast.makeText(requireContext(), getString(R.string.profile_edit_first), Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun persistAvatarPermission(uri: Uri) {
         runCatching {
             requireContext().contentResolver.takePersistableUriPermission(
@@ -141,20 +157,35 @@ class ProfileFragment : Fragment() {
 
     private fun renderValidationErrors(): Boolean {
         val fullName = binding.etFullName.text.toString().trim()
-        val email = binding.etEmail.text.toString().trim()
         val phone = binding.etPhone.text.toString().trim()
-        val birthday = binding.etBirthday.text.toString().trim()
 
-        val isEmailValid = Patterns.EMAIL_ADDRESS.matcher(email).matches()
         val isPhoneValid = phone.isBlank() || PHONE_REGEX.matches(phone)
-        val isBirthdayValid = birthday.isBlank() || BIRTHDAY_REGEX.matches(birthday)
 
-        binding.etFullName.error = if (fullName.isBlank()) "Ho ten khong duoc de trong" else null
-        binding.etEmail.error = if (isEmailValid) null else "Email khong hop le"
-        binding.etPhone.error = if (isPhoneValid) null else "So dien thoai khong hop le"
-        binding.etBirthday.error = if (isBirthdayValid) null else "Ngay sinh phai co dinh dang MM/DD/YYYY"
+        binding.etFullName.error = if (fullName.isBlank()) getString(R.string.profile_full_name_required) else null
+        binding.etEmail.error = null
+        binding.etPhone.error = if (isPhoneValid) null else getString(R.string.profile_phone_invalid)
 
-        return fullName.isNotBlank() && isEmailValid && isPhoneValid && isBirthdayValid
+        return fullName.isNotBlank() && isPhoneValid
+    }
+
+    private fun renderEditMode(state: ProfileUiState) {
+        val enabled = state.isEditing && !state.isSaving && !state.isLoading
+        setInputEnabled(binding.etFullName, enabled)
+        setInputEnabled(binding.etEmail, false)
+        setInputEnabled(binding.etPhone, enabled)
+        setInputEnabled(binding.etOccupation, enabled)
+        binding.btnEditAvatar.visibility = View.VISIBLE
+        binding.btnEditAvatar.alpha = if (enabled) 1f else 0.48f
+        binding.btnEditProfile.visibility = if (state.isEditing) View.GONE else View.VISIBLE
+        binding.btnSaveProfile.visibility = if (state.isEditing) View.VISIBLE else View.GONE
+    }
+
+    private fun setInputEnabled(editText: android.widget.EditText, enabled: Boolean) {
+        editText.isFocusable = enabled
+        editText.isFocusableInTouchMode = enabled
+        editText.isCursorVisible = enabled
+        editText.isLongClickable = enabled
+        editText.alpha = 1f
     }
 
     private fun updateTextIfChanged(editText: android.widget.EditText, value: String) {
@@ -171,6 +202,5 @@ class ProfileFragment : Fragment() {
 
     private companion object {
         val PHONE_REGEX = Regex("^[+0-9][0-9 ]{7,18}$")
-        val BIRTHDAY_REGEX = Regex("^(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\\d{4}$")
     }
 }

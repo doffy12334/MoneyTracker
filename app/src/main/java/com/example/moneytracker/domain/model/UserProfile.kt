@@ -4,6 +4,6 @@ data class UserProfile(
     val fullName: String,
     val email: String,
     val phone: String,
-    val birthday: String,
+    val occupation: String,
     val avatarUri: String = ""
 )

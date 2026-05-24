@@ -53,6 +53,10 @@ class SettingFragment : Fragment() {
         get() = binding.root.findViewById(R.id.rowTheme)
     private val rowCurrency: View
         get() = binding.root.findViewById(R.id.rowCurrency)
+    private val rowProfile: View
+        get() = binding.root.findViewById(R.id.rowProfile)
+    private val rowSecurity: View
+        get() = binding.root.findViewById(R.id.rowSecurity)
     private val tvLanguageValue: TextView
         get() = binding.root.findViewById(R.id.tvLanguageValue)
     private val tvThemeValue: TextView
@@ -83,6 +87,12 @@ class SettingFragment : Fragment() {
         }
         rowCurrency.setOnClickListener {
             showCurrencyDialog()
+        }
+        rowProfile.setOnClickListener {
+            findNavController().navigate(R.id.profileFragment)
+        }
+        rowSecurity.setOnClickListener {
+            findNavController().navigate(R.id.securityCenterFragment)
         }
         binding.btnLogout.setOnClickListener {
             logout()
