@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.FragmentDashBoardBinding
 import com.example.moneytracker.di.AppContainer
+import com.example.moneytracker.domain.model.AppCurrency
 import com.example.moneytracker.presentation.adapter.TransactionAdapter
 import com.example.moneytracker.presentation.uistate.DashboardUiState
+import com.example.moneytracker.presentation.util.CurrencyFormatter
 import com.example.moneytracker.presentation.viewmodel.DashboardViewModel
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -31,7 +33,8 @@ class DashBoardFragment : Fragment() {
     }
 
     private lateinit var transactionAdapter: TransactionAdapter
-    private val currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US)
+    private var appCurrency = AppCurrency.VND
+    private var currencyFormatter = CurrencyFormatter.create(appCurrency)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,7 +74,18 @@ class DashBoardFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        applyCurrencySettings()
         viewModel.loadDashboard()
+    }
+
+    private fun applyCurrencySettings() {
+        val currency = AppContainer.getSettingsUseCase().currency
+        if (appCurrency == currency) return
+        appCurrency = currency
+        currencyFormatter = CurrencyFormatter.create(currency)
+        if (::transactionAdapter.isInitialized) {
+            transactionAdapter.setCurrency(currency)
+        }
     }
 
     private fun renderState(state: DashboardUiState) {

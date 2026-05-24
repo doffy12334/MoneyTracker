@@ -42,6 +42,7 @@ class AddTransactionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupSpinners()
+        updateAmountHint()
         binding.etName.addTextChangedListener { viewModel.onNameChanged(it.toString()) }
         binding.etAmount.addTextChangedListener { viewModel.onAmountChanged(it.toString()) }
         binding.etDate.addTextChangedListener { viewModel.onDateChanged(it.toString()) }
@@ -52,6 +53,15 @@ class AddTransactionFragment : Fragment() {
                 viewModel.uiState.collect(::renderState)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateAmountHint()
+    }
+
+    private fun updateAmountHint() {
+        binding.etAmount.hint = "Amount (${AppContainer.getSettingsUseCase().currency.code})"
     }
 
     private fun setupSpinners() {

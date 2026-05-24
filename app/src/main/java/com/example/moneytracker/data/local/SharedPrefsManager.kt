@@ -24,6 +24,12 @@ class SharedPrefsManager(context: Context) {
 
     fun getThemeValue(): String = sharedPref.getString(KEY_THEME_VALUE, "light") ?: "light"
 
+    fun setCurrencyCode(currencyCode: String) {
+        sharedPref.edit { putString(KEY_CURRENCY_CODE, currencyCode) }
+    }
+
+    fun getCurrencyCode(): String = sharedPref.getString(KEY_CURRENCY_CODE, "VND") ?: "VND"
+
     fun setProfileFullName(fullName: String) {
         sharedPref.edit { putString(KEY_PROFILE_FULL_NAME, fullName) }
     }
@@ -81,6 +87,7 @@ class SharedPrefsManager(context: Context) {
         const val KEY_NOTIFICATION_ENABLED = "notification_enabled"
         const val KEY_LANGUAGE_CODE = "language_code"
         const val KEY_THEME_VALUE = "theme_value"
+        const val KEY_CURRENCY_CODE = "currency_code"
         const val KEY_PROFILE_FULL_NAME = "profile_full_name"
         const val KEY_PROFILE_EMAIL = "profile_email"
         const val KEY_PROFILE_PHONE = "profile_phone"

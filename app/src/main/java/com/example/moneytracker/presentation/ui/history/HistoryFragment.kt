@@ -216,6 +216,7 @@ class HistoryFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        transactionAdapter.setCurrency(AppContainer.getSettingsUseCase().currency)
         viewModel.loadTransactions()
     }
 

@@ -8,9 +8,11 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.OvershootInterpolator
+import kotlin.math.PI
+import kotlin.math.cos
 import kotlin.math.sin
 
 class PigLoginView @JvmOverloads constructor(
@@ -33,6 +35,7 @@ class PigLoginView @JvmOverloads constructor(
     private var state = PigState.NORMAL
     private var transition = 0f
     private var bob = 0f
+    private var tapPop = 0f
 
     private val stateAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
         duration = 460L
@@ -44,12 +47,25 @@ class PigLoginView @JvmOverloads constructor(
     }
 
     private val idleAnimator = ValueAnimator.ofFloat(0f, (Math.PI * 2).toFloat()).apply {
-        duration = 1800L
+        duration = 2200L
         repeatCount = ValueAnimator.INFINITE
         addUpdateListener {
             bob = it.animatedValue as Float
             invalidate()
         }
+    }
+
+    private val tapAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+        duration = 520L
+        interpolator = OvershootInterpolator(2.4f)
+        addUpdateListener {
+            tapPop = it.animatedValue as Float
+            invalidate()
+        }
+    }
+
+    init {
+        isClickable = true
     }
 
     override fun onAttachedToWindow() {
@@ -65,6 +81,20 @@ class PigLoginView @JvmOverloads constructor(
         super.onDetachedFromWindow()
     }
 
+    override fun performClick(): Boolean {
+        super.performClick()
+        tapAnimator.cancel()
+        tapAnimator.start()
+        return true
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_UP) {
+            performClick()
+        }
+        return true
+    }
+
     fun setPigState(newState: PigState) {
         if (state == newState) return
         state = newState
@@ -78,8 +108,9 @@ class PigLoginView @JvmOverloads constructor(
         val w = width.toFloat()
         val h = height.toFloat()
         val cx = w / 2f
-        val cy = h * 0.54f + sin(bob) * 4f
-        val scale = minOf(w / 180f, h / 150f)
+        val cy = h * 0.54f + sin(bob) * 4f - sin(tapPop * PI).toFloat() * 8f
+        val popScale = 1f + sin(tapPop * PI).toFloat() * 0.08f
+        val scale = minOf(w / 180f, h / 150f) * popScale
 
         canvas.save()
         canvas.translate(cx, cy)
@@ -93,29 +124,44 @@ class PigLoginView @JvmOverloads constructor(
     }
 
     private fun drawCoins(canvas: Canvas) {
+        val coinPulse = sin(bob * 1.6f) * 2f
+        val leftCoinY = 44f + cos(bob) * 4f
+        val rightCoinY = 42f + sin(bob + 0.8f) * 4f
+
         paint.style = Paint.Style.FILL
         paint.color = Color.rgb(249, 188, 80)
-        canvas.drawCircle(-68f, 44f, 13f, paint)
-        canvas.drawCircle(66f, 42f, 11f, paint)
+        canvas.drawCircle(-68f, leftCoinY, 13f + coinPulse, paint)
+        canvas.drawCircle(66f, rightCoinY, 11f - coinPulse * 0.4f, paint)
         paint.color = Color.rgb(255, 224, 135)
-        canvas.drawCircle(-68f, 44f, 6f, paint)
-        canvas.drawCircle(66f, 42f, 5f, paint)
+        canvas.drawCircle(-68f, leftCoinY, 6f, paint)
+        canvas.drawCircle(66f, rightCoinY, 5f, paint)
+
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 2f
+        paint.alpha = (90 + 70 * sin(bob * 2f).coerceAtLeast(0f)).toInt()
+        paint.color = Color.rgb(255, 214, 102)
+        val sparkleX = -48f + cos(bob * 1.5f) * 10f
+        val sparkleY = 20f + sin(bob * 1.5f) * 8f
+        canvas.drawLine(sparkleX - 5f, sparkleY, sparkleX + 5f, sparkleY, paint)
+        canvas.drawLine(sparkleX, sparkleY - 5f, sparkleX, sparkleY + 5f, paint)
+        paint.alpha = 255
     }
 
     private fun drawPig(canvas: Canvas) {
         paint.style = Paint.Style.FILL
+        val earWiggle = sin(bob * 1.3f) * 4f + sin(tapPop * PI).toFloat() * 7f
 
         paint.color = Color.rgb(255, 179, 198)
         path.reset()
         path.moveTo(-54f, -30f)
-        path.lineTo(-76f, -64f)
+        path.lineTo(-76f - earWiggle, -64f + earWiggle)
         path.lineTo(-35f, -51f)
         path.close()
         canvas.drawPath(path, paint)
 
         path.reset()
         path.moveTo(54f, -30f)
-        path.lineTo(76f, -64f)
+        path.lineTo(76f + earWiggle, -64f + earWiggle)
         path.lineTo(35f, -51f)
         path.close()
         canvas.drawPath(path, paint)
@@ -148,20 +194,50 @@ class PigLoginView @JvmOverloads constructor(
     }
 
     private fun drawNormalEyes(canvas: Canvas) {
+        val blink = blinkProgress()
         paint.style = Paint.Style.FILL
         paint.color = Color.rgb(45, 38, 51)
-        canvas.drawCircle(-27f, -13f, 6f, paint)
-        canvas.drawCircle(27f, -13f, 6f, paint)
+        if (blink > 0.85f) {
+            paint.style = Paint.Style.STROKE
+            paint.strokeWidth = 4f
+            canvas.drawLine(-33f, -13f, -21f, -13f, paint)
+            canvas.drawLine(21f, -13f, 33f, -13f, paint)
+            paint.style = Paint.Style.FILL
+        } else {
+            val eyeScaleY = 1f - blink * 0.78f
+            canvas.save()
+            canvas.scale(1f, eyeScaleY, -27f, -13f)
+            canvas.drawCircle(-27f, -13f, 6f, paint)
+            canvas.restore()
+
+            canvas.save()
+            canvas.scale(1f, eyeScaleY, 27f, -13f)
+            canvas.drawCircle(27f, -13f, 6f, paint)
+            canvas.restore()
+        }
 
         paint.color = Color.WHITE
-        canvas.drawCircle(-29f, -15f, 2f, paint)
-        canvas.drawCircle(25f, -15f, 2f, paint)
+        if (blink < 0.55f) {
+            canvas.drawCircle(-29f, -15f, 2f, paint)
+            canvas.drawCircle(25f, -15f, 2f, paint)
+        }
 
         paint.color = Color.rgb(231, 91, 130)
         paint.alpha = 90
         canvas.drawCircle(-48f, 5f, 8f, paint)
         canvas.drawCircle(48f, 5f, 8f, paint)
         paint.alpha = 255
+    }
+
+    private fun blinkProgress(): Float {
+        val phase = ((bob / (Math.PI * 2).toFloat()) % 1f).let { if (it < 0f) it + 1f else it }
+        val blinkWindow = 0.08f
+        return when {
+            phase < blinkWindow -> sin((phase / blinkWindow) * PI).toFloat().coerceIn(0f, 1f)
+            phase > 0.58f && phase < 0.58f + blinkWindow ->
+                sin(((phase - 0.58f) / blinkWindow) * PI).toFloat().coerceIn(0f, 1f)
+            else -> 0f
+        }
     }
 
     private fun drawSunglasses(canvas: Canvas, peeking: Boolean) {        // Náº¿u Ä‘ang peeking, nháº¥c kĂ­nh lĂªn cao (peekLift), náº¿u khĂ´ng thĂ¬ háº¡ xuá»‘ng 0

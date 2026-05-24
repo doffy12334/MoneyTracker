@@ -5,14 +5,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moneytracker.databinding.ItemReportCategoryBinding
+import com.example.moneytracker.domain.model.AppCurrency
 import com.example.moneytracker.domain.model.ReportCategoryBreakdown
-import java.text.NumberFormat
-import java.util.Locale
+import com.example.moneytracker.presentation.util.CurrencyFormatter
 
 class ReportCategoryAdapter : RecyclerView.Adapter<ReportCategoryAdapter.ReportCategoryViewHolder>() {
     private val items = mutableListOf<ReportCategoryBreakdown>()
-    private val currencyFormatter = NumberFormat.getCurrencyInstance(Locale.US).apply {
-        maximumFractionDigits = 0
+    private var currency = AppCurrency.VND
+    private var currencyFormatter = CurrencyFormatter.create(currency)
+
+    fun setCurrency(currency: AppCurrency) {
+        if (this.currency == currency) return
+        this.currency = currency
+        currencyFormatter = CurrencyFormatter.create(currency)
+        notifyDataSetChanged()
     }
 
     fun submitList(newItems: List<ReportCategoryBreakdown>) {

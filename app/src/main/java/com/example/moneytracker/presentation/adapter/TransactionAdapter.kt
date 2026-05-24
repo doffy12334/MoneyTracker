@@ -8,13 +8,20 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.ItemTransactionBinding
+import com.example.moneytracker.domain.model.AppCurrency
 import com.example.moneytracker.domain.model.transaction.Transaction
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.domain.model.transaction.TransactionType
-import java.text.NumberFormat
-import java.util.Locale
+import com.example.moneytracker.presentation.util.CurrencyFormatter
 
 class TransactionAdapter : ListAdapter<Transaction, TransactionAdapter.ViewHolder>(DiffCallback()) {
+    private var currency = AppCurrency.VND
+
+    fun setCurrency(currency: AppCurrency) {
+        if (this.currency == currency) return
+        this.currency = currency
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemTransactionBinding.inflate(
@@ -26,15 +33,15 @@ class TransactionAdapter : ListAdapter<Transaction, TransactionAdapter.ViewHolde
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), currency)
     }
 
     class ViewHolder(private val binding: ItemTransactionBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Transaction) {
+        fun bind(item: Transaction, currency: AppCurrency) {
             val context = binding.root.context
-            val formatter = NumberFormat.getCurrencyInstance(Locale.US)
+            val formatter = CurrencyFormatter.create(currency)
             val formattedAmount = formatter.format(item.amount)
             val amountColor = if (item.type == TransactionType.INCOME) {
                 R.color.success_color

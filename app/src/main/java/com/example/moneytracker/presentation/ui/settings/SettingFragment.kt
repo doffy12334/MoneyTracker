@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.FragmentSettingBinding
 import com.example.moneytracker.di.AppContainer
+import com.example.moneytracker.domain.model.AppCurrency
 import com.example.moneytracker.domain.model.AppLanguage
 import com.example.moneytracker.domain.model.AppTheme
 import com.example.moneytracker.presentation.ui.activities.MainActivity
@@ -36,7 +37,8 @@ class SettingFragment : Fragment() {
             AppContainer.getSettingsUseCase,
             AppContainer.setNotificationsEnabledUseCase,
             AppContainer.setLanguageUseCase,
-            AppContainer.setThemeUseCase
+            AppContainer.setThemeUseCase,
+            AppContainer.setCurrencyUseCase
         )
     }
 
@@ -49,10 +51,14 @@ class SettingFragment : Fragment() {
         get() = binding.root.findViewById(R.id.rowLanguage)
     private val rowTheme: View
         get() = binding.root.findViewById(R.id.rowTheme)
+    private val rowCurrency: View
+        get() = binding.root.findViewById(R.id.rowCurrency)
     private val tvLanguageValue: TextView
         get() = binding.root.findViewById(R.id.tvLanguageValue)
     private val tvThemeValue: TextView
         get() = binding.root.findViewById(R.id.tvThemeValue)
+    private val tvCurrencyValue: TextView
+        get() = binding.root.findViewById(R.id.tvCurrencyValue)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,6 +81,9 @@ class SettingFragment : Fragment() {
         rowTheme.setOnClickListener {
             showThemeDialog()
         }
+        rowCurrency.setOnClickListener {
+            showCurrencyDialog()
+        }
         binding.btnLogout.setOnClickListener {
             logout()
         }
@@ -93,6 +102,7 @@ class SettingFragment : Fragment() {
 
         tvLanguageValue.text = languageLabel(state.language)
         tvThemeValue.text = themeLabel(state.theme)
+        tvCurrencyValue.text = currencyLabel(state.currency)
         applyLanguage(state.language)
         applyTheme(state.theme)
     }
@@ -103,6 +113,16 @@ class SettingFragment : Fragment() {
             .setTitle(getString(R.string.dialog_language_title))
             .setItems(languages.map { languageLabel(it) }.toTypedArray()) { _, index ->
                 viewModel.onLanguageChanged(languages[index])
+            }
+            .show()
+    }
+
+    private fun showCurrencyDialog() {
+        val currencies = AppCurrency.entries.toTypedArray()
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.dialog_currency_title))
+            .setItems(currencies.map { currencyLabel(it) }.toTypedArray()) { _, index ->
+                viewModel.onCurrencyChanged(currencies[index])
             }
             .show()
     }
@@ -183,6 +203,17 @@ class SettingFragment : Fragment() {
             when (theme) {
                 AppTheme.LIGHT -> R.string.theme_light
                 AppTheme.DARK -> R.string.theme_dark
+            }
+        )
+    }
+
+    private fun currencyLabel(currency: AppCurrency): String {
+        return getString(
+            when (currency) {
+                AppCurrency.VND -> R.string.currency_vnd
+                AppCurrency.USD -> R.string.currency_usd
+                AppCurrency.EUR -> R.string.currency_eur
+                AppCurrency.JPY -> R.string.currency_jpy
             }
         )
     }

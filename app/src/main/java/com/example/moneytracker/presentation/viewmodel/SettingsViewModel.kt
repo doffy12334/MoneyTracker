@@ -2,9 +2,11 @@ package com.example.moneytracker.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.moneytracker.domain.model.AppCurrency
 import com.example.moneytracker.domain.model.AppLanguage
 import com.example.moneytracker.domain.model.AppTheme
 import com.example.moneytracker.domain.usecase.GetSettingsUseCase
+import com.example.moneytracker.domain.usecase.SetCurrencyUseCase
 import com.example.moneytracker.domain.usecase.SetLanguageUseCase
 import com.example.moneytracker.domain.usecase.SetNotificationsEnabledUseCase
 import com.example.moneytracker.domain.usecase.SetThemeUseCase
@@ -18,7 +20,8 @@ class SettingsViewModel(
     private val getSettingsUseCase: GetSettingsUseCase,
     private val setNotificationsEnabledUseCase: SetNotificationsEnabledUseCase,
     private val setLanguageUseCase: SetLanguageUseCase,
-    private val setThemeUseCase: SetThemeUseCase
+    private val setThemeUseCase: SetThemeUseCase,
+    private val setCurrencyUseCase: SetCurrencyUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SettingsUiState())
     val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
@@ -32,7 +35,8 @@ class SettingsViewModel(
         _uiState.value = SettingsUiState(
             notificationsEnabled = settings.notificationsEnabled,
             language = settings.language,
-            theme = settings.theme
+            theme = settings.theme,
+            currency = settings.currency
         )
     }
 
@@ -51,11 +55,17 @@ class SettingsViewModel(
         _uiState.update { it.copy(theme = theme) }
     }
 
+    fun onCurrencyChanged(currency: AppCurrency) {
+        setCurrencyUseCase(currency)
+        _uiState.update { it.copy(currency = currency) }
+    }
+
     class Factory(
         private val getSettingsUseCase: GetSettingsUseCase,
         private val setNotificationsEnabledUseCase: SetNotificationsEnabledUseCase,
         private val setLanguageUseCase: SetLanguageUseCase,
-        private val setThemeUseCase: SetThemeUseCase
+        private val setThemeUseCase: SetThemeUseCase,
+        private val setCurrencyUseCase: SetCurrencyUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -64,7 +74,8 @@ class SettingsViewModel(
                     getSettingsUseCase,
                     setNotificationsEnabledUseCase,
                     setLanguageUseCase,
-                    setThemeUseCase
+                    setThemeUseCase,
+                    setCurrencyUseCase
                 ) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

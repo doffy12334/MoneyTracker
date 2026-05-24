@@ -114,15 +114,15 @@ class ThemeTransitionOverlay(
         paint.color = if (darkMode) Color.rgb(255, 240, 138) else Color.rgb(255, 183, 3)
         paint.alpha = (visible * 170).toInt().coerceIn(0, 170)
 
-        for (i in 0 until 10) {
-            val angle = i * 36f + sparklePhase * 80f
-            val radius = maxRadius * (0.12f + i * 0.035f) * progress
+        for (i in 0 until 18) {
+            val angle = i * 20f + sparklePhase * 90f
+            val radius = maxRadius * (0.1f + i * 0.022f) * progress
             val x = originX + cos(Math.toRadians(angle.toDouble())).toFloat() * radius
             val y = originY + sin(Math.toRadians(angle.toDouble())).toFloat() * radius
             canvas.save()
             canvas.rotate(angle, x, y)
-            canvas.drawRoundRect(x - 2.5f, y - 10f, x + 2.5f, y + 10f, 3f, 3f, paint)
-            canvas.drawRoundRect(x - 10f, y - 2.5f, x + 10f, y + 2.5f, 3f, 3f, paint)
+            val size = if (i % 3 == 0) 13f else 8f
+            drawFourPointStar(canvas, x, y, size, size * 0.36f, paint)
             canvas.restore()
         }
         paint.alpha = 255
@@ -178,15 +178,33 @@ class ThemeTransitionOverlay(
 
     private fun drawNightSky(canvas: Canvas) {
         paint.style = Paint.Style.FILL
-        for (i in 0 until 28) {
+        for (i in 0 until 56) {
             val x = ((i * 83 + 37) % width.coerceAtLeast(1)).toFloat()
             val y = ((i * 47 + 29) % height.coerceAtLeast(1)).toFloat()
             val pulse = 0.55f + 0.45f * sin(sparklePhase * Math.PI * 2f + i).toFloat()
             paint.color = if (i % 5 == 0) Color.rgb(255, 240, 138) else Color.WHITE
             paint.alpha = (90 + pulse * 130).toInt().coerceIn(70, 220)
-            canvas.drawCircle(x, y, if (i % 4 == 0) 3.2f else 2f, paint)
+            if (i % 7 == 0) {
+                drawFourPointStar(canvas, x, y, 10f, 3.6f, paint)
+            } else {
+                canvas.drawCircle(x, y, if (i % 4 == 0) 3.2f else 2f, paint)
+            }
         }
         paint.alpha = 255
+    }
+
+    private fun drawFourPointStar(canvas: Canvas, cx: Float, cy: Float, outer: Float, inner: Float, starPaint: Paint) {
+        path.reset()
+        path.moveTo(cx, cy - outer)
+        path.lineTo(cx + inner, cy - inner)
+        path.lineTo(cx + outer, cy)
+        path.lineTo(cx + inner, cy + inner)
+        path.lineTo(cx, cy + outer)
+        path.lineTo(cx - inner, cy + inner)
+        path.lineTo(cx - outer, cy)
+        path.lineTo(cx - inner, cy - inner)
+        path.close()
+        canvas.drawPath(path, starPaint)
     }
 
     private fun drawDaySky(canvas: Canvas) {

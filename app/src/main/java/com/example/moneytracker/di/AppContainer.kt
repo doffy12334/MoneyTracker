@@ -32,6 +32,7 @@ import com.example.moneytracker.domain.usecase.LogoutUseCase
 import com.example.moneytracker.domain.usecase.RegisterUseCase
 import com.example.moneytracker.domain.usecase.SendPasswordResetEmailUseCase
 import com.example.moneytracker.domain.usecase.SetBiometricEnabledUseCase
+import com.example.moneytracker.domain.usecase.SetCurrencyUseCase
 import com.example.moneytracker.domain.usecase.SetHighValueProtectionEnabledUseCase
 import com.example.moneytracker.domain.usecase.SetLanguageUseCase
 import com.example.moneytracker.domain.usecase.SetNotificationsEnabledUseCase
@@ -149,6 +150,10 @@ object AppContainer {
 
     val setThemeUseCase: SetThemeUseCase by lazy {
         SetThemeUseCase(settingsRepository)
+    }
+
+    val setCurrencyUseCase: SetCurrencyUseCase by lazy {
+        SetCurrencyUseCase(settingsRepository)
     }
 
     val getProfileUseCase: GetProfileUseCase by lazy {
