@@ -25,7 +25,7 @@ class LoginViewModel(
                 loginUseCase(email, password)
                 LoginUiState.Authenticated
             } catch (exception: Exception) {
-                LoginUiState.Error(exception.message ?: "ÄÄƒng nháº­p tháº¥t báº¡i")
+                LoginUiState.Error(exception.message ?: "Đăng nhập thất bại")
             }
         }
     }
@@ -37,7 +37,7 @@ class LoginViewModel(
                 loginWithGoogleUseCase(idToken)
                 LoginUiState.Authenticated
             } catch (exception: Exception) {
-                LoginUiState.Error(exception.message ?: "ÄÄƒng nháº­p Google tháº¥t báº¡i")
+                LoginUiState.Error(exception.message ?: "Đăng nhập Google thất bại")
             }
         }
     }

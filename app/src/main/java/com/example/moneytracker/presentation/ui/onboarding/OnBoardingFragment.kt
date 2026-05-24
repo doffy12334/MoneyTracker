@@ -19,27 +19,27 @@ class OnBoardingFragment : Fragment() {
     private val pages = listOf(
         OnboardingPage(
             imageRes = R.drawable.img_intro_finance,
-            title = "TĂ i chĂ­nh thĂ´ng minh",
-            subtitle = "Kiáº¿n táº¡o tÆ°Æ¡ng lai tĂ i chĂ­nh vá»¯ng cháº¯c vá»›i sá»± há»— trá»£ tá»« cĂ´ng nghá»‡ minh báº¡ch vĂ  hiá»‡n Ä‘áº¡i.",
-            buttonText = "Báº¯t Ä‘áº§u",
+            title = "Tài chính thông minh",
+            subtitle = "Kiến tạo tương lai tài chính vững chắc với sự hỗ trợ từ công nghệ minh bạch và hiện đại.",
+            buttonText = "Bắt đầu",
             showSkip = true,
             showBadges = false,
             imagePaddingDp = 0
         ),
         OnboardingPage(
             imageRes = R.drawable.img_finance,
-            title = "Quáº£n lĂ½ tĂ i chĂ­nh",
-            subtitle = "Theo dĂµi chi tiĂªu vĂ  dĂ²ng tiá»n má»—i ngĂ y",
-            buttonText = "Tiáº¿p tá»¥c",
+            title = "Quản lý tài chính",
+            subtitle = "Theo dõi chi tiêu và dòng tiền mỗi ngày",
+            buttonText = "Tiếp tục",
             showSkip = true,
             showBadges = true,
             imagePaddingDp = 22
         ),
         OnboardingPage(
             imageRes = R.drawable.img_savings_piggy,
-            title = "Tiáº¿t kiá»‡m dá»… dĂ ng",
-            subtitle = "Thiáº¿t láº­p má»¥c tiĂªu vĂ  theo dĂµi lá»™ trĂ¬nh",
-            buttonText = "Tiáº¿p tá»¥c",
+            title = "Tiết kiệm dễ dàng",
+            subtitle = "Thiết lập mục tiêu và theo dõi lộ trình",
+            buttonText = "Tiếp tục",
             showSkip = false,
             showBadges = false,
             imagePaddingDp = 0

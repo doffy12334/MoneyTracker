@@ -194,6 +194,7 @@ class SettingFragment : Fragment() {
             when (language) {
                 AppLanguage.VIETNAMESE -> R.string.language_vietnamese
                 AppLanguage.ENGLISH -> R.string.language_english
+                AppLanguage.FRENCH -> R.string.language_french
             }
         )
     }

@@ -4,8 +4,8 @@ enum class AppTheme(
     val value: String,
     val displayName: String
 ) {
-    LIGHT("light", "SĂ¡ng"),
-    DARK("dark", "Tá»‘i");
+    LIGHT("light", "Sáng"),
+    DARK("dark", "Tối");
 
     companion object {
         fun fromValue(value: String): AppTheme {

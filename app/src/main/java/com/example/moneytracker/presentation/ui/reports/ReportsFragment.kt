@@ -128,10 +128,10 @@ class ReportsFragment : Fragment() {
 
     private fun TextView.renderPeriodTab(isSelected: Boolean) {
         if (isSelected) {
-            setBackgroundResource(R.drawable.bg_filter_report_active)
+            setBackgroundResource(R.drawable.bg_filter_active)
             setTextColor(ContextCompat.getColor(requireContext(), R.color.inverse_text))
         } else {
-            background = ContextCompat.getDrawable(requireContext(), android.R.drawable.list_selector_background)
+            setBackgroundResource(R.drawable.bg_filter_inactive)
             setTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary))
         }
     }

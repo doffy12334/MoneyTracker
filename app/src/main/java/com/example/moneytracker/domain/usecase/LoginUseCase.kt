@@ -8,9 +8,9 @@ class LoginUseCase(
     suspend operator fun invoke(email: String, password: String) {
         val normalizedEmail = email.trim()
 
-        require(normalizedEmail.isNotBlank()) { "Email khĂ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng" }
-        require(EMAIL_REGEX.matches(normalizedEmail)) { "Email khĂ´ng há»£p lá»‡" }
-        require(password.isNotBlank()) { "Máº­t kháº©u khĂ´ng Ä‘Æ°á»£c Ä‘á»ƒ trá»‘ng" }
+        require(normalizedEmail.isNotBlank()) { "Email không được để trống" }
+        require(EMAIL_REGEX.matches(normalizedEmail)) { "Email không hợp lệ" }
+        require(password.isNotBlank()) { "Mật khẩu không được để trống" }
         authRepository.login(normalizedEmail, password)
     }
 

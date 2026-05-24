@@ -1,4 +1,4 @@
-package com.example.moneytracker.presentation.ui.auth
+﻿package com.example.moneytracker.presentation.ui.auth
 
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
@@ -94,14 +94,14 @@ class LoginFragment : Fragment() {
                 val idToken = getGoogleIdToken(filterByAuthorizedAccounts = true)
                     ?: getGoogleIdToken(filterByAuthorizedAccounts = false)
                 if (idToken == null) {
-                    viewModel.setError("KhĂ´ng láº¥y Ä‘Æ°á»£c tĂ i khoáº£n Google")
+                    viewModel.setError("Không lấy được tài khoản Google")
                 } else {
                     viewModel.loginWithGoogle(idToken)
                 }
             } catch (exception: GoogleIdTokenParsingException) {
-                viewModel.setError("KhĂ´ng Ä‘á»c Ä‘Æ°á»£c thĂ´ng tin tĂ i khoáº£n Google")
+                viewModel.setError("Không đọc được thông tin tài khoản Google")
             } catch (exception: GetCredentialException) {
-                viewModel.setError("ÄÄƒng nháº­p Google bá»‹ há»§y hoáº·c tháº¥t báº¡i")
+                viewModel.setError("Đăng nhập Google bị hủy hoặc thất bại")
             } finally {
                 binding.btnGoogle.isEnabled = true
             }

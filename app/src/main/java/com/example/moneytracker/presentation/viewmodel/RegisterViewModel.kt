@@ -23,7 +23,7 @@ class RegisterViewModel(
                 registerUseCase(email, password, confirmPassword)
                 RegisterUiState.Registered
             } catch (exception: Exception) {
-                RegisterUiState.Error(exception.message ?: "ÄÄƒng kĂ½ tháº¥t báº¡i")
+                RegisterUiState.Error(exception.message ?: "Đăng ký thất bại")
             }
         }
     }

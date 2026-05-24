@@ -4,8 +4,9 @@ enum class AppLanguage(
     val code: String,
     val displayName: String
 ) {
-    VIETNAMESE("vi", "Tiáº¿ng Viá»‡t"),
-    ENGLISH("en", "English");
+    VIETNAMESE("vi", "Tiếng Việt"),
+    ENGLISH("en", "English"),
+    FRENCH("fr", "Français");
 
     companion object {
         fun fromCode(code: String): AppLanguage {
