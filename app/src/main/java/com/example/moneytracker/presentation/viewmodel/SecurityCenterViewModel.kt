@@ -14,11 +14,13 @@ import com.example.moneytracker.domain.usecase.SetHighValueProtectionEnabledUseC
 import com.example.moneytracker.domain.usecase.SetTwoFactorEnabledUseCase
 import com.example.moneytracker.domain.usecase.UpdatePasswordUseCase
 import com.example.moneytracker.presentation.uistate.SecurityCenterUiState
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class SecurityCenterViewModel(
     private val getSecuritySettingsUseCase: GetSecuritySettingsUseCase,
@@ -48,14 +50,58 @@ class SecurityCenterViewModel(
     }
 
     fun onTwoFactorChanged(enabled: Boolean) {
-        setTwoFactorEnabledUseCase(enabled)
-        _uiState.update {
-            it.copy(
-                twoFactorEnabled = enabled,
-                messageResId = if (enabled) R.string.security_two_factor_enabled else R.string.security_two_factor_disabled,
-                message = null,
-                errorMessage = null
-            )
+        if (!enabled) {
+            setTwoFactorEnabledUseCase(false)
+            _uiState.update {
+                it.copy(
+                    twoFactorEnabled = false,
+                    messageResId = R.string.security_two_factor_disabled,
+                    message = null,
+                    errorMessage = null
+                )
+            }
+            return
+        }
+
+        viewModelScope.launch {
+            runCatching {
+                val user = FirebaseAuth.getInstance().currentUser
+                    ?: throw IllegalStateException("Tai khoan chua dang nhap")
+                user.reload().await()
+                val refreshedUser = FirebaseAuth.getInstance().currentUser ?: user
+                if (!refreshedUser.isEmailVerified) {
+                    refreshedUser.sendEmailVerification().await()
+                    throw IllegalStateException("EMAIL_VERIFICATION_REQUIRED")
+                }
+            }.onSuccess {
+                setTwoFactorEnabledUseCase(true)
+                _uiState.update {
+                    it.copy(
+                        twoFactorEnabled = true,
+                        messageResId = R.string.security_two_factor_enabled,
+                        message = null,
+                        errorMessage = null
+                    )
+                }
+            }.onFailure { exception ->
+                setTwoFactorEnabledUseCase(false)
+                _uiState.update {
+                    it.copy(
+                        twoFactorEnabled = false,
+                        messageResId = if (exception.message == "EMAIL_VERIFICATION_REQUIRED") {
+                            R.string.security_two_factor_verify_email_first
+                        } else {
+                            null
+                        },
+                        message = null,
+                        errorMessage = if (exception.message == "EMAIL_VERIFICATION_REQUIRED") {
+                            null
+                        } else {
+                            exception.message ?: "Khong the bat xac thuc 2 yeu to"
+                        }
+                    )
+                }
+            }
         }
     }
 

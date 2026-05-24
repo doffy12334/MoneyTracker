@@ -18,8 +18,11 @@ class SharedPreferencesProfileRepository(
 ) : ProfileRepository {
     override suspend fun getProfile(): UserProfile {
         val localProfile = getLocalProfile()
-        val uid = firebaseAuth.currentUser?.uid ?: return localProfile
-        val authEmail = firebaseAuth.currentUser?.email.orEmpty()
+        val currentUser = firebaseAuth.currentUser ?: return localProfile
+        val uid = currentUser.uid
+        val authEmail = currentUser.email.orEmpty()
+        val authName = currentUser.displayName.orEmpty()
+        val authAvatarUri = currentUser.photoUrl?.toString().orEmpty()
 
         val remoteProfile = runCatching {
             val snapshot = firestore.collection("users")
@@ -36,22 +39,36 @@ class SharedPreferencesProfileRepository(
         }.getOrNull()
 
         val mergedProfile = localProfile.copy(
-            fullName = remoteProfile?.fullName?.ifBlank { localProfile.fullName } ?: localProfile.fullName,
+            fullName = remoteProfile?.fullName
+                ?.ifBlank { localProfile.fullName }
+                ?.ifBlank { authName }
+                ?: localProfile.fullName.ifBlank { authName },
             email = authEmail.ifBlank {
                 remoteProfile?.email?.ifBlank { localProfile.email } ?: localProfile.email
             },
             phone = remoteProfile?.phone?.ifBlank { localProfile.phone } ?: localProfile.phone,
             occupation = remoteProfile?.occupation?.ifBlank { localProfile.occupation } ?: localProfile.occupation,
-            avatarUri = remoteProfile?.avatarUri?.ifBlank { localProfile.avatarUri } ?: localProfile.avatarUri
+            avatarUri = remoteProfile?.avatarUri
+                ?.ifBlank { localProfile.avatarUri }
+                ?.ifBlank { authAvatarUri }
+                ?: localProfile.avatarUri.ifBlank { authAvatarUri }
         )
         saveLocalProfile(mergedProfile)
-        if (authEmail.isNotBlank() && !authEmail.equals(remoteProfile?.email.orEmpty(), ignoreCase = true)) {
+        val shouldSeedRemoteProfile =
+            authEmail.isNotBlank() && !authEmail.equals(remoteProfile?.email.orEmpty(), ignoreCase = true) ||
+                authName.isNotBlank() && remoteProfile?.fullName.isNullOrBlank() ||
+                authAvatarUri.isNotBlank() && remoteProfile?.avatarUri.isNullOrBlank()
+        if (shouldSeedRemoteProfile) {
             runCatching {
                 firestore.collection("users")
                     .document(uid)
                     .set(
                         mapOf(
                             FIELD_EMAIL to authEmail,
+                            FIELD_FULL_NAME to mergedProfile.fullName,
+                            FIELD_AVATAR_URI to mergedProfile.avatarUri,
+                            FIELD_PHONE to mergedProfile.phone,
+                            FIELD_OCCUPATION to mergedProfile.occupation,
                             FIELD_PENDING_EMAIL to ""
                         ),
                         SetOptions.merge()

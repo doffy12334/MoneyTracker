@@ -1,5 +1,6 @@
 package com.example.moneytracker.presentation.ui.addtransaction
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,9 @@ import com.example.moneytracker.domain.model.transaction.TransactionType
 import com.example.moneytracker.presentation.uistate.AddTransactionUiState
 import com.example.moneytracker.presentation.viewmodel.AddTransactionViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class AddTransactionFragment : Fragment() {
     private var _binding: FragmentAddTransactionBinding? = null
@@ -45,7 +49,7 @@ class AddTransactionFragment : Fragment() {
         updateAmountHint()
         binding.etName.addTextChangedListener { viewModel.onNameChanged(it.toString()) }
         binding.etAmount.addTextChangedListener { viewModel.onAmountChanged(it.toString()) }
-        binding.etDate.addTextChangedListener { viewModel.onDateChanged(it.toString()) }
+        binding.etDate.setOnClickListener { showDatePicker() }
         binding.btnSaveTransaction.setOnClickListener { viewModel.saveTransaction() }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -62,6 +66,42 @@ class AddTransactionFragment : Fragment() {
 
     private fun updateAmountHint() {
         binding.etAmount.hint = "Amount (${AppContainer.getSettingsUseCase().currency.code})"
+    }
+
+    private fun showDatePicker() {
+        val initialDate = parseSelectedDate() ?: Calendar.getInstance()
+        DatePickerDialog(
+            requireContext(),
+            { _, year, month, dayOfMonth ->
+                val selectedDate = Calendar.getInstance().apply {
+                    set(Calendar.YEAR, year)
+                    set(Calendar.MONTH, month)
+                    set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                }
+                viewModel.onDateChanged(selectedDate.toInputDate())
+            },
+            initialDate.get(Calendar.YEAR),
+            initialDate.get(Calendar.MONTH),
+            initialDate.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+
+    private fun parseSelectedDate(): Calendar? {
+        val value = binding.etDate.text.toString().trim()
+        if (value.isBlank()) return null
+        return runCatching {
+            Calendar.getInstance().apply {
+                time = SimpleDateFormat(INPUT_DATE_PATTERN, currentLocale()).parse(value) ?: return null
+            }
+        }.getOrNull()
+    }
+
+    private fun Calendar.toInputDate(): String {
+        return SimpleDateFormat(INPUT_DATE_PATTERN, currentLocale()).format(time)
+    }
+
+    private fun currentLocale(): Locale {
+        return resources.configuration.locales[0] ?: Locale.getDefault()
     }
 
     private fun setupSpinners() {
@@ -126,5 +166,6 @@ class AddTransactionFragment : Fragment() {
     private companion object {
         const val TYPE_PLACEHOLDER = "Select type"
         const val CATEGORY_PLACEHOLDER = "Select category"
+        const val INPUT_DATE_PATTERN = "dd/MM/yyyy"
     }
 }

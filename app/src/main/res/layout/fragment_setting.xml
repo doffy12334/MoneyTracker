@@ -101,7 +101,9 @@
                 android:orientation="vertical"
                 android:paddingVertical="16dp">
 
-                <include layout="@layout/item_export_data" />
+                <include
+                    android:id="@+id/rowExportData"
+                    layout="@layout/item_export_data" />
                 <include layout="@layout/item_delete_account" />
             </LinearLayout>
 

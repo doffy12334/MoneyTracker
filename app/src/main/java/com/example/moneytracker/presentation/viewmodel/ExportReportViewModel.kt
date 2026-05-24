@@ -21,40 +21,80 @@ class ExportReportViewModel(
     val uiState: StateFlow<ExportReportUiState> = _uiState.asStateFlow()
 
     fun selectPeriod(period: ExportPeriod) {
-        _uiState.update { it.copy(selectedPeriod = period, successMessage = null, errorMessage = null) }
+        _uiState.update {
+            it.copy(
+                selectedPeriod = period,
+                exportedReport = null,
+                successMessage = null,
+                errorMessage = null
+            )
+        }
     }
 
     fun selectFormat(format: ExportFileFormat) {
-        _uiState.update { it.copy(selectedFormat = format, successMessage = null, errorMessage = null) }
+        _uiState.update {
+            it.copy(
+                selectedFormat = format,
+                exportedReport = null,
+                successMessage = null,
+                errorMessage = null
+            )
+        }
+    }
+
+    fun selectCustomDateRange(startDate: String, endDate: String) {
+        _uiState.update {
+            it.copy(
+                selectedPeriod = ExportPeriod.CUSTOM,
+                customStartDate = startDate,
+                customEndDate = endDate,
+                exportedReport = null,
+                successMessage = null,
+                errorMessage = null
+            )
+        }
     }
 
     fun exportReport() {
         val state = _uiState.value
+        if (state.selectedPeriod == ExportPeriod.CUSTOM &&
+            (state.customStartDate.isNullOrBlank() || state.customEndDate.isNullOrBlank())
+        ) {
+            _uiState.update { it.copy(errorMessage = "CUSTOM_DATE_REQUIRED") }
+            return
+        }
         viewModelScope.launch {
             _uiState.update { it.copy(isExporting = true, successMessage = null, errorMessage = null) }
             runCatching {
                 exportReportUseCase(
                     ExportReportRequest(
                         period = state.selectedPeriod,
-                        fileFormat = state.selectedFormat
+                        fileFormat = state.selectedFormat,
+                        customStartDate = state.customStartDate,
+                        customEndDate = state.customEndDate
                     )
                 )
             }.onSuccess { result ->
                 _uiState.update {
                     it.copy(
                         isExporting = false,
-                        successMessage = "Da tao ${result.fileName} voi ${result.transactionCount} giao dich"
+                        exportedReport = result,
+                        successMessage = null
                     )
                 }
             }.onFailure { exception ->
                 _uiState.update {
                     it.copy(
                         isExporting = false,
-                        errorMessage = exception.message ?: "Khong the xuat bao cao"
+                        errorMessage = exception.message.orEmpty()
                     )
                 }
             }
         }
+    }
+
+    fun consumeExportedReport() {
+        _uiState.update { it.copy(exportedReport = null) }
     }
 
     fun consumeMessage() {

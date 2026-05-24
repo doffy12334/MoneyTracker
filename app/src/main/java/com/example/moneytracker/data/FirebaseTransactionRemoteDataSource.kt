@@ -20,7 +20,8 @@ class FirebaseTransactionRemoteDataSource(
 
     override suspend fun fetchTransactions(): List<Transaction> {
         val uid = auth.currentUser?.uid ?: throw IllegalStateException("User not logged in")
-        val formatter = SimpleDateFormat(OUTPUT_DATE_PATTERN, Locale.US)
+        val dateFormatter = SimpleDateFormat(OUTPUT_DATE_PATTERN, Locale.US)
+        val createdAtFormatter = SimpleDateFormat(CREATED_AT_PATTERN, Locale.US)
         return firestore.collection("users")
             .document(uid)
             .collection("transactions")
@@ -40,14 +41,14 @@ class FirebaseTransactionRemoteDataSource(
                     id = doc.id,
                     name = doc.getString("name") ?: return@mapNotNull null,
                     amount = doc.getDouble("amount") ?: return@mapNotNull null,
-                    date = doc.getTimestamp("date")?.toDate()?.let(formatter::format)
+                    date = doc.getTimestamp("date")?.toDate()?.let(dateFormatter::format)
                         ?: doc.getString("date")
                         ?: return@mapNotNull null,
                     category = category,
                     type = type,
-                    createdAt = doc.getTimestamp("createdAt")?.toDate()?.let(formatter::format)
+                    createdAt = doc.getTimestamp("createdAt")?.toDate()?.let(createdAtFormatter::format)
                         ?: doc.getString("createdAt")
-                        ?: doc.getTimestamp("date")?.toDate()?.let(formatter::format)
+                        ?: doc.getTimestamp("date")?.toDate()?.let(dateFormatter::format)
                         ?: doc.getString("date")
                         ?: return@mapNotNull null
                 )
@@ -86,12 +87,14 @@ class FirebaseTransactionRemoteDataSource(
 
     private companion object {
         const val OUTPUT_DATE_PATTERN = "dd MMM yyyy"
+        const val CREATED_AT_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS"
 
         val INPUT_DATE_PATTERNS = listOf(
             "dd/MM/yyyy",
             "dd-MM-yyyy",
             "yyyy-MM-dd",
-            OUTPUT_DATE_PATTERN
+            OUTPUT_DATE_PATTERN,
+            CREATED_AT_PATTERN
         )
 
         fun parseTransactionDate(value: String): Date? {

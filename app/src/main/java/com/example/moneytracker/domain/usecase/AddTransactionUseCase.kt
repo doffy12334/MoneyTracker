@@ -4,6 +4,9 @@ import com.example.moneytracker.domain.model.transaction.Transaction
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.domain.model.transaction.TransactionType
 import com.example.moneytracker.domain.repository.TransactionRepository
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.UUID
 
 class AddTransactionUseCase(
@@ -27,8 +30,13 @@ class AddTransactionUseCase(
                 amount = amount,
                 date = date.trim(),
                 category = category,
-                type = type
+                type = type,
+                createdAt = SimpleDateFormat(CREATED_AT_PATTERN, Locale.US).format(Date())
             )
         )
+    }
+
+    private companion object {
+        const val CREATED_AT_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS"
     }
 }

@@ -110,6 +110,11 @@
         tools:layout="@layout/fragment_setting" />
 
     <fragment
+        android:id="@+id/exportReportFragment"
+        android:name="com.example.moneytracker.presentation.ui.reports.ExportReportFragment"
+        tools:layout="@layout/fragment_export_report" />
+
+    <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.moneytracker.presentation.ui.profile.ProfileFragment"
         tools:layout="@layout/fragment_profile" />

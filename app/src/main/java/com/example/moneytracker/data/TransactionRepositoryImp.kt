@@ -8,18 +8,25 @@ class TransactionRepositoryImp(
     private val localDataSource: TransactionLocalDataSource
 ) : TransactionRepository{
     override suspend fun getTransactions() :List<Transaction>{
+        val local = localDataSource.getTransactions()
         return try{
             val remote = remoteDataSource.fetchTransactions()
-            localDataSource.saveTransactions(remote)
-            remote
+            val remoteIds = remote.map { it.id }.toSet()
+            val localOnly = local.filterNot { it.id in remoteIds }
+            localOnly.forEach { transaction ->
+                runCatching { remoteDataSource.pushTransaction(transaction) }
+            }
+            val merged = remote + localOnly
+            localDataSource.saveTransactions(merged)
+            merged
         } catch (e: Exception){
-            localDataSource.getTransactions()
+            local
         }
     }
 
     override suspend fun addTransaction(transaction: Transaction) {
-        remoteDataSource.pushTransaction(transaction)
         localDataSource.addTransaction(transaction)
+        remoteDataSource.pushTransaction(transaction)
     }
 
     override suspend fun deleteTransaction(transactionId: String) {

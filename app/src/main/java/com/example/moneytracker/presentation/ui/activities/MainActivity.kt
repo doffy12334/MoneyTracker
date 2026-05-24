@@ -48,7 +48,8 @@ class MainActivity : AppCompatActivity() {
             )
             val isAccountDetailScreen = destination.id in setOf(
                 R.id.profileFragment,
-                R.id.securityCenterFragment
+                R.id.securityCenterFragment,
+                R.id.exportReportFragment
             )
             if (isAuthScreen) {
                 binding.bottomNav.fadeVisibility(View.GONE)

@@ -11,12 +11,15 @@ import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 class FirebaseAuthRepository(
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance(),
+    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) : AuthRepository {
     override fun isUserLoggedIn(): Boolean {
         return firebaseAuth.currentUser != null
@@ -38,10 +41,13 @@ class FirebaseAuthRepository(
     override suspend fun loginWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential).await()
+        seedCurrentUserProfile()
     }
 
     override suspend fun register(email: String, password: String) {
         firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+        firebaseAuth.currentUser?.sendEmailVerification()?.await()
+        seedCurrentUserProfile()
     }
 
     override suspend fun sendPasswordResetEmail(email: String) {
@@ -55,6 +61,24 @@ class FirebaseAuthRepository(
 
     override suspend fun verifyPasswordResetCode(code: String): String {
         return firebaseAuth.verifyPasswordResetCode(code).await()
+    }
+
+    private suspend fun seedCurrentUserProfile() {
+        val user = firebaseAuth.currentUser ?: return
+        firestore.collection("users")
+            .document(user.uid)
+            .set(
+                mapOf(
+                    "email" to user.email.orEmpty(),
+                    "fullName" to user.displayName.orEmpty(),
+                    "avatarUri" to user.photoUrl?.toString().orEmpty(),
+                    "phone" to user.phoneNumber.orEmpty(),
+                    "occupation" to "",
+                    "pendingEmail" to ""
+                ),
+                SetOptions.merge()
+            )
+            .await()
     }
 }
 

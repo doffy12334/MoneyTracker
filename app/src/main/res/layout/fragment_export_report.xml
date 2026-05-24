@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="18dp"
         android:paddingBottom="120dp">
 
         <TextView
@@ -18,108 +19,115 @@
             android:layout_width="48dp"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:text="Ä‚â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂĂ„â€Ă‚Â¢Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¬Ä‚â€Ă‚ÂÄ‚â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂĂ„â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¢Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂĂ„â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¢Ä‚â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¢Ă„â€Ă‚Â¢Ä‚Â¢Ă¢â€Â¬Ă‚ÂÄ‚â€Ă‚Â¬Ă„â€Ă¢â‚¬ÂÄ‚â€Ă‚ÂÄ‚â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂĂ„â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¬Ă„â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂĂ„â€Ă‚Â¢Ä‚Â¢Ă¢â‚¬ÂĂ‚Â¬Ä‚â€Ă‚ÂÄ‚â€Ă¢â‚¬ÂÄ‚Â¢Ă¢â€Â¬Ă‚ÂĂ„â€Ă¢â‚¬ÂÄ‚â€Ă‚Â¹"
+            android:text="@string/export_back"
             android:textColor="@color/primary_color"
             android:textSize="36sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Xuat bao cao"
+            android:layout_marginTop="18dp"
+            android:text="@string/export_report_title"
             android:textColor="@color/text_primary"
-            android:textSize="34sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Tai xuong giao dich va phan tich cua ban mot cach chi tiet."
+            android:text="@string/export_report_subtitle"
             android:textColor="@color/text_secondary"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Khoang thoi gian"
+            android:layout_marginTop="28dp"
+            android:text="@string/export_period_title"
             android:textColor="@color/text_primary"
-            android:textSize="26sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/optionCurrentMonth"
             android:layout_width="match_parent"
-            android:layout_height="104dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_input_field"
+            android:layout_height="wrap_content"
+            android:minHeight="84dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_export_option_selected"
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp"
-            android:text="PHO BIEN\nThang nay\n01/10 - 31/10"
+            android:paddingVertical="14dp"
             android:textColor="@color/text_primary"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/optionLastMonth"
             android:layout_width="match_parent"
-            android:layout_height="104dp"
-            android:layout_marginTop="14dp"
+            android:layout_height="wrap_content"
+            android:minHeight="84dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/bg_soft_green_card"
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp"
-            android:text="LICH SU\nThang truoc\n01/09 - 30/09"
+            android:paddingVertical="14dp"
             android:textColor="@color/text_primary"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/optionCustom"
             android:layout_width="match_parent"
-            android:layout_height="104dp"
-            android:layout_marginTop="14dp"
+            android:layout_height="wrap_content"
+            android:minHeight="84dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/bg_soft_green_card"
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp"
-            android:text="LINH HOAT\nTuy chinh\nChon ngay cu the"
+            android:paddingVertical="14dp"
             android:textColor="@color/text_primary"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Dinh dang tep"
+            android:layout_marginTop="28dp"
+            android:text="@string/export_format_title"
             android:textColor="@color/text_primary"
-            android:textSize="26sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/optionCsv"
             android:layout_width="match_parent"
-            android:layout_height="112dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_input_field"
+            android:layout_height="wrap_content"
+            android:minHeight="90dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_export_option_selected"
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp"
-            android:text="Excel / CSV\nPhu hop cho viec tinh toan va nhap lieu"
+            android:paddingVertical="14dp"
+            android:text="@string/export_format_csv"
             android:textColor="@color/text_primary"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/optionPdf"
             android:layout_width="match_parent"
-            android:layout_height="112dp"
-            android:layout_marginTop="14dp"
+            android:layout_height="wrap_content"
+            android:minHeight="90dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/bg_soft_green_card"
             android:gravity="center_vertical"
             android:paddingHorizontal="20dp"
-            android:text="Bao cao PDF\nTai lieu trinh bay dep, de in an"
+            android:paddingVertical="14dp"
+            android:text="@string/export_format_pdf"
             android:textColor="@color/text_primary"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButton
@@ -127,15 +135,33 @@
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:layout_marginTop="34dp"
-            android:backgroundTint="@color/success_color"
-            android:text="Xuat bao cao"
+            android:background="@drawable/bg_export_action_button"
+            android:backgroundTint="@null"
+            android:text="@string/export_report_action"
             android:textAllCaps="false"
-            android:textColor="@color/primary_color"
-            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:cornerRadius="14dp"
             app:icon="@drawable/ic_download"
-            app:iconTint="@color/primary_color" />
+            app:iconTint="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPrintReport"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/export_report_print_action"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:cornerRadius="14dp"
+            app:icon="@drawable/ic_export"
+            app:iconTint="@color/text_primary"
+            app:strokeColor="@color/divider_color"
+            app:strokeWidth="1dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
-

@@ -91,16 +91,21 @@ class HistoryViewModel(
     private fun applyFilters() {
         val state = _uiState.value
         val normalizedQuery = state.searchQuery.trim()
-        val periodAnchor = allTransactions.latestHistoryDate()
-        val filteredTransactions = allTransactions
-            .filter { transaction -> transaction.matchesDateFilter(state.dateFilter, periodAnchor) }
+        val typeFilteredTransactions = allTransactions
             .filter { transaction -> transaction.matchesTypeFilter(state.typeFilter) }
+        val periodAnchor = typeFilteredTransactions.periodAnchorCalendar()
+        val filteredTransactions = typeFilteredTransactions
+            .filter { transaction -> transaction.matchesDateFilter(state.dateFilter, periodAnchor) }
             .filter { transaction ->
                 normalizedQuery.isBlank() ||
                     transaction.name.contains(normalizedQuery, ignoreCase = true) ||
                     transaction.category.name.contains(normalizedQuery, ignoreCase = true) ||
                     transaction.type.name.contains(normalizedQuery, ignoreCase = true)
             }
+            .sortedWith(
+                compareByDescending<Transaction> { it.parseHistoryDate()?.time ?: 0L }
+                    .thenByDescending { it.parseCreatedAtDate()?.time ?: 0L }
+            )
 
         _uiState.update {
             it.copy(
@@ -124,7 +129,7 @@ class HistoryViewModel(
         val transactionCalendar = Calendar.getInstance().apply { time = date }
         val anchorCalendar = periodAnchor ?: Calendar.getInstance()
         return when (filter) {
-            HistoryDateFilter.WEEKLY -> transactionCalendar.isInLastSevenDays(anchorCalendar)
+            HistoryDateFilter.WEEKLY -> transactionCalendar.isInSameWeek(anchorCalendar)
             HistoryDateFilter.MONTHLY ->
                 transactionCalendar.get(Calendar.YEAR) == anchorCalendar.get(Calendar.YEAR) &&
                     transactionCalendar.get(Calendar.MONTH) == anchorCalendar.get(Calendar.MONTH)
@@ -133,33 +138,41 @@ class HistoryViewModel(
         }
     }
 
-    private fun List<Transaction>.latestHistoryDate(): Calendar? {
-        val latestDate = mapNotNull { it.parseHistoryDate() }.maxOrNull() ?: return null
-        return Calendar.getInstance().apply { time = latestDate }
+    private fun List<Transaction>.periodAnchorCalendar(): Calendar {
+        val today = Calendar.getInstance()
+        val endOfToday = today.copyAtEndOfDay()
+        val latestAvailableDate = mapNotNull { it.parseHistoryDate() }
+            .filter { !it.after(endOfToday.time) }
+            .maxByOrNull { it.time }
+        return Calendar.getInstance().apply { time = latestAvailableDate ?: today.time }
     }
 
     private fun Transaction.parseHistoryDate(): Date? {
         return parseTransactionDate(date)
-            ?: parseTransactionDate(createdAt).takeIf { createdAt.isNotBlank() }
+            ?: parseCreatedAtDate().takeIf { createdAt.isNotBlank() }
     }
 
-    private fun Calendar.isInLastSevenDays(anchorCalendar: Calendar): Boolean {
-        val startCalendar = anchorCalendar.copyAtStartOfDay().apply {
-            add(Calendar.DAY_OF_YEAR, -6)
-        }
-        val endCalendar = anchorCalendar.copyAtStartOfDay().apply {
-            add(Calendar.DAY_OF_YEAR, 1)
-            add(Calendar.MILLISECOND, -1)
-        }
-        return !before(startCalendar) && !after(endCalendar)
+    private fun Transaction.parseCreatedAtDate(): Date? {
+        return parseTransactionDate(createdAt)
     }
 
-    private fun Calendar.copyAtStartOfDay(): Calendar {
+    private fun Calendar.isInSameWeek(anchorCalendar: Calendar): Boolean {
+        firstDayOfWeek = Calendar.MONDAY
+        minimalDaysInFirstWeek = 4
+        val normalizedAnchor = (anchorCalendar.clone() as Calendar).apply {
+            firstDayOfWeek = Calendar.MONDAY
+            minimalDaysInFirstWeek = 4
+        }
+        return getWeekYear() == normalizedAnchor.getWeekYear() &&
+            get(Calendar.WEEK_OF_YEAR) == normalizedAnchor.get(Calendar.WEEK_OF_YEAR)
+    }
+
+    private fun Calendar.copyAtEndOfDay(): Calendar {
         return (clone() as Calendar).apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE, 59)
+            set(Calendar.SECOND, 59)
+            set(Calendar.MILLISECOND, 999)
         }
     }
 
@@ -201,6 +214,7 @@ class HistoryViewModel(
             "dd-MM-yyyy",
             "d-M-yyyy",
             "yyyy-MM-dd",
+            "yyyy-MM-dd HH:mm:ss.SSS",
             "EEE MMM dd HH:mm:ss zzz yyyy"
         )
     }

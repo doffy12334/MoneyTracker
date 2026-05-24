@@ -18,13 +18,14 @@ class GetSpendingReportUseCase(
 ) {
     suspend operator fun invoke(period: ReportPeriod = ReportPeriod.MONTHLY): SpendingReportSummary {
         val transactions = transactionRepository.getTransactions()
-        val anchorDate = transactions.latestReportDate()
         val expenses = transactions
-            .filter { it.matchesPeriod(period, anchorDate) }
             .filter { it.type == TransactionType.EXPENSE }
+        val anchorDate = expenses.periodAnchorCalendar()
+        val filteredExpenses = expenses
+            .filter { it.matchesPeriod(period, anchorDate) }
 
-        val totalSpent = expenses.sumOf { it.amount }
-        val breakdown = expenses
+        val totalSpent = filteredExpenses.sumOf { it.amount }
+        val breakdown = filteredExpenses
             .groupBy { it.category }
             .map { (category, transactions) ->
                 val amount = transactions.sumOf { it.amount }
@@ -53,23 +54,26 @@ class GetSpendingReportUseCase(
         }
     }
 
-    private fun List<Transaction>.latestReportDate(): Calendar? {
-        val latestDate = mapNotNull { it.parseReportDate() }.maxOrNull() ?: return null
-        return Calendar.getInstance().apply { time = latestDate }
-    }
-
-    private fun Transaction.matchesPeriod(period: ReportPeriod, anchorDate: Calendar?): Boolean {
+    private fun Transaction.matchesPeriod(period: ReportPeriod, anchorDate: Calendar): Boolean {
         val date = parseReportDate() ?: return false
         val transactionDate = Calendar.getInstance().apply { time = date }
-        val anchor = anchorDate ?: Calendar.getInstance()
         return when (period) {
-            ReportPeriod.WEEKLY -> transactionDate.isInLastSevenDays(anchor)
+            ReportPeriod.WEEKLY -> transactionDate.isInSameWeek(anchorDate)
             ReportPeriod.MONTHLY ->
-                transactionDate.get(Calendar.YEAR) == anchor.get(Calendar.YEAR) &&
-                    transactionDate.get(Calendar.MONTH) == anchor.get(Calendar.MONTH)
+                transactionDate.get(Calendar.YEAR) == anchorDate.get(Calendar.YEAR) &&
+                    transactionDate.get(Calendar.MONTH) == anchorDate.get(Calendar.MONTH)
             ReportPeriod.YEARLY ->
-                transactionDate.get(Calendar.YEAR) == anchor.get(Calendar.YEAR)
+                transactionDate.get(Calendar.YEAR) == anchorDate.get(Calendar.YEAR)
         }
+    }
+
+    private fun List<Transaction>.periodAnchorCalendar(): Calendar {
+        val today = Calendar.getInstance()
+        val endOfToday = today.copyAtEndOfDay()
+        val latestAvailableDate = mapNotNull { it.parseReportDate() }
+            .filter { !it.after(endOfToday.time) }
+            .maxByOrNull { it.time }
+        return Calendar.getInstance().apply { time = latestAvailableDate ?: today.time }
     }
 
     private fun Transaction.parseReportDate(): Date? {
@@ -89,21 +93,23 @@ class GetSpendingReportUseCase(
         }
     }
 
-    private fun Calendar.isInLastSevenDays(anchor: Calendar): Boolean {
-        val start = anchor.copyAtStartOfDay().apply { add(Calendar.DAY_OF_YEAR, -6) }
-        val end = anchor.copyAtStartOfDay().apply {
-            add(Calendar.DAY_OF_YEAR, 1)
-            add(Calendar.MILLISECOND, -1)
+    private fun Calendar.isInSameWeek(anchor: Calendar): Boolean {
+        firstDayOfWeek = Calendar.MONDAY
+        minimalDaysInFirstWeek = 4
+        val normalizedAnchor = (anchor.clone() as Calendar).apply {
+            firstDayOfWeek = Calendar.MONDAY
+            minimalDaysInFirstWeek = 4
         }
-        return !before(start) && !after(end)
+        return getWeekYear() == normalizedAnchor.getWeekYear() &&
+            get(Calendar.WEEK_OF_YEAR) == normalizedAnchor.get(Calendar.WEEK_OF_YEAR)
     }
 
-    private fun Calendar.copyAtStartOfDay(): Calendar {
+    private fun Calendar.copyAtEndOfDay(): Calendar {
         return (clone() as Calendar).apply {
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE, 59)
+            set(Calendar.SECOND, 59)
+            set(Calendar.MILLISECOND, 999)
         }
     }
 
@@ -119,6 +125,7 @@ class GetSpendingReportUseCase(
             "dd-MM-yyyy",
             "d-M-yyyy",
             "yyyy-MM-dd",
+            "yyyy-MM-dd HH:mm:ss.SSS",
             "EEE MMM dd HH:mm:ss zzz yyyy"
         )
     }

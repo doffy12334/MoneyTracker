@@ -1,10 +1,14 @@
 package com.example.moneytracker.presentation.ui.security
 
+import android.app.Activity
+import android.app.KeyguardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -23,6 +27,15 @@ class SecurityCenterFragment : Fragment() {
     private var _binding: FragmentSecurityCenterBinding? = null
     private val binding get() = _binding!!
     private var isRendering = false
+
+    private val biometricEnableLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        viewModel.onBiometricChanged(result.resultCode == Activity.RESULT_OK)
+        if (result.resultCode != Activity.RESULT_OK) {
+            Toast.makeText(requireContext(), R.string.security_biometric_cancelled, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     private val viewModel: SecurityCenterViewModel by viewModels {
         SecurityCenterViewModel.Factory(
@@ -62,7 +75,13 @@ class SecurityCenterFragment : Fragment() {
             if (!isRendering) viewModel.onTwoFactorChanged(isChecked)
         }
         binding.switchBiometric.setOnCheckedChangeListener { _, isChecked ->
-            if (!isRendering) viewModel.onBiometricChanged(isChecked)
+            if (!isRendering) {
+                if (isChecked) {
+                    requestBiometricConfirmation()
+                } else {
+                    viewModel.onBiometricChanged(false)
+                }
+            }
         }
         binding.switchHighValue.setOnCheckedChangeListener { _, isChecked ->
             if (!isRendering) viewModel.onHighValueProtectionChanged(isChecked)
@@ -126,6 +145,25 @@ class SecurityCenterFragment : Fragment() {
                 .setPopUpTo(R.id.nav_graph, true)
                 .build()
         )
+    }
+
+    private fun requestBiometricConfirmation() {
+        val keyguardManager = requireContext().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        if (!keyguardManager.isKeyguardSecure) {
+            viewModel.onBiometricChanged(false)
+            Toast.makeText(requireContext(), R.string.security_biometric_not_available, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val intent = keyguardManager.createConfirmDeviceCredentialIntent(
+            getString(R.string.security_biometric_confirm_title),
+            getString(R.string.security_biometric_confirm_subtitle)
+        )
+        if (intent == null) {
+            viewModel.onBiometricChanged(false)
+            Toast.makeText(requireContext(), R.string.security_biometric_not_available, Toast.LENGTH_SHORT).show()
+            return
+        }
+        biometricEnableLauncher.launch(intent)
     }
 
     override fun onDestroyView() {

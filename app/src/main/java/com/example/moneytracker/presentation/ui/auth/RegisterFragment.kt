@@ -71,6 +71,11 @@ class RegisterFragment : Fragment() {
             RegisterUiState.Loading -> Unit
 
             RegisterUiState.Registered -> {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.register_email_verification_sent),
+                    Toast.LENGTH_LONG
+                ).show()
                 findNavController().navigate(R.id.action_register_to_dashboard)
             }
 

@@ -99,12 +99,13 @@ class ReportsFragment : Fragment() {
             legend.isEnabled = false
             setUsePercentValues(false)
             setDrawEntryLabels(false)
+            setTouchEnabled(true)
             setHoleColor(Color.TRANSPARENT)
             holeRadius = 68f
             transparentCircleRadius = 74f
             setTransparentCircleColor(ContextCompat.getColor(requireContext(), R.color.primary_color))
             setTransparentCircleAlpha(40)
-            setNoDataText("Chưa có chi tiêu")
+            setNoDataText(getString(R.string.reports_no_spending))
             setNoDataTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary))
         }
     }
@@ -176,18 +177,17 @@ class ReportsFragment : Fragment() {
     private fun updateChartData(totalSpent: Double, breakdown: List<ReportCategoryBreakdown>) {
         val chart = binding.spendingPieChart
         if (breakdown.isEmpty() || totalSpent <= 0.0) {
-            chart.clear()
-            chart.centerText = currencyFormatter.format(0.0)
+            renderEmptyChart(chart)
             chart.invalidate()
             return
         }
 
         val entries = breakdown.map { item ->
-            PieEntry(item.amount.toFloat(), item.categoryName)
+            PieEntry(item.displaySliceValue(totalSpent).toFloat(), item.categoryName)
         }
         val dataSet = PieDataSet(entries, "").apply {
             colors = ReportCategoryAdapter.colors
-            sliceSpace = 3f
+            sliceSpace = 4f
             selectionShift = 8f
             valueTextColor = ContextCompat.getColor(requireContext(), R.color.text_primary)
             valueTextSize = 11f
@@ -195,14 +195,41 @@ class ReportsFragment : Fragment() {
         chart.data = PieData(dataSet).apply {
             setDrawValues(false)
         }
+        chart.isHighlightPerTapEnabled = true
         chart.centerText = "Total\n${currencyFormatter.format(totalSpent)}"
         chart.setCenterTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary))
         chart.setCenterTextSize(14f)
         chart.invalidate()
     }
 
+    private fun ReportCategoryBreakdown.displaySliceValue(totalSpent: Double): Double {
+        if (totalSpent <= 0.0 || amount <= 0.0) return amount
+        if (amount / totalSpent >= MIN_VISIBLE_SLICE_RATIO) return amount
+        return totalSpent * MIN_VISIBLE_SLICE_RATIO
+    }
+
+    private fun renderEmptyChart(chart: com.github.mikephil.charting.charts.PieChart) {
+        val entries = ReportCategoryAdapter.colors.map { PieEntry(1f, "") }
+        val dataSet = PieDataSet(entries, "").apply {
+            colors = ReportCategoryAdapter.colors.map { color -> Color.argb(92, Color.red(color), Color.green(color), Color.blue(color)) }
+            sliceSpace = 3f
+            selectionShift = 0f
+        }
+        chart.data = PieData(dataSet).apply {
+            setDrawValues(false)
+        }
+        chart.centerText = getString(R.string.reports_no_spending)
+        chart.setCenterTextColor(ContextCompat.getColor(requireContext(), R.color.text_secondary))
+        chart.setCenterTextSize(13f)
+        chart.isHighlightPerTapEnabled = false
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private companion object {
+        const val MIN_VISIBLE_SLICE_RATIO = 0.04
     }
 }

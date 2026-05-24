@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -57,6 +58,8 @@ class SettingFragment : Fragment() {
         get() = binding.root.findViewById(R.id.rowProfile)
     private val rowSecurity: View
         get() = binding.root.findViewById(R.id.rowSecurity)
+    private val rowExportData: View
+        get() = binding.root.findViewById(R.id.rowExportData)
     private val tvLanguageValue: TextView
         get() = binding.root.findViewById(R.id.tvLanguageValue)
     private val tvThemeValue: TextView
@@ -79,20 +82,23 @@ class SettingFragment : Fragment() {
         switchNotification.setOnCheckedChangeListener { _, isChecked ->
             viewModel.onNotificationsChanged(isChecked)
         }
-        rowLanguage.setOnClickListener {
+        rowLanguage.setSmoothClickListener {
             showLanguageDialog()
         }
-        rowTheme.setOnClickListener {
+        rowTheme.setSmoothClickListener {
             showThemeDialog()
         }
-        rowCurrency.setOnClickListener {
+        rowCurrency.setSmoothClickListener {
             showCurrencyDialog()
         }
-        rowProfile.setOnClickListener {
-            findNavController().navigate(R.id.profileFragment)
+        rowProfile.setSmoothClickListener {
+            navigateSettingDetail(R.id.profileFragment)
         }
-        rowSecurity.setOnClickListener {
-            findNavController().navigate(R.id.securityCenterFragment)
+        rowSecurity.setSmoothClickListener {
+            navigateSettingDetail(R.id.securityCenterFragment)
+        }
+        rowExportData.setSmoothClickListener {
+            navigateSettingDetail(R.id.exportReportFragment)
         }
         binding.btnLogout.setOnClickListener {
             logout()
@@ -167,6 +173,46 @@ class SettingFragment : Fragment() {
         )
     }
 
+    private fun navigateSettingDetail(destinationId: Int) {
+        findNavController().navigate(
+            destinationId,
+            null,
+            NavOptions.Builder()
+                .setEnterAnim(R.anim.slide_in_right)
+                .setExitAnim(R.anim.slide_out_left)
+                .setPopEnterAnim(R.anim.slide_in_left)
+                .setPopExitAnim(R.anim.slide_out_right)
+                .build()
+        )
+    }
+
+    private fun View.setSmoothClickListener(action: () -> Unit) {
+        setOnClickListener {
+            if (!isEnabled) return@setOnClickListener
+            isEnabled = false
+            animate()
+                .scaleX(SETTING_ITEM_PRESSED_SCALE)
+                .scaleY(SETTING_ITEM_PRESSED_SCALE)
+                .alpha(SETTING_ITEM_PRESSED_ALPHA)
+                .setDuration(SETTING_ITEM_PRESS_IN_MS)
+                .setInterpolator(DecelerateInterpolator())
+                .withEndAction {
+                    animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .alpha(1f)
+                        .setDuration(SETTING_ITEM_PRESS_OUT_MS)
+                        .setInterpolator(DecelerateInterpolator())
+                        .withEndAction {
+                            isEnabled = true
+                            action()
+                        }
+                        .start()
+                }
+                .start()
+        }
+    }
+
     private fun applyLanguage(language: AppLanguage) {
         val currentTags = AppCompatDelegate.getApplicationLocales().toLanguageTags()
         if (appliedLanguage == language || currentTags == language.code) {
@@ -236,5 +282,9 @@ class SettingFragment : Fragment() {
 
     companion object {
         private const val THEME_DIALOG_DISMISS_DELAY_MS = 90L
+        private const val SETTING_ITEM_PRESSED_SCALE = 0.97f
+        private const val SETTING_ITEM_PRESSED_ALPHA = 0.86f
+        private const val SETTING_ITEM_PRESS_IN_MS = 70L
+        private const val SETTING_ITEM_PRESS_OUT_MS = 120L
     }
 }

@@ -13,7 +13,9 @@ enum class ExportFileFormat {
 
 data class ExportReportRequest(
     val period: ExportPeriod,
-    val fileFormat: ExportFileFormat
+    val fileFormat: ExportFileFormat,
+    val customStartDate: String? = null,
+    val customEndDate: String? = null
 )
 
 data class ExportReportResult(

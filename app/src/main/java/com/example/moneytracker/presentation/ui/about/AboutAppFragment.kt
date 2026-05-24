@@ -28,21 +28,21 @@ class AboutAppFragment : Fragment() {
 
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
         binding.rowRate.setOnClickListener {
-            Toast.makeText(requireContext(), "Cam on ban da danh gia Financier", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Cảm ơn bạn đã đánh giá Financier", Toast.LENGTH_SHORT).show()
         }
         binding.rowSupport.setOnClickListener {
-            Toast.makeText(requireContext(), "Email ho tro: support@financier.app", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), "Email hỗ trợ: support@financier.app", Toast.LENGTH_LONG).show()
         }
         binding.rowPrivacy.setOnClickListener {
             showInfoDialog(
-                title = "Chinh sach bao mat",
-                message = "Financier chi luu du lieu can thiet de van hanh tai khoan va bao ve lich su giao dich cua ban."
+                title = "Chính sách bảo mật",
+                message = "Financier chỉ lưu dữ liệu cần thiết để vận hành tài khoản và bảo vệ lịch sử giao dịch của bạn."
             )
         }
         binding.rowTerms.setOnClickListener {
             showInfoDialog(
-                title = "Dieu khoan su dung",
-                message = "Bang cach su dung ung dung, ban dong y bao mat thong tin dang nhap va chiu trach nhiem voi du lieu da nhap."
+                title = "Điều khoản sử dụng",
+                message = "Bằng cách sử dụng ứng dụng, bạn đồng ý bảo mật thông tin đăng nhập và chịu trách nhiệm với dữ liệu đã nhập."
             )
         }
     }
@@ -51,7 +51,7 @@ class AboutAppFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setTitle(title)
             .setMessage(message)
-            .setPositiveButton("Da hieu", null)
+            .setPositiveButton("Đã hiểu", null)
             .show()
     }
 

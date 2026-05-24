@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.MoneyTracker" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- GĂ¡n style cho Bottom Navigation toĂ n app á»Ÿ Ä‘Ă¢y -->
+        <!-- Bottom navigation style for the app -->
         <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
@@ -10,7 +10,7 @@
         <item name="colorOnSurfaceVariant">@color/text_secondary</item>
     </style>
 
-    <!-- Style cho nĂºt Ä‘ang Ä‘Æ°á»£c chá»n (Filter) -->
+    <!-- Active filter button style -->
     <style name="FilterTabActive">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -24,7 +24,7 @@
         <item name="android:background">@drawable/bg_filter_active</item>
     </style>
 
-    <!-- Style cho cĂ¡c nĂºt chÆ°a Ä‘Æ°á»£c chá»n -->
+    <!-- Inactive filter button style -->
     <style name="FilterTabInactive">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -38,7 +38,7 @@
         <item name="android:background">@drawable/bg_filter_inactive</item>
     </style>
 
-    <!-- Cáº¥u hĂ¬nh hĂ¬nh dĂ¡ng FAB (NĂºt thĂªm) -->
+    <!-- FAB shape configuration -->
     <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">12dp</item>
