@@ -24,4 +24,12 @@
     <color name="warning_color">#FFC857</color>
     <color name="info_color">#74C0FC</color>
     <color name="error_color">#FF7B7B</color>
+    <color name="profile_avatar_border">#FF9F1C</color>
+    <color name="budget_item_surface">#2A2942</color>
+    <color name="budget_item_stroke">#4A4866</color>
+    <color name="budget_progress_track">#4A4866</color>
+    <color name="deposit_button_background">#243E63</color>
+    <color name="deposit_button_text">#9BD0FF</color>
+    <color name="delete_button_background">#4A232A</color>
+    <color name="delete_button_stroke">#7A333D</color>
 </resources>

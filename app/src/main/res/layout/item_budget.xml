@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
+    app:cardBackgroundColor="@color/budget_item_surface"
     app:cardCornerRadius="16dp"
     app:cardElevation="2dp">
 
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp"
-        android:background="#99F2F4F7">
+        android:background="@color/budget_item_surface">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -23,8 +24,9 @@
                 android:id="@+id/ivCatIcon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:background="@drawable/bg_circle_primary"
-                android:padding="12dp" />
+                android:background="@drawable/bg_circle_blue_soft"
+                android:padding="12dp"
+                app:tint="@color/info_color" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -37,7 +39,7 @@
                     android:id="@+id/tvBudgetName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ăn uống"
+                    android:text="@string/category_food"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary" />
 
@@ -45,19 +47,30 @@
                     android:id="@+id/tvBudgetLimit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Giới hạn: 5.000.000đ"
+                    android:text="@string/budget_limit_preview"
                     android:textSize="12sp"
                     android:textColor="@color/text_secondary" />
             </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnDeleteBudget"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/bg_delete_button"
+                android:padding="7dp"
+                android:scaleType="center"
+                android:src="@drawable/ic_trash_red_bold" />
 
             <TextView
                 android:id="@+id/tvBudgetPercent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="80%"
+                android:layout_marginEnd="44dp"
+                android:text="@string/budget_percent_preview"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/primary_color"
+                android:textColor="@color/info_color"
                 android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
@@ -67,13 +80,15 @@
             android:layout_width="match_parent"
             android:layout_height="4dp"
             android:layout_marginTop="16dp"
+            android:progressBackgroundTint="@color/budget_progress_track"
+            android:progressTint="@color/info_color"
             android:progress="80" />
 
         <TextView
             android:id="@+id/tvSpentInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Đã tiêu: 4.000.000đ"
+            android:text="@string/budget_spent_preview"
             android:textSize="12sp"
             android:layout_marginTop="8dp"
             android:textColor="@color/text_primary" />

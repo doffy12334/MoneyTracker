@@ -88,7 +88,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/primary_color"
-        android:text="Xác nhận"
+        android:text="@string/action_confirm"
         android:textAllCaps="false"
         android:textColor="@color/text_primary"
         android:textSize="18sp"

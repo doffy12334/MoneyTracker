@@ -41,8 +41,7 @@ class TransactionAdapter : ListAdapter<Transaction, TransactionAdapter.ViewHolde
 
         fun bind(item: Transaction, currency: AppCurrency) {
             val context = binding.root.context
-            val formatter = CurrencyFormatter.create(currency)
-            val formattedAmount = formatter.format(item.amount)
+            val formattedAmount = CurrencyFormatter.formatFromVnd(item.amount, currency)
             val amountColor = if (item.type == TransactionType.INCOME) {
                 R.color.success_color
             } else {
@@ -68,7 +67,7 @@ class TransactionAdapter : ListAdapter<Transaction, TransactionAdapter.ViewHolde
                 TransactionCategory.TRANSPORT -> R.drawable.ic_car
                 TransactionCategory.SHOPPING -> R.drawable.ic_cart
                 TransactionCategory.SALARY -> R.drawable.ic_money_bag
-                TransactionCategory.ENTERTAINMENT -> R.drawable.ic_diamond_outline
+                TransactionCategory.ENTERTAINMENT -> R.drawable.ic_wallet
                 TransactionCategory.OTHER -> R.drawable.ic_wallet
             }
         }

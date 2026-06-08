@@ -22,6 +22,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -102,6 +103,10 @@ class ExportReportFragment : Fragment() {
             pendingAction = ExportAction.PRINT
             viewModel.exportReport()
         }
+        binding.btnShareReport.setOnClickListener {
+            pendingAction = ExportAction.SHARE
+            viewModel.exportReport()
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -123,6 +128,7 @@ class ExportReportFragment : Fragment() {
         setSelected(binding.optionPdf, state.selectedFormat == ExportFileFormat.PDF)
         binding.btnExportReport.isEnabled = !state.isExporting
         binding.btnPrintReport.isEnabled = !state.isExporting
+        binding.btnShareReport.isEnabled = !state.isExporting
         binding.btnPrintReport.visibility = if (state.selectedFormat == ExportFileFormat.PDF) {
             View.VISIBLE
         } else {
@@ -163,6 +169,7 @@ class ExportReportFragment : Fragment() {
         when (pendingAction) {
             ExportAction.DOWNLOAD -> openDownloadPicker(report)
             ExportAction.PRINT -> printReport(report)
+            ExportAction.SHARE -> shareReport(report)
         }
         pendingAction = ExportAction.DOWNLOAD
     }
@@ -326,6 +333,26 @@ class ExportReportFragment : Fragment() {
         }
     }
 
+    private fun shareReport(report: ExportReportResult) {
+        runCatching {
+            val reportFile = File(report.filePath)
+            val uri = FileProvider.getUriForFile(
+                requireContext(),
+                "${requireContext().packageName}.fileprovider",
+                reportFile
+            )
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = report.mimeType()
+                putExtra(Intent.EXTRA_STREAM, uri)
+                putExtra(Intent.EXTRA_SUBJECT, report.fileName)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            startActivity(Intent.createChooser(intent, getString(R.string.export_report_share_title)))
+        }.onFailure {
+            Toast.makeText(requireContext(), R.string.export_report_share_error, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun ExportReportResult.mimeType(): String {
         return when (fileName.substringAfterLast('.', "").lowercase()) {
             "csv" -> "text/csv"
@@ -346,7 +373,8 @@ class ExportReportFragment : Fragment() {
 
     private enum class ExportAction {
         DOWNLOAD,
-        PRINT
+        PRINT,
+        SHARE
     }
 
     private class PdfFilePrintAdapter(

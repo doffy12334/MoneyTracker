@@ -31,7 +31,6 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import kotlinx.coroutines.launch
-import java.text.NumberFormat
 
 class ReportsFragment : Fragment() {
     private var _binding: FragmentReportsBinding? = null
@@ -42,7 +41,6 @@ class ReportsFragment : Fragment() {
     }
     private val categoryAdapter = ReportCategoryAdapter()
     private var appCurrency = AppCurrency.VND
-    private var currencyFormatter: NumberFormat = CurrencyFormatter.create(appCurrency)
     private var lastChartSignature: String = ""
 
     override fun onCreateView(
@@ -88,7 +86,6 @@ class ReportsFragment : Fragment() {
         val currency = AppContainer.getSettingsUseCase().currency
         if (appCurrency == currency) return
         appCurrency = currency
-        currencyFormatter = CurrencyFormatter.create(currency)
         categoryAdapter.setCurrency(currency)
         lastChartSignature = ""
     }
@@ -196,7 +193,7 @@ class ReportsFragment : Fragment() {
             setDrawValues(false)
         }
         chart.isHighlightPerTapEnabled = true
-        chart.centerText = "Total\n${currencyFormatter.format(totalSpent)}"
+        chart.centerText = "Total\n${CurrencyFormatter.formatFromVnd(totalSpent, appCurrency)}"
         chart.setCenterTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary))
         chart.setCenterTextSize(14f)
         chart.invalidate()

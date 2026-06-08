@@ -9,14 +9,9 @@ class SharedPreferencesSecuritySettingsRepository(
 ) : SecuritySettingsRepository {
     override fun getSecuritySettings(): SecuritySettings {
         return SecuritySettings(
-            twoFactorEnabled = sharedPrefsManager.isTwoFactorEnabled(),
             biometricEnabled = sharedPrefsManager.isBiometricEnabled(),
             highValueProtectionEnabled = sharedPrefsManager.isHighValueProtectionEnabled()
         )
-    }
-
-    override fun setTwoFactorEnabled(enabled: Boolean) {
-        sharedPrefsManager.setTwoFactorEnabled(enabled)
     }
 
     override fun setBiometricEnabled(enabled: Boolean) {

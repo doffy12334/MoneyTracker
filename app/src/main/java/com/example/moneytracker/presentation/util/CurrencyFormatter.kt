@@ -13,4 +13,8 @@ object CurrencyFormatter {
             maximumFractionDigits = appCurrency.fractionDigits
         }
     }
+
+    fun formatFromVnd(amountInVnd: Double, appCurrency: AppCurrency): String {
+        return create(appCurrency).format(appCurrency.fromVnd(amountInVnd))
+    }
 }

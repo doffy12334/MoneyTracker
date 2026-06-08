@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.domain.model.transaction.TransactionType
 import com.example.moneytracker.domain.usecase.AddTransactionUseCase
+import com.example.moneytracker.domain.usecase.GetSettingsUseCase
 import com.example.moneytracker.presentation.uistate.AddTransactionUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AddTransactionViewModel(
-    private val addTransactionUseCase: AddTransactionUseCase
+    private val addTransactionUseCase: AddTransactionUseCase,
+    private val getSettingsUseCase: GetSettingsUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(AddTransactionUiState())
     val uiState: StateFlow<AddTransactionUiState> = _uiState.asStateFlow()
@@ -69,9 +71,10 @@ class AddTransactionViewModel(
         viewModelScope.launch {
             _uiState.update { it.copy(isSaving = true, errorMessage = null, isSaved = false) }
             try {
+                val amountInVnd = getSettingsUseCase().currency.toVnd(amount)
                 addTransactionUseCase(
                     name = state.name,
-                    amount = amount,
+                    amount = amountInVnd,
                     date = state.date,
                     category = selectedCategory,
                     type = selectedType
@@ -89,12 +92,13 @@ class AddTransactionViewModel(
     }
 
     class Factory(
-        private val addTransactionUseCase: AddTransactionUseCase
+        private val addTransactionUseCase: AddTransactionUseCase,
+        private val getSettingsUseCase: GetSettingsUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(AddTransactionViewModel::class.java)) {
-                return AddTransactionViewModel(addTransactionUseCase) as T
+                return AddTransactionViewModel(addTransactionUseCase, getSettingsUseCase) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

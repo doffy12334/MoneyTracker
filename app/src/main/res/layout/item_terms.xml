@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rowTerms"
     android:layout_width="match_parent"
     android:layout_height="74dp"
     android:gravity="center_vertical"
@@ -17,7 +18,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_export"
-            app:tint="@color/primary_color" />
+            app:tint="@color/profile_avatar_border" />
     </FrameLayout>
 
     <LinearLayout

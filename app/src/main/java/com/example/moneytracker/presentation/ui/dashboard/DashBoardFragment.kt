@@ -21,7 +21,6 @@ import com.example.moneytracker.presentation.uistate.DashboardUiState
 import com.example.moneytracker.presentation.util.CurrencyFormatter
 import com.example.moneytracker.presentation.viewmodel.DashboardViewModel
 import kotlinx.coroutines.launch
-import java.text.NumberFormat
 import java.util.Locale
 
 class DashBoardFragment : Fragment() {
@@ -34,7 +33,6 @@ class DashBoardFragment : Fragment() {
 
     private lateinit var transactionAdapter: TransactionAdapter
     private var appCurrency = AppCurrency.VND
-    private var currencyFormatter = CurrencyFormatter.create(appCurrency)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,7 +80,6 @@ class DashBoardFragment : Fragment() {
         val currency = AppContainer.getSettingsUseCase().currency
         if (appCurrency == currency) return
         appCurrency = currency
-        currencyFormatter = CurrencyFormatter.create(currency)
         if (::transactionAdapter.isInitialized) {
             transactionAdapter.setCurrency(currency)
         }
@@ -92,17 +89,17 @@ class DashBoardFragment : Fragment() {
         when (state) {
             DashboardUiState.Loading -> {
                 transactionAdapter.submitList(emptyList())
-                binding.tvTotalBalance.text = currencyFormatter.format(0.0)
-                binding.tvIncomeAmount.text = currencyFormatter.format(0.0)
-                binding.tvExpenseAmount.text = currencyFormatter.format(0.0)
+                binding.tvTotalBalance.text = formatMoney(0.0)
+                binding.tvIncomeAmount.text = formatMoney(0.0)
+                binding.tvExpenseAmount.text = formatMoney(0.0)
                 binding.tvBalanceRate.text = formatBalanceRate(0.0)
                 binding.tvSeeAllTransactions.text = getString(R.string.xem_t_t_c)
             }
 
             is DashboardUiState.Success -> {
-                binding.tvTotalBalance.text = currencyFormatter.format(state.totalBalance)
-                binding.tvIncomeAmount.text = currencyFormatter.format(state.totalIncome)
-                binding.tvExpenseAmount.text = currencyFormatter.format(state.totalExpense)
+                binding.tvTotalBalance.text = formatMoney(state.totalBalance)
+                binding.tvIncomeAmount.text = formatMoney(state.totalIncome)
+                binding.tvExpenseAmount.text = formatMoney(state.totalExpense)
                 binding.tvBalanceRate.text = formatBalanceRate(state.balanceRate)
                 binding.tvSeeAllTransactions.text = if (state.showAllTransactions) {
                     getString(R.string.show_less)
@@ -117,12 +114,16 @@ class DashBoardFragment : Fragment() {
             is DashboardUiState.Error -> {
                 transactionAdapter.submitList(emptyList())
                 binding.tvTotalBalance.text = state.message
-                binding.tvIncomeAmount.text = currencyFormatter.format(0.0)
-                binding.tvExpenseAmount.text = currencyFormatter.format(0.0)
+                binding.tvIncomeAmount.text = formatMoney(0.0)
+                binding.tvExpenseAmount.text = formatMoney(0.0)
                 binding.tvBalanceRate.text = formatBalanceRate(0.0)
                 binding.tvSeeAllTransactions.text = getString(R.string.xem_t_t_c)
             }
         }
+    }
+
+    private fun formatMoney(amountInVnd: Double): String {
+        return CurrencyFormatter.formatFromVnd(amountInVnd, appCurrency)
     }
 
     private fun formatBalanceRate(rate: Double): String {

@@ -125,6 +125,11 @@
         tools:layout="@layout/fragment_security_center" />
 
     <fragment
+        android:id="@+id/aboutAppFragment"
+        android:name="com.example.moneytracker.presentation.ui.about.AboutAppFragment"
+        tools:layout="@layout/fragment_about_app" />
+
+    <fragment
         android:id="@+id/budgetFragment"
         android:name="com.example.moneytracker.presentation.ui.budget.BudgetFragment"
         tools:layout="@layout/fragment_budget" />

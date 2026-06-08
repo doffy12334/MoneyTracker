@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -32,6 +33,22 @@ class FirebaseAuthRepository(
 
     override fun logout() {
         firebaseAuth.signOut()
+    }
+
+    override suspend fun deleteAccount(password: String) {
+        val user = firebaseAuth.currentUser ?: throw IllegalArgumentException("Tài khoản chưa đăng nhập")
+        val email = user.email.orEmpty()
+        val hasPasswordProvider = user.providerData.any { it.providerId == EmailAuthProvider.PROVIDER_ID }
+        if (email.isBlank() || !hasPasswordProvider) {
+            throw IllegalArgumentException("Tài khoản này không dùng mật khẩu. Vui lòng đăng nhập lại bằng Google để xóa tài khoản")
+        }
+        val uid = user.uid
+        val credential = EmailAuthProvider.getCredential(email, password)
+        user.reauthenticate(credential).await()
+        user.delete().await()
+        runCatching {
+            firestore.collection("users").document(uid).delete().await()
+        }
     }
 
     override suspend fun login(email: String, password: String) {
@@ -100,6 +117,7 @@ private fun Exception?.toAuthException(): IllegalArgumentException {
         is FirebaseAuthWeakPasswordException -> "Mật khẩu quá yếu, vui lòng dùng ít nhất 6 ký tự"
         is FirebaseNetworkException -> "Không có kết nối mạng, vui lòng thử lại"
         is FirebaseTooManyRequestsException -> "Bạn thao tác quá nhiều lần, vui lòng thử lại sau"
+        is FirebaseAuthRecentLoginRequiredException -> "Vui lòng đăng nhập lại trước khi xóa tài khoản"
         else -> this?.message ?: "Không thể xác thực tài khoản"
     }
     return IllegalArgumentException(message)

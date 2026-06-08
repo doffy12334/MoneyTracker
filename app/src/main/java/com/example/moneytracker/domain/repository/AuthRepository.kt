@@ -4,6 +4,7 @@ interface AuthRepository {
     fun isUserLoggedIn(): Boolean
     fun isCurrentUserGoogleAccount(): Boolean
     fun logout()
+    suspend fun deleteAccount(password: String)
     suspend fun login(email: String, password: String)
     suspend fun loginWithGoogle(idToken: String)
     suspend fun register(email: String, password: String)

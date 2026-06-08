@@ -12,12 +12,10 @@ import com.example.moneytracker.presentation.util.CurrencyFormatter
 class ReportCategoryAdapter : RecyclerView.Adapter<ReportCategoryAdapter.ReportCategoryViewHolder>() {
     private val items = mutableListOf<ReportCategoryBreakdown>()
     private var currency = AppCurrency.VND
-    private var currencyFormatter = CurrencyFormatter.create(currency)
 
     fun setCurrency(currency: AppCurrency) {
         if (this.currency == currency) return
         this.currency = currency
-        currencyFormatter = CurrencyFormatter.create(currency)
         notifyDataSetChanged()
     }
 
@@ -48,7 +46,7 @@ class ReportCategoryAdapter : RecyclerView.Adapter<ReportCategoryAdapter.ReportC
         fun bind(item: ReportCategoryBreakdown, color: Int) {
             binding.viewColorDot.background.setTint(color)
             binding.tvCategoryName.text = item.categoryName
-            binding.tvCategoryAmount.text = "${currencyFormatter.format(item.amount)} (${item.percent}%)"
+            binding.tvCategoryAmount.text = "${CurrencyFormatter.formatFromVnd(item.amount, currency)} (${item.percent}%)"
         }
     }
 

@@ -30,6 +30,17 @@ class SharedPrefsManager(context: Context) {
 
     fun getCurrencyCode(): String = sharedPref.getString(KEY_CURRENCY_CODE, "VND") ?: "VND"
 
+    fun setExchangeRatesJson(ratesJson: String, fetchedAtMillis: Long) {
+        sharedPref.edit {
+            putString(KEY_EXCHANGE_RATES_JSON, ratesJson)
+            putLong(KEY_EXCHANGE_RATES_FETCHED_AT, fetchedAtMillis)
+        }
+    }
+
+    fun getExchangeRatesJson(): String? = sharedPref.getString(KEY_EXCHANGE_RATES_JSON, null)
+
+    fun getExchangeRatesFetchedAtMillis(): Long = sharedPref.getLong(KEY_EXCHANGE_RATES_FETCHED_AT, 0L)
+
     fun setProfileFullName(fullName: String, userId: String = "") {
         sharedPref.edit { putString(profileKey(KEY_PROFILE_FULL_NAME, userId), fullName) }
     }
@@ -69,12 +80,6 @@ class SharedPrefsManager(context: Context) {
         return if (userId.isBlank()) baseKey else "${baseKey}_$userId"
     }
 
-    fun setTwoFactorEnabled(enabled: Boolean) {
-        sharedPref.edit { putBoolean(KEY_TWO_FACTOR_ENABLED, enabled) }
-    }
-
-    fun isTwoFactorEnabled(): Boolean = sharedPref.getBoolean(KEY_TWO_FACTOR_ENABLED, false)
-
     fun setBiometricEnabled(enabled: Boolean) {
         sharedPref.edit { putBoolean(KEY_BIOMETRIC_ENABLED, enabled) }
     }
@@ -94,12 +99,13 @@ class SharedPrefsManager(context: Context) {
         const val KEY_LANGUAGE_CODE = "language_code"
         const val KEY_THEME_VALUE = "theme_value"
         const val KEY_CURRENCY_CODE = "currency_code"
+        const val KEY_EXCHANGE_RATES_JSON = "exchange_rates_json"
+        const val KEY_EXCHANGE_RATES_FETCHED_AT = "exchange_rates_fetched_at"
         const val KEY_PROFILE_FULL_NAME = "profile_full_name"
         const val KEY_PROFILE_EMAIL = "profile_email"
         const val KEY_PROFILE_PHONE = "profile_phone"
         const val KEY_PROFILE_OCCUPATION = "profile_occupation"
         const val KEY_PROFILE_AVATAR_URI = "profile_avatar_uri"
-        const val KEY_TWO_FACTOR_ENABLED = "two_factor_enabled"
         const val KEY_BIOMETRIC_ENABLED = "biometric_enabled"
         const val KEY_HIGH_VALUE_PROTECTION_ENABLED = "high_value_protection_enabled"
     }

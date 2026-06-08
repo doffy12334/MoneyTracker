@@ -18,7 +18,7 @@
             android:layout_width="48dp"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:text="‹"
+            android:text="@string/export_back"
             android:textColor="@color/primary_color"
             android:textSize="36sp" />
 
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Financier"
+            android:text="@string/app_name"
             android:textColor="@color/text_primary"
             android:textSize="28sp"
             android:textStyle="bold" />
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="VERSION V2.4.0"
+            android:text="@string/info_version"
             android:textColor="@color/primary_color"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -67,7 +67,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nhật ký thay đổi"
+                android:text="@string/about_changelog_title"
                 android:textColor="@color/text_primary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:text="v2.4.0 - Mới nhất\n• Cập nhật giao diện Radiant Finance mới\n• Tích hợp biểu đồ phân tích Glassmorphism\n\nv2.3.5\n• Sửa lỗi đồng bộ hóa dữ liệu đám mây"
+                android:text="@string/about_changelog_body"
                 android:textColor="@color/text_secondary"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -95,7 +95,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đánh giá"
+                android:text="@string/about_rate_title"
                 android:textColor="@color/text_primary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="4.9\nGiúp chúng tôi phát triển hơn"
+                android:text="@string/about_rate_body"
                 android:textColor="@color/text_primary"
                 android:textSize="24sp" />
         </LinearLayout>
@@ -120,7 +120,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pháp lý và Bảo mật"
+                android:text="@string/about_legal_title"
                 android:textColor="@color/text_primary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -129,9 +129,8 @@
                 android:id="@+id/rowPrivacy"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginTop="14dp"
                 android:gravity="center_vertical"
-                android:text="Chính sách bảo mật"
+                android:text="@string/about_privacy_title"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp" />
 
@@ -140,7 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:gravity="center_vertical"
-                android:text="Điều khoản sử dụng"
+                android:text="@string/about_terms_title"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -158,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Bạn cần hỗ trợ?"
+                android:text="@string/about_support_title"
                 android:textColor="@color/inverse_text"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -170,11 +169,19 @@
                 android:layout_marginTop="12dp"
                 android:background="@drawable/bg_input_field"
                 android:gravity="center"
-                android:text="Email hỗ trợ"
+                android:text="@string/about_support_action"
                 android:textColor="@color/primary_color"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:text="@string/about_exchange_attribution"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
-

@@ -2,6 +2,8 @@ package com.example.moneytracker.di
 
 import android.content.Context
 import com.example.moneytracker.data.InternalStorageExportReportRepository
+import com.example.moneytracker.data.OpenExchangeRateRepository
+import com.example.moneytracker.data.SharedPreferencesBudgetRepository
 import com.example.moneytracker.data.SharedPreferencesSettingsRepository
 import com.example.moneytracker.data.SharedPreferencesProfileRepository
 import com.example.moneytracker.data.SharedPreferencesSecuritySettingsRepository
@@ -11,14 +13,20 @@ import com.example.moneytracker.data.SharedPreferencesTransactionLocalDataSource
 import com.example.moneytracker.data.TransactionRepositoryImp
 import com.example.moneytracker.data.local.SharedPrefsManager
 import com.example.moneytracker.domain.repository.AuthRepository
+import com.example.moneytracker.domain.repository.BudgetRepository
 import com.example.moneytracker.domain.repository.ExportReportRepository
+import com.example.moneytracker.domain.repository.ExchangeRateRepository
 import com.example.moneytracker.domain.repository.ProfileRepository
 import com.example.moneytracker.domain.repository.SecuritySettingsRepository
 import com.example.moneytracker.domain.repository.SettingsRepository
 import com.example.moneytracker.domain.repository.TransactionRepository
 import com.example.moneytracker.domain.usecase.AddTransactionUseCase
+import com.example.moneytracker.domain.usecase.DeleteAccountUseCase
 import com.example.moneytracker.domain.usecase.DeleteTransactionUseCase
+import com.example.moneytracker.domain.usecase.DeleteBudgetLimitUseCase
+import com.example.moneytracker.domain.usecase.DeleteSavingGoalUseCase
 import com.example.moneytracker.domain.usecase.ExportReportUseCase
+import com.example.moneytracker.domain.usecase.GetBudgetOverviewUseCase
 import com.example.moneytracker.domain.usecase.GetDashboardSummaryUseCase
 import com.example.moneytracker.domain.usecase.GetProfileUseCase
 import com.example.moneytracker.domain.usecase.GetSecuritySettingsUseCase
@@ -31,6 +39,7 @@ import com.example.moneytracker.domain.usecase.LoginUseCase
 import com.example.moneytracker.domain.usecase.LoginWithGoogleUseCase
 import com.example.moneytracker.domain.usecase.LogoutUseCase
 import com.example.moneytracker.domain.usecase.RegisterUseCase
+import com.example.moneytracker.domain.usecase.RefreshExchangeRatesUseCase
 import com.example.moneytracker.domain.usecase.SendPasswordResetEmailUseCase
 import com.example.moneytracker.domain.usecase.SetBiometricEnabledUseCase
 import com.example.moneytracker.domain.usecase.SetCurrencyUseCase
@@ -38,10 +47,11 @@ import com.example.moneytracker.domain.usecase.SetHighValueProtectionEnabledUseC
 import com.example.moneytracker.domain.usecase.SetLanguageUseCase
 import com.example.moneytracker.domain.usecase.SetNotificationsEnabledUseCase
 import com.example.moneytracker.domain.usecase.SetThemeUseCase
-import com.example.moneytracker.domain.usecase.SetTwoFactorEnabledUseCase
 import com.example.moneytracker.domain.usecase.UpdateProfileUseCase
 import com.example.moneytracker.domain.usecase.UpdatePasswordUseCase
 import com.example.moneytracker.domain.usecase.VerifyPasswordResetCodeUseCase
+import com.example.moneytracker.domain.usecase.SaveBudgetLimitUseCase
+import com.example.moneytracker.domain.usecase.SaveSavingGoalUseCase
 
 object AppContainer {
     private lateinit var appContext: Context
@@ -102,6 +112,10 @@ object AppContainer {
         LogoutUseCase(authRepository)
     }
 
+    val deleteAccountUseCase: DeleteAccountUseCase by lazy {
+        DeleteAccountUseCase(authRepository)
+    }
+
     val loginWithGoogleUseCase: LoginWithGoogleUseCase by lazy {
         LoginWithGoogleUseCase(authRepository)
     }
@@ -130,6 +144,10 @@ object AppContainer {
         SharedPreferencesSettingsRepository(sharedPrefsManager)
     }
 
+    private val exchangeRateRepository: ExchangeRateRepository by lazy {
+        OpenExchangeRateRepository(sharedPrefsManager)
+    }
+
     private val profileRepository: ProfileRepository by lazy {
         SharedPreferencesProfileRepository(sharedPrefsManager)
     }
@@ -142,8 +160,32 @@ object AppContainer {
         InternalStorageExportReportRepository(appContext)
     }
 
+    private val budgetRepository: BudgetRepository by lazy {
+        SharedPreferencesBudgetRepository(appContext)
+    }
+
     val exportReportUseCase: ExportReportUseCase by lazy {
         ExportReportUseCase(transactionRepository, exportReportRepository)
+    }
+
+    val getBudgetOverviewUseCase: GetBudgetOverviewUseCase by lazy {
+        GetBudgetOverviewUseCase(budgetRepository, transactionRepository)
+    }
+
+    val saveBudgetLimitUseCase: SaveBudgetLimitUseCase by lazy {
+        SaveBudgetLimitUseCase(budgetRepository)
+    }
+
+    val deleteBudgetLimitUseCase: DeleteBudgetLimitUseCase by lazy {
+        DeleteBudgetLimitUseCase(budgetRepository)
+    }
+
+    val saveSavingGoalUseCase: SaveSavingGoalUseCase by lazy {
+        SaveSavingGoalUseCase(budgetRepository)
+    }
+
+    val deleteSavingGoalUseCase: DeleteSavingGoalUseCase by lazy {
+        DeleteSavingGoalUseCase(budgetRepository)
     }
 
     val getSettingsUseCase: GetSettingsUseCase by lazy {
@@ -166,6 +208,10 @@ object AppContainer {
         SetCurrencyUseCase(settingsRepository)
     }
 
+    val refreshExchangeRatesUseCase: RefreshExchangeRatesUseCase by lazy {
+        RefreshExchangeRatesUseCase(exchangeRateRepository)
+    }
+
     val getProfileUseCase: GetProfileUseCase by lazy {
         GetProfileUseCase(profileRepository)
     }
@@ -176,10 +222,6 @@ object AppContainer {
 
     val getSecuritySettingsUseCase: GetSecuritySettingsUseCase by lazy {
         GetSecuritySettingsUseCase(securitySettingsRepository)
-    }
-
-    val setTwoFactorEnabledUseCase: SetTwoFactorEnabledUseCase by lazy {
-        SetTwoFactorEnabledUseCase(securitySettingsRepository)
     }
 
     val setBiometricEnabledUseCase: SetBiometricEnabledUseCase by lazy {

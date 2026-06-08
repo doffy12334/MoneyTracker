@@ -100,9 +100,9 @@ class HistoryFragment : Fragment() {
         binding.tvMonthly.renderFilterChip(activeFilter == HistoryDateFilter.MONTHLY)
         binding.tvYearly.renderFilterChip(activeFilter == HistoryDateFilter.YEARLY)
         binding.tvHistoryPeriodTitle.text = when (activeFilter) {
-            HistoryDateFilter.WEEKLY -> "THIS WEEK"
-            HistoryDateFilter.MONTHLY -> "THIS MONTH"
-            HistoryDateFilter.YEARLY -> "THIS YEAR"
+            HistoryDateFilter.WEEKLY -> getString(R.string.history_period_this_week)
+            HistoryDateFilter.MONTHLY -> getString(R.string.history_period_this_month)
+            HistoryDateFilter.YEARLY -> getString(R.string.history_period_this_year)
         }
     }
 
@@ -118,11 +118,15 @@ class HistoryFragment : Fragment() {
             HistoryTypeFilter.INCOME,
             HistoryTypeFilter.EXPENSE
         )
-        val labels = arrayOf("Tất cả", "Thu nhập", "Chi tiêu")
+        val labels = arrayOf(
+            getString(R.string.history_type_all),
+            getString(R.string.history_type_income),
+            getString(R.string.history_type_expense)
+        )
         val checkedItem = filters.indexOf(currentFilter)
 
         AlertDialog.Builder(requireContext())
-            .setTitle("Lọc theo loại")
+            .setTitle(R.string.history_type_filter_title)
             .setSingleChoiceItems(labels, checkedItem) { dialog, which ->
                 viewModel.onTypeFilterChanged(filters[which])
                 dialog.dismiss()
@@ -205,7 +209,7 @@ class HistoryFragment : Fragment() {
                     icon?.draw(c)
 
                     val textBaseline = actionRect.centerY() + iconSize / 2f + contentGap - (labelPaint.descent() + labelPaint.ascent()) / 2f
-                    c.drawText("Xóa", centerX, textBaseline, labelPaint)
+                    c.drawText(getString(R.string.action_delete), centerX, textBaseline, labelPaint)
                 }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
             }

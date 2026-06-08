@@ -1,8 +1,12 @@
 package com.example.moneytracker.presentation.ui.activities
 
+import android.app.Activity
+import android.app.KeyguardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -10,11 +14,21 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.ActivityMainBinding
+import com.example.moneytracker.di.AppContainer
 import com.example.moneytracker.presentation.ui.views.ThemeTransitionOverlay
-import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private var shouldLockOnNextStart = false
+    private var credentialPromptShowing = false
+    private val appLockLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        credentialPromptShowing = false
+        if (result.resultCode != Activity.RESULT_OK) {
+            moveTaskToBack(true)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        if (savedInstanceState == null && FirebaseAuth.getInstance().currentUser != null) {
+        if (savedInstanceState == null && AppContainer.isUserLoggedInUseCase()) {
             val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
             navGraph.setStartDestination(R.id.dashboardFragment)
             navController.graph = navGraph
@@ -49,7 +63,8 @@ class MainActivity : AppCompatActivity() {
             val isAccountDetailScreen = destination.id in setOf(
                 R.id.profileFragment,
                 R.id.securityCenterFragment,
-                R.id.exportReportFragment
+                R.id.exportReportFragment,
+                R.id.aboutAppFragment
             )
             if (isAuthScreen) {
                 binding.bottomNav.fadeVisibility(View.GONE)
@@ -65,6 +80,38 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (shouldLockOnNextStart) {
+            shouldLockOnNextStart = false
+            requestAppLockIfNeeded()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (!isChangingConfigurations &&
+            !credentialPromptShowing &&
+            AppContainer.isUserLoggedInUseCase()
+        ) {
+            shouldLockOnNextStart = true
+        }
+    }
+
+    private fun requestAppLockIfNeeded() {
+        if (credentialPromptShowing || !AppContainer.isUserLoggedInUseCase()) return
+        if (!AppContainer.getSecuritySettingsUseCase().highValueProtectionEnabled) return
+
+        val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        if (!keyguardManager.isKeyguardSecure) return
+        val intent = keyguardManager.createConfirmDeviceCredentialIntent(
+            getString(R.string.security_app_lock_confirm_title),
+            getString(R.string.security_app_lock_confirm_subtitle)
+        ) ?: return
+        credentialPromptShowing = true
+        appLockLauncher.launch(intent)
     }
 
     fun playThemeTransition(anchor: View, darkMode: Boolean, onCovered: () -> Unit) {

@@ -6,6 +6,8 @@ import com.example.moneytracker.domain.model.AppCurrency
 import com.example.moneytracker.domain.model.AppLanguage
 import com.example.moneytracker.domain.model.AppTheme
 import com.example.moneytracker.domain.usecase.GetSettingsUseCase
+import com.example.moneytracker.domain.usecase.LogoutUseCase
+import com.example.moneytracker.domain.usecase.RefreshExchangeRatesUseCase
 import com.example.moneytracker.domain.usecase.SetCurrencyUseCase
 import com.example.moneytracker.domain.usecase.SetLanguageUseCase
 import com.example.moneytracker.domain.usecase.SetNotificationsEnabledUseCase
@@ -15,13 +17,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 class SettingsViewModel(
     private val getSettingsUseCase: GetSettingsUseCase,
     private val setNotificationsEnabledUseCase: SetNotificationsEnabledUseCase,
     private val setLanguageUseCase: SetLanguageUseCase,
     private val setThemeUseCase: SetThemeUseCase,
-    private val setCurrencyUseCase: SetCurrencyUseCase
+    private val setCurrencyUseCase: SetCurrencyUseCase,
+    private val refreshExchangeRatesUseCase: RefreshExchangeRatesUseCase,
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SettingsUiState())
     val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
@@ -57,7 +63,14 @@ class SettingsViewModel(
 
     fun onCurrencyChanged(currency: AppCurrency) {
         setCurrencyUseCase(currency)
-        _uiState.update { it.copy(currency = currency) }
+        viewModelScope.launch {
+            refreshExchangeRatesUseCase()
+            _uiState.update { it.copy(currency = currency) }
+        }
+    }
+
+    fun logout() {
+        logoutUseCase()
     }
 
     class Factory(
@@ -65,7 +78,9 @@ class SettingsViewModel(
         private val setNotificationsEnabledUseCase: SetNotificationsEnabledUseCase,
         private val setLanguageUseCase: SetLanguageUseCase,
         private val setThemeUseCase: SetThemeUseCase,
-        private val setCurrencyUseCase: SetCurrencyUseCase
+        private val setCurrencyUseCase: SetCurrencyUseCase,
+        private val refreshExchangeRatesUseCase: RefreshExchangeRatesUseCase,
+        private val logoutUseCase: LogoutUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -75,7 +90,9 @@ class SettingsViewModel(
                     setNotificationsEnabledUseCase,
                     setLanguageUseCase,
                     setThemeUseCase,
-                    setCurrencyUseCase
+                    setCurrencyUseCase,
+                    refreshExchangeRatesUseCase,
+                    logoutUseCase
                 ) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

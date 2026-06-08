@@ -51,13 +51,14 @@ app/google-services.json
 ```text
 data/
   local/
-  FakeTransactionRemoteDataSource.kt
   FirebaseAuthRepository.kt
-  InMemoryTransactionLocalDataSource.kt
+  FirebaseTransactionRemoteDataSource.kt
   InternalStorageExportReportRepository.kt
+  SharedPreferencesBudgetRepository.kt
   SharedPreferencesProfileRepository.kt
   SharedPreferencesSecuritySettingsRepository.kt
   SharedPreferencesSettingsRepository.kt
+  SharedPreferencesTransactionLocalDataSource.kt
   TransactionRepositoryImp.kt
 
 domain/
@@ -219,7 +220,7 @@ res/layout/fragment_login.xml
 
 ## Transactions
 
-Current transaction data is not persisted after app restart.
+Current transaction data is persisted locally in SharedPreferences and synced to Firestore when a user is logged in.
 
 Domain:
 
@@ -238,17 +239,17 @@ domain/usecase/GetSpendingReportUseCase.kt
 Data:
 
 ```text
-data/FakeTransactionRemoteDataSource.kt
-data/InMemoryTransactionLocalDataSource.kt
+data/FirebaseTransactionRemoteDataSource.kt
+data/SharedPreferencesTransactionLocalDataSource.kt
 data/TransactionLocalDataSource.kt
 data/TransactionRemoteDataSource.kt
 data/TransactionRepositoryImp.kt
 ```
 
 Current behavior:
-- `FakeTransactionRemoteDataSource` provides sample remote-like data.
-- `InMemoryTransactionLocalDataSource` caches only while the app process is alive.
-- Transactions are not saved to Firestore or Room at this point.
+- `FirebaseTransactionRemoteDataSource` reads/writes transactions under the current Firebase user.
+- `SharedPreferencesTransactionLocalDataSource` keeps a per-user local cache and guest fallback.
+- `TransactionRepositoryImp` merges remote and local data, pushes local-only entries, and falls back to local data if remote fetch fails.
 - Dashboard, History, Reports, and Export all read through `TransactionRepository`.
 
 Current flow:
@@ -370,7 +371,6 @@ Domain/data:
 domain/model/SecuritySettings.kt
 domain/repository/SecuritySettingsRepository.kt
 domain/usecase/GetSecuritySettingsUseCase.kt
-domain/usecase/SetTwoFactorEnabledUseCase.kt
 domain/usecase/SetBiometricEnabledUseCase.kt
 domain/usecase/SetHighValueProtectionEnabledUseCase.kt
 data/SharedPreferencesSecuritySettingsRepository.kt
@@ -387,7 +387,6 @@ res/layout/fragment_security_center.xml
 
 Security currently includes:
 - change password via Firebase reset email
-- 2FA preference toggle
 - biometric preference toggle
 - high-value protection preference toggle
 - static login history UI
@@ -438,9 +437,9 @@ item_terms.xml
 
 ## Known Issues / Technical Debt
 
-1. Transactions are not persisted.
-   - Current data uses fake/in-memory sources.
-   - Add Room or Firestore when persistence is required.
+1. Transaction persistence is simple but not fully offline-first.
+   - Current data uses Firestore plus SharedPreferences cache.
+   - Add Room if stronger offline querying, migration, or conflict handling is required.
 
 2. Some visible strings are hardcoded in XML/Kotlin.
    - Move to `strings.xml` when polishing localization.
@@ -448,8 +447,8 @@ item_terms.xml
 3. Some Vietnamese text in older XML may have encoding artifacts.
    - Clean gradually when touching those layouts.
 
-4. Budget screen is still mostly a placeholder.
-   - Needs ViewModel/use cases/data once budget feature is implemented.
+4. Budget uses MVVM/Clean flow now, but still stores data in SharedPreferences.
+   - Move to Room or Firestore if budget data needs sync, migration, or richer querying.
 
 5. Manual DI is used.
    - Acceptable for now.

@@ -4,13 +4,28 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import com.example.moneytracker.di.AppContainer
+import com.example.moneytracker.presentation.util.AppNotificationScheduler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class MoneyTrackerApplication : Application() {
+    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
     override fun onCreate() {
         super.onCreate()
         AppContainer.init(this)
         applySavedLanguage()
         applySavedTheme()
+        refreshExchangeRates()
+        AppNotificationScheduler(this).scheduleAll()
+    }
+
+    private fun refreshExchangeRates() {
+        applicationScope.launch {
+            AppContainer.refreshExchangeRatesUseCase()
+        }
     }
 
     private fun applySavedLanguage() {

@@ -1,14 +1,22 @@
 package com.example.moneytracker.presentation.ui.settings
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,7 +35,6 @@ import com.example.moneytracker.presentation.ui.activities.MainActivity
 import com.example.moneytracker.presentation.uistate.SettingsUiState
 import com.example.moneytracker.presentation.viewmodel.SettingsViewModel
 import com.google.android.material.materialswitch.MaterialSwitch
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 class SettingFragment : Fragment() {
@@ -39,12 +46,21 @@ class SettingFragment : Fragment() {
             AppContainer.setNotificationsEnabledUseCase,
             AppContainer.setLanguageUseCase,
             AppContainer.setThemeUseCase,
-            AppContainer.setCurrencyUseCase
+            AppContainer.setCurrencyUseCase,
+            AppContainer.refreshExchangeRatesUseCase,
+            AppContainer.logoutUseCase
         )
     }
 
     private var appliedLanguage: AppLanguage? = null
     private var appliedTheme: AppTheme? = null
+    private val notificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (!isGranted) {
+            viewModel.onNotificationsChanged(false)
+        }
+    }
 
     private val switchNotification: MaterialSwitch
         get() = binding.root.findViewById(R.id.switchNotification)
@@ -60,6 +76,12 @@ class SettingFragment : Fragment() {
         get() = binding.root.findViewById(R.id.rowSecurity)
     private val rowExportData: View
         get() = binding.root.findViewById(R.id.rowExportData)
+    private val rowDeleteAccount: View
+        get() = binding.root.findViewById(R.id.rowDeleteAccount)
+    private val rowAboutApp: View
+        get() = binding.root.findViewById(R.id.rowAboutApp)
+    private val rowTerms: View
+        get() = binding.root.findViewById(R.id.rowTerms)
     private val tvLanguageValue: TextView
         get() = binding.root.findViewById(R.id.tvLanguageValue)
     private val tvThemeValue: TextView
@@ -81,6 +103,7 @@ class SettingFragment : Fragment() {
 
         switchNotification.setOnCheckedChangeListener { _, isChecked ->
             viewModel.onNotificationsChanged(isChecked)
+            if (isChecked) requestNotificationPermissionIfNeeded()
         }
         rowLanguage.setSmoothClickListener {
             showLanguageDialog()
@@ -99,6 +122,15 @@ class SettingFragment : Fragment() {
         }
         rowExportData.setSmoothClickListener {
             navigateSettingDetail(R.id.exportReportFragment)
+        }
+        rowDeleteAccount.setSmoothClickListener {
+            showDeleteAccountDialog()
+        }
+        rowAboutApp.setSmoothClickListener {
+            navigateSettingDetail(R.id.aboutAppFragment)
+        }
+        rowTerms.setSmoothClickListener {
+            showTermsDialog()
         }
         binding.btnLogout.setOnClickListener {
             logout()
@@ -157,9 +189,93 @@ class SettingFragment : Fragment() {
     }
 
     private fun logout() {
-        FirebaseAuth.getInstance().signOut()
+        viewModel.logout()
         Toast.makeText(requireContext(), getString(R.string.text_logout), Toast.LENGTH_SHORT).show()
 
+        navigateToLogin()
+    }
+
+    private fun requestNotificationPermissionIfNeeded() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+    }
+
+    private fun showDeleteAccountDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_delete_account_confirm, null)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+        dialogView.findViewById<View>(R.id.btnCancel).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialogView.findViewById<View>(R.id.btnConfirm).setOnClickListener {
+            dialog.dismiss()
+            showDeleteAccountPasswordDialog()
+        }
+        dialog.showThemed()
+    }
+
+    private fun showTermsDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.about_terms_title)
+            .setMessage(R.string.about_terms_message)
+            .setPositiveButton(R.string.action_ok, null)
+            .show()
+    }
+
+    private fun showDeleteAccountPasswordDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_delete_account_password, null)
+        val passwordInput = dialogView.findViewById<EditText>(R.id.etPassword)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+        dialogView.findViewById<View>(R.id.btnCancel).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialogView.findViewById<View>(R.id.btnConfirm).setOnClickListener {
+            val password = passwordInput.text.toString()
+            if (password.isBlank()) {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.delete_account_password_required,
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+            dialog.dismiss()
+            deleteAccount(password)
+        }
+        dialog.showThemed()
+    }
+
+    private fun deleteAccount(password: String) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            rowDeleteAccount.isEnabled = false
+            Toast.makeText(requireContext(), R.string.delete_account_deleting, Toast.LENGTH_SHORT).show()
+            runCatching {
+                AppContainer.deleteAccountUseCase(password)
+            }.onSuccess {
+                Toast.makeText(requireContext(), R.string.delete_account_success, Toast.LENGTH_SHORT).show()
+                navigateToLogin()
+            }.onFailure { throwable ->
+                rowDeleteAccount.isEnabled = true
+                Toast.makeText(
+                    requireContext(),
+                    throwable.message ?: getString(R.string.delete_account_error),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    private fun navigateToLogin() {
         findNavController().navigate(
             R.id.loginFragment,
             null,
@@ -171,6 +287,11 @@ class SettingFragment : Fragment() {
                 .setPopUpTo(R.id.nav_graph, true)
                 .build()
         )
+    }
+
+    private fun AlertDialog.showThemed() {
+        show()
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
     private fun navigateSettingDetail(destinationId: Int) {

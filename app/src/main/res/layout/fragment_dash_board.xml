@@ -80,7 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="$24,562.00"
+                        android:text="@string/dashboard_zero_balance"
                         android:textColor="@color/inverse_text"
                         android:textSize="36sp"
                         android:textStyle="bold" />
@@ -93,7 +93,7 @@
                         android:background="@drawable/bg_rounded_primary"
                         android:paddingHorizontal="8dp"
                         android:paddingVertical="4dp"
-                        android:text="+2.4% tháng này"
+                        android:text="@string/balance_rate_saved_placeholder"
                         android:textColor="@color/inverse_text"
                         android:textSize="20sp"
                         app:drawableStartCompat="@drawable/ic_trending"
@@ -139,7 +139,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="INCOME"
+                            android:text="@string/transaction_type_income"
                             android:textColor="@color/text_secondary"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -148,7 +148,7 @@
                             android:id="@+id/tvIncomeAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="$5,240.50"
+                            android:text="@string/dashboard_zero_balance"
                             android:textColor="@color/text_primary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -185,7 +185,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="12dp"
-                            android:text="EXPENSE"
+                            android:text="@string/transaction_type_expense"
                             android:textColor="@color/text_secondary"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -194,7 +194,7 @@
                             android:id="@+id/tvExpenseAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="$2,180.20"
+                            android:text="@string/dashboard_zero_balance"
                             android:textColor="@color/text_primary"
                             android:textSize="18sp"
                             android:textStyle="bold" />

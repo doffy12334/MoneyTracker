@@ -69,18 +69,18 @@
             <TextView
                 android:id="@+id/tvWeekly"
                 style="@style/FilterTabActive"
-                android:text="WEEKLY" />
+                android:text="@string/history_filter_weekly" />
 
             <TextView
                 android:id="@+id/tvMonthly"
                 style="@style/FilterTabInactive"
                 android:layout_marginHorizontal="8dp"
-                android:text="MONTHLY" />
+                android:text="@string/history_filter_monthly" />
 
             <TextView
                 android:id="@+id/tvYearly"
                 style="@style/FilterTabInactive"
-                android:text="YEARLY" />
+                android:text="@string/history_filter_yearly" />
         </LinearLayout>
 
         <!-- List Transactions -->
@@ -89,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="THIS WEEK"
+            android:text="@string/history_period_this_week"
             android:textColor="@color/text_secondary"
             android:textStyle="bold" />
 

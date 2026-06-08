@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.moneytracker.R
 import com.example.moneytracker.databinding.FragmentAboutAppBinding
 
 class AboutAppFragment : Fragment() {
@@ -28,21 +29,21 @@ class AboutAppFragment : Fragment() {
 
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
         binding.rowRate.setOnClickListener {
-            Toast.makeText(requireContext(), "Cảm ơn bạn đã đánh giá Financier", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.about_rate_thanks, Toast.LENGTH_SHORT).show()
         }
         binding.rowSupport.setOnClickListener {
-            Toast.makeText(requireContext(), "Email hỗ trợ: support@financier.app", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), R.string.about_support_message, Toast.LENGTH_LONG).show()
         }
         binding.rowPrivacy.setOnClickListener {
             showInfoDialog(
-                title = "Chính sách bảo mật",
-                message = "Financier chỉ lưu dữ liệu cần thiết để vận hành tài khoản và bảo vệ lịch sử giao dịch của bạn."
+                title = getString(R.string.about_privacy_title),
+                message = getString(R.string.about_privacy_message)
             )
         }
         binding.rowTerms.setOnClickListener {
             showInfoDialog(
-                title = "Điều khoản sử dụng",
-                message = "Bằng cách sử dụng ứng dụng, bạn đồng ý bảo mật thông tin đăng nhập và chịu trách nhiệm với dữ liệu đã nhập."
+                title = getString(R.string.about_terms_title),
+                message = getString(R.string.about_terms_message)
             )
         }
     }
@@ -51,7 +52,7 @@ class AboutAppFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setTitle(title)
             .setMessage(message)
-            .setPositiveButton("Đã hiểu", null)
+            .setPositiveButton(R.string.action_ok, null)
             .show()
     }
 

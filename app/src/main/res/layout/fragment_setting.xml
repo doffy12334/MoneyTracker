@@ -104,7 +104,9 @@
                 <include
                     android:id="@+id/rowExportData"
                     layout="@layout/item_export_data" />
-                <include layout="@layout/item_delete_account" />
+                <include
+                    android:id="@+id/rowDeleteAccount"
+                    layout="@layout/item_delete_account" />
             </LinearLayout>
 
             <TextView

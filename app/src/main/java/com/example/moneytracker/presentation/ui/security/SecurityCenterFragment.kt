@@ -36,11 +36,18 @@ class SecurityCenterFragment : Fragment() {
             Toast.makeText(requireContext(), R.string.security_biometric_cancelled, Toast.LENGTH_SHORT).show()
         }
     }
+    private val appLockEnableLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        viewModel.onHighValueProtectionChanged(result.resultCode == Activity.RESULT_OK)
+        if (result.resultCode != Activity.RESULT_OK) {
+            Toast.makeText(requireContext(), R.string.security_app_lock_cancelled, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     private val viewModel: SecurityCenterViewModel by viewModels {
         SecurityCenterViewModel.Factory(
             AppContainer.getSecuritySettingsUseCase,
-            AppContainer.setTwoFactorEnabledUseCase,
             AppContainer.setBiometricEnabledUseCase,
             AppContainer.setHighValueProtectionEnabledUseCase,
             AppContainer.getProfileUseCase,
@@ -71,9 +78,6 @@ class SecurityCenterFragment : Fragment() {
                 binding.etConfirmNewPassword.text.toString()
             )
         }
-        binding.switchTwoFactor.setOnCheckedChangeListener { _, isChecked ->
-            if (!isRendering) viewModel.onTwoFactorChanged(isChecked)
-        }
         binding.switchBiometric.setOnCheckedChangeListener { _, isChecked ->
             if (!isRendering) {
                 if (isChecked) {
@@ -84,7 +88,13 @@ class SecurityCenterFragment : Fragment() {
             }
         }
         binding.switchHighValue.setOnCheckedChangeListener { _, isChecked ->
-            if (!isRendering) viewModel.onHighValueProtectionChanged(isChecked)
+            if (!isRendering) {
+                if (isChecked) {
+                    requestAppLockConfirmation()
+                } else {
+                    viewModel.onHighValueProtectionChanged(false)
+                }
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -96,7 +106,6 @@ class SecurityCenterFragment : Fragment() {
 
     private fun renderState(state: SecurityCenterUiState) {
         isRendering = true
-        binding.switchTwoFactor.isChecked = state.twoFactorEnabled
         binding.switchBiometric.isChecked = state.biometricEnabled
         binding.switchHighValue.isChecked = state.highValueProtectionEnabled
         isRendering = false
@@ -164,6 +173,25 @@ class SecurityCenterFragment : Fragment() {
             return
         }
         biometricEnableLauncher.launch(intent)
+    }
+
+    private fun requestAppLockConfirmation() {
+        val keyguardManager = requireContext().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        if (!keyguardManager.isKeyguardSecure) {
+            viewModel.onHighValueProtectionChanged(false)
+            Toast.makeText(requireContext(), R.string.security_app_lock_not_available, Toast.LENGTH_SHORT).show()
+            return
+        }
+        val intent = keyguardManager.createConfirmDeviceCredentialIntent(
+            getString(R.string.security_app_lock_confirm_title),
+            getString(R.string.security_app_lock_confirm_subtitle)
+        )
+        if (intent == null) {
+            viewModel.onHighValueProtectionChanged(false)
+            Toast.makeText(requireContext(), R.string.security_app_lock_not_available, Toast.LENGTH_SHORT).show()
+            return
+        }
+        appLockEnableLauncher.launch(intent)
     }
 
     override fun onDestroyView() {
