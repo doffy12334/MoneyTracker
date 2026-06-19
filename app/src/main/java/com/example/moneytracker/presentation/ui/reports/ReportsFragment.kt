@@ -196,7 +196,7 @@ class ReportsFragment : Fragment() {
             setDrawValues(false)
         }
         chart.isHighlightPerTapEnabled = true
-        chart.centerText = "Total\n${currencyFormatter.format(totalSpent)}"
+        chart.centerText = "${getString(R.string.reports_total)}\n${currencyFormatter.format(totalSpent)}"
         chart.setCenterTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary))
         chart.setCenterTextSize(14f)
         chart.invalidate()

@@ -65,7 +65,8 @@ class AddTransactionFragment : Fragment() {
     }
 
     private fun updateAmountHint() {
-        binding.etAmount.hint = "Amount (${AppContainer.getSettingsUseCase().currency.code})"
+        binding.etAmount.hint = "${getString(com.example.moneytracker.R.string.amount)}(${AppContainer.getSettingsUseCase()
+            .currency.code})"
     }
 
     private fun showDatePicker() {
@@ -105,15 +106,36 @@ class AddTransactionFragment : Fragment() {
     }
 
     private fun setupSpinners() {
+        val typePlaceholder = getString(com.example.moneytracker.R.string.select_type)
+        val categoryPlaceholder = getString(com.example.moneytracker.R.string.select_category)
+
+        val typeLabels = listOf(typePlaceholder) + TransactionType.entries.map { type ->
+            when (type) {
+                TransactionType.INCOME -> getString(com.example.moneytracker.R.string.income)
+                TransactionType.EXPENSE -> getString(com.example.moneytracker.R.string.expense)
+            }
+        }
+
+        val categoryLabels = listOf(categoryPlaceholder) + TransactionCategory.entries.map { category ->
+            when (category) {
+                TransactionCategory.FOOD -> getString(com.example.moneytracker.R.string.category_food)
+                TransactionCategory.TRANSPORT -> getString(com.example.moneytracker.R.string.category_transport)
+                TransactionCategory.SHOPPING -> getString(com.example.moneytracker.R.string.category_shopping)
+                TransactionCategory.SALARY -> getString(com.example.moneytracker.R.string.category_salary)
+                TransactionCategory.ENTERTAINMENT -> getString(com.example.moneytracker.R.string.category_entertainment)
+                TransactionCategory.OTHER -> getString(com.example.moneytracker.R.string.category_other)
+            }
+        }
+
         binding.spType.adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
-            listOf(TYPE_PLACEHOLDER) + TransactionType.entries.map { it.name }
+            typeLabels
         )
         binding.spCategory.adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
-            listOf(CATEGORY_PLACEHOLDER) + TransactionCategory.entries.map { it.name }
+            categoryLabels
         )
 
         binding.spType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -153,7 +175,7 @@ class AddTransactionFragment : Fragment() {
         }
 
         if (state.isSaved) {
-            Toast.makeText(context, "Da luu giao dich", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(com.example.moneytracker.R.string.transaction_saved_success), Toast.LENGTH_SHORT).show()
             findNavController().navigateUp()
         }
     }
@@ -164,8 +186,6 @@ class AddTransactionFragment : Fragment() {
     }
 
     private companion object {
-        const val TYPE_PLACEHOLDER = "Select type"
-        const val CATEGORY_PLACEHOLDER = "Select category"
         const val INPUT_DATE_PATTERN = "dd/MM/yyyy"
     }
 }
