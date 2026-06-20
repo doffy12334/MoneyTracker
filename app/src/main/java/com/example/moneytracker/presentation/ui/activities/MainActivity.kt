@@ -151,8 +151,8 @@ class MainActivity : AppCompatActivity() {
                 .setExitAnim(R.anim.slide_out_left)
                 .setPopEnterAnim(R.anim.slide_in_left)
                 .setPopExitAnim(R.anim.slide_out_right)
-                .setPopUpTo(R.id.dashboardFragment, false, true)
-                .setRestoreState(true)
+                .setPopUpTo(R.id.dashboardFragment, false, false)
+                .setRestoreState(false)
                 .build()
 
             runCatching {

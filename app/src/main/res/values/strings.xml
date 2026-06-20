@@ -233,7 +233,7 @@
     <string name="notification_monthly_digest_message">This month you spent %1$s. Open Money Tracker for the full breakdown.</string>
     <string name="about_changelog_title">Changelog</string>
     <string name="about_changelog_body">v2.5.0 - Current\n• Live exchange rates with offline cache\n• Budget alerts and saving goals\n• Export reports to CSV/PDF\n\nv2.4.0\n• Dashboard, history, reports, profile, and security center improvements</string>
-    <string name="about_rate_title">Rate Financier</string>
+    <string name="about_rate_title">Rate MoneyTracker</string>
     <string name="about_rate_body">4.9\nThanks for helping us improve the app.</string>
     <string name="about_legal_title">Legal &amp; privacy</string>
     <string name="about_privacy_title">Privacy policy</string>
