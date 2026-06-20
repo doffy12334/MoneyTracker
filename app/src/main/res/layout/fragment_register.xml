@@ -25,8 +25,8 @@
         android:layout_height="56dp"
         android:layout_marginTop="48dp"
         android:background="@drawable/bg_input_field"
-        android:hint="@string/account_hint"
-        android:inputType="text"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
         android:paddingHorizontal="16dp"
         app:layout_constraintTop_toBottomOf="@id/tvRegisterTitle"
         android:textColor="@color/text_primary"
@@ -58,6 +58,19 @@
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_secondary" />
 
+    <EditText
+        android:id="@+id/etRegisterPhone"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_input_field"
+        android:hint="@string/hint_register_phone"
+        android:inputType="phone"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toBottomOf="@id/etConfirmPassword"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary" />
+
     <Button
         android:id="@+id/btnRegister"
         android:layout_width="match_parent"
@@ -69,7 +82,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:cornerRadius="16dp"
-        app:layout_constraintTop_toBottomOf="@id/etConfirmPassword" />
+        app:layout_constraintTop_toBottomOf="@id/etRegisterPhone" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -97,4 +110,3 @@
         app:layout_constraintTop_toBottomOf="@id/btnRegister" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

@@ -15,7 +15,7 @@
         android:layout_marginEnd="24dp"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
-        android:text="Financier"
+        android:text="@string/money_tracker"
         android:textColor="@color/primary_color"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -34,7 +34,7 @@
         android:focusable="true"
         android:gravity="center"
         android:minWidth="72dp"
-        android:text="Bỏ qua"
+        android:text="@string/onboarding_skip"
         android:textColor="@color/accent_blue"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -126,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Wallet"
+                android:text="@string/onboarding_wallet"
                 android:textColor="@color/accent_blue"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -151,11 +151,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Tài chính thông minh"
+            android:text="@string/onboarding_smart_finance_title"
             android:textColor="@color/text_primary"
             android:textSize="30sp"
             android:textStyle="bold"
-            tools:text="Tài chính thông minh" />
+            tools:text="@string/onboarding_smart_finance_title" />
 
         <TextView
             android:id="@+id/tvSubtitle"
@@ -163,10 +163,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="Kiến tạo tương lai tài chính vững chắc với sự hỗ trợ từ công nghệ minh bạch và hiện đại."
+            android:text="@string/onboarding_smart_finance_subtitle"
             android:textColor="@color/text_secondary"
             android:textSize="18sp"
-            tools:text="Kiến tạo tương lai tài chính vững chắc với sự hỗ trợ từ công nghệ minh bạch và hiện đại." />
+            tools:text="@string/onboarding_smart_finance_subtitle" />
     </LinearLayout>
 
     <LinearLayout
@@ -210,7 +210,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:backgroundTint="@color/primary_color"
-        android:text="Bắt đầu"
+        android:text="@string/onboarding_start"
         android:textAllCaps="false"
         android:textColor="@color/text_primary"
         android:textSize="20sp"

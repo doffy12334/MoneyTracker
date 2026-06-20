@@ -19,27 +19,27 @@ class OnBoardingFragment : Fragment() {
     private val pages = listOf(
         OnboardingPage(
             imageRes = R.drawable.img_intro_finance,
-            title = "Tài chính thông minh",
-            subtitle = "Kiến tạo tương lai tài chính vững chắc với sự hỗ trợ từ công nghệ minh bạch và hiện đại.",
-            buttonText = "Bắt đầu",
+            titleRes = R.string.onboarding_smart_finance_title,
+            subtitleRes = R.string.onboarding_smart_finance_subtitle,
+            buttonTextRes = R.string.onboarding_start,
             showSkip = true,
             showBadges = false,
             imagePaddingDp = 0
         ),
         OnboardingPage(
             imageRes = R.drawable.img_finance,
-            title = "Quản lý tài chính",
-            subtitle = "Theo dõi chi tiêu và dòng tiền mỗi ngày",
-            buttonText = "Tiếp tục",
+            titleRes = R.string.onboarding_manage_finance_title,
+            subtitleRes = R.string.onboarding_manage_finance_subtitle,
+            buttonTextRes = R.string.onboarding_continue,
             showSkip = true,
             showBadges = true,
             imagePaddingDp = 22
         ),
         OnboardingPage(
             imageRes = R.drawable.img_savings_piggy,
-            title = "Tiết kiệm dễ dàng",
-            subtitle = "Thiết lập mục tiêu và theo dõi lộ trình",
-            buttonText = "Tiếp tục",
+            titleRes = R.string.onboarding_easy_saving_title,
+            subtitleRes = R.string.onboarding_easy_saving_subtitle,
+            buttonTextRes = R.string.onboarding_continue,
             showSkip = false,
             showBadges = false,
             imagePaddingDp = 0
@@ -121,9 +121,9 @@ class OnBoardingFragment : Fragment() {
 
         binding.imgHero.setImageResource(page.imageRes)
         binding.imgHero.setPadding(padding, padding, padding, padding)
-        binding.tvTitle.text = page.title
-        binding.tvSubtitle.text = page.subtitle
-        binding.btnGetStarted.text = page.buttonText
+        binding.tvTitle.setText(page.titleRes)
+        binding.tvSubtitle.setText(page.subtitleRes)
+        binding.btnGetStarted.setText(page.buttonTextRes)
         binding.btnSkip.isVisible = page.showSkip
         binding.profitBadge.isVisible = page.showBadges
         binding.walletBadge.isVisible = page.showBadges
@@ -168,9 +168,9 @@ class OnBoardingFragment : Fragment() {
 
     private data class OnboardingPage(
         val imageRes: Int,
-        val title: String,
-        val subtitle: String,
-        val buttonText: String,
+        val titleRes: Int,
+        val subtitleRes: Int,
+        val buttonTextRes: Int,
         val showSkip: Boolean,
         val showBadges: Boolean,
         val imagePaddingDp: Int

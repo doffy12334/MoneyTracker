@@ -24,8 +24,6 @@ class SecurityCenterViewModel(
     private val setBiometricEnabledUseCase: SetBiometricEnabledUseCase,
     private val setHighValueProtectionEnabledUseCase: SetHighValueProtectionEnabledUseCase,
     private val getProfileUseCase: GetProfileUseCase,
-    private val sendPasswordResetEmailUseCase: SendPasswordResetEmailUseCase,
-    private val isCurrentUserGoogleAccountUseCase: IsCurrentUserGoogleAccountUseCase,
     private val updatePasswordUseCase: UpdatePasswordUseCase,
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
@@ -38,10 +36,12 @@ class SecurityCenterViewModel(
 
     fun loadSecuritySettings() {
         val settings = getSecuritySettingsUseCase()
-        _uiState.value = SecurityCenterUiState(
-            biometricEnabled = settings.biometricEnabled,
-            highValueProtectionEnabled = settings.highValueProtectionEnabled
-        )
+        _uiState.update {
+            it.copy(
+                biometricEnabled = settings.biometricEnabled,
+                highValueProtectionEnabled = settings.highValueProtectionEnabled
+            )
+        }
     }
 
     fun onBiometricChanged(enabled: Boolean) {
@@ -68,53 +68,15 @@ class SecurityCenterViewModel(
         }
     }
 
-    fun sendChangePasswordEmail() {
+    fun showPasswordForm() {
         if (_uiState.value.isPasswordResetLoading) return
-        if (!isCurrentUserGoogleAccountUseCase()) {
-            _uiState.update {
-                it.copy(
-                    isPasswordFormVisible = true,
-                    messageResId = null,
-                    message = null,
-                    errorMessage = null
-                )
-            }
-            return
-        }
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    isPasswordResetLoading = true,
-                    messageResId = null,
-                    message = null,
-                    errorMessage = null
-                )
-            }
-            runCatching {
-                val email = getProfileUseCase().email
-                sendPasswordResetEmailUseCase(email)
-                logoutUseCase()
-            }.onSuccess {
-                _uiState.update {
-                    it.copy(
-                        isPasswordResetLoading = false,
-                        passwordResetSent = true,
-                        shouldLogoutAfterPasswordReset = true,
-                        messageResId = R.string.security_password_reset_sent,
-                        message = null,
-                        errorMessage = null
-                    )
-                }
-            }.onFailure { exception ->
-                _uiState.update {
-                    it.copy(
-                        isPasswordResetLoading = false,
-                        errorMessage = exception.message ?: "Khong the gui email doi mat khau",
-                        messageResId = null,
-                        message = null
-                    )
-                }
-            }
+        _uiState.update {
+            it.copy(
+                isPasswordFormVisible = true,
+                messageResId = null,
+                message = null,
+                errorMessage = null
+            )
         }
     }
 
@@ -180,8 +142,6 @@ class SecurityCenterViewModel(
         private val setBiometricEnabledUseCase: SetBiometricEnabledUseCase,
         private val setHighValueProtectionEnabledUseCase: SetHighValueProtectionEnabledUseCase,
         private val getProfileUseCase: GetProfileUseCase,
-        private val sendPasswordResetEmailUseCase: SendPasswordResetEmailUseCase,
-        private val isCurrentUserGoogleAccountUseCase: IsCurrentUserGoogleAccountUseCase,
         private val updatePasswordUseCase: UpdatePasswordUseCase,
         private val logoutUseCase: LogoutUseCase
     ) : ViewModelProvider.Factory {
@@ -193,8 +153,6 @@ class SecurityCenterViewModel(
                     setBiometricEnabledUseCase,
                     setHighValueProtectionEnabledUseCase,
                     getProfileUseCase,
-                    sendPasswordResetEmailUseCase,
-                    isCurrentUserGoogleAccountUseCase,
                     updatePasswordUseCase,
                     logoutUseCase
                 ) as T

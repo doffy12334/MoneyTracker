@@ -1,5 +1,7 @@
 package com.example.moneytracker.data
 
+import android.app.Activity
+import com.example.moneytracker.R
 import com.example.moneytracker.domain.repository.AuthRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseNetworkException
@@ -7,13 +9,17 @@ import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -22,6 +28,7 @@ class FirebaseAuthRepository(
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance(),
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) : AuthRepository {
+
     override fun isUserLoggedIn(): Boolean {
         return firebaseAuth.currentUser != null
     }
@@ -29,6 +36,10 @@ class FirebaseAuthRepository(
     override fun isCurrentUserGoogleAccount(): Boolean {
         return firebaseAuth.currentUser?.providerData
             ?.any { it.providerId == GoogleAuthProvider.PROVIDER_ID } == true
+    }
+
+    override fun getCurrentUserEmail(): String? {
+        return firebaseAuth.currentUser?.email
     }
 
     override fun logout() {
@@ -72,13 +83,89 @@ class FirebaseAuthRepository(
     }
 
     override suspend fun updatePassword(newPassword: String) {
-        val user = firebaseAuth.currentUser ?: throw IllegalArgumentException("Tài khoản chưa đăng nhập")
+        val user = firebaseAuth.currentUser ?: throw AuthException(R.string.error_unknown)
         user.updatePassword(newPassword).await()
     }
 
     override suspend fun verifyPasswordResetCode(code: String): String {
         return firebaseAuth.verifyPasswordResetCode(code).await()
     }
+
+    override suspend fun deleteCurrentUser() {
+        firebaseAuth.currentUser?.delete()?.await()
+    }
+
+    // ── Phone Auth ───────────────────────────────────────────────────────
+
+    private var autoVerifiedCredential: PhoneAuthCredential? = null
+
+    override suspend fun sendPhoneVerificationCode(
+        phoneNumber: String,
+        activity: Any
+    ): String = suspendCancellableCoroutine { continuation ->
+        val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                autoVerifiedCredential = credential
+                if (continuation.isActive) {
+                    continuation.resume("AUTO_VERIFIED")
+                }
+            }
+
+            override fun onVerificationFailed(exception: com.google.firebase.FirebaseException) {
+                if (continuation.isActive) {
+                    continuation.resumeWithException(exception.toAuthException())
+                }
+            }
+
+            override fun onCodeSent(
+                verificationId: String,
+                token: PhoneAuthProvider.ForceResendingToken
+            ) {
+                if (continuation.isActive) {
+                    continuation.resume(verificationId)
+                }
+            }
+        }
+
+        val options = PhoneAuthOptions.newBuilder(firebaseAuth)
+            .setPhoneNumber(phoneNumber)
+            .setTimeout(OTP_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .setActivity(activity as Activity)
+            .setCallbacks(callbacks)
+            .build()
+
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    override suspend fun verifyPhoneOtp(verificationId: String, code: String) {
+        val credential = if (verificationId == "AUTO_VERIFIED" && autoVerifiedCredential != null) {
+            autoVerifiedCredential!!
+        } else {
+            PhoneAuthProvider.getCredential(verificationId, code)
+        }
+        firebaseAuth.signInWithCredential(credential).await()
+        autoVerifiedCredential = null
+    }
+
+    override suspend fun linkPhoneToCurrentUser(verificationId: String, code: String) {
+        val credential = if (verificationId == "AUTO_VERIFIED" && autoVerifiedCredential != null) {
+            autoVerifiedCredential!!
+        } else {
+            PhoneAuthProvider.getCredential(verificationId, code)
+        }
+        val user = firebaseAuth.currentUser ?: throw AuthException(R.string.error_unknown)
+        user.linkWithCredential(credential).await()
+        autoVerifiedCredential = null
+    }
+
+    override suspend fun resetPasswordAfterPhoneVerification(newPassword: String) {
+        val user = firebaseAuth.currentUser ?: throw AuthException(R.string.error_unknown)
+        user.updatePassword(newPassword).await()
+        // Sign out so the user must log back in with the new password
+        firebaseAuth.signOut()
+    }
+
+    // ── Helpers ──────────────────────────────────────────────────────────
 
     private suspend fun seedCurrentUserProfile() {
         val user = firebaseAuth.currentUser ?: return
@@ -97,6 +184,10 @@ class FirebaseAuthRepository(
             )
             .await()
     }
+
+    private companion object {
+        const val OTP_TIMEOUT_SECONDS = 60L
+    }
 }
 
 private suspend fun <T> Task<T>.await(): T = suspendCancellableCoroutine { continuation ->
@@ -109,16 +200,18 @@ private suspend fun <T> Task<T>.await(): T = suspendCancellableCoroutine { conti
     }
 }
 
-private fun Exception?.toAuthException(): IllegalArgumentException {
-    val message = when (this) {
-        is FirebaseAuthInvalidUserException -> "Tài khoản không tồn tại hoặc đã bị vô hiệu hóa"
-        is FirebaseAuthInvalidCredentialsException -> "Email hoặc mật khẩu không đúng"
-        is FirebaseAuthUserCollisionException -> "Email này đã được đăng ký"
-        is FirebaseAuthWeakPasswordException -> "Mật khẩu quá yếu, vui lòng dùng ít nhất 6 ký tự"
-        is FirebaseNetworkException -> "Không có kết nối mạng, vui lòng thử lại"
-        is FirebaseTooManyRequestsException -> "Bạn thao tác quá nhiều lần, vui lòng thử lại sau"
-        is FirebaseAuthRecentLoginRequiredException -> "Vui lòng đăng nhập lại trước khi xóa tài khoản"
-        else -> this?.message ?: "Không thể xác thực tài khoản"
+private fun Exception?.toAuthException(): AuthException {
+    val stringRes = when (this) {
+        is FirebaseAuthInvalidUserException -> R.string.error_invalid_user
+        is FirebaseAuthInvalidCredentialsException -> R.string.error_invalid_credentials
+        is FirebaseAuthUserCollisionException -> R.string.error_user_collision
+        is FirebaseAuthWeakPasswordException -> R.string.error_weak_password
+        is FirebaseAuthRecentLoginRequiredException -> R.string.error_recent_login_required
+        is FirebaseNetworkException -> R.string.error_network
+        is FirebaseTooManyRequestsException -> R.string.error_too_many_requests
+        else -> R.string.error_unknown
     }
-    return IllegalArgumentException(message)
+    return AuthException(stringRes, this?.message)
 }
+
+class AuthException(val messageResId: Int, override val message: String? = null) : Exception()

@@ -58,7 +58,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.onboardingFragment,
                 R.id.loginFragment,
                 R.id.registerFragment,
-                R.id.inputEmailFragment
+                R.id.inputEmailFragment,
+                R.id.otpVerificationFragment,
+                R.id.newPasswordFragment
             )
             val isAccountDetailScreen = destination.id in setOf(
                 R.id.profileFragment,

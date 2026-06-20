@@ -92,7 +92,7 @@ object AppContainer {
         GetSpendingReportUseCase(transactionRepository)
     }
 
-    private val authRepository: AuthRepository by lazy {
+    val authRepository: AuthRepository by lazy {
         FirebaseAuthRepository()
     }
 
@@ -135,6 +135,24 @@ object AppContainer {
     val updatePasswordUseCase: UpdatePasswordUseCase by lazy {
         UpdatePasswordUseCase(authRepository)
     }
+
+    // --- NEW PHONE AUTH USE CASES ---
+    val sendPhoneOtpUseCase: com.example.moneytracker.domain.usecase.SendPhoneOtpUseCase by lazy {
+        com.example.moneytracker.domain.usecase.SendPhoneOtpUseCase(authRepository)
+    }
+
+    val verifyPhoneOtpUseCase: com.example.moneytracker.domain.usecase.VerifyPhoneOtpUseCase by lazy {
+        com.example.moneytracker.domain.usecase.VerifyPhoneOtpUseCase(authRepository)
+    }
+
+    val resetPasswordWithPhoneUseCase: com.example.moneytracker.domain.usecase.ResetPasswordWithPhoneUseCase by lazy {
+        com.example.moneytracker.domain.usecase.ResetPasswordWithPhoneUseCase(authRepository)
+    }
+
+    val linkPhoneUseCase: com.example.moneytracker.domain.usecase.LinkPhoneUseCase by lazy {
+        com.example.moneytracker.domain.usecase.LinkPhoneUseCase(authRepository)
+    }
+    // --------------------------------
 
     private val sharedPrefsManager: SharedPrefsManager by lazy {
         SharedPrefsManager(appContext)
@@ -231,4 +249,22 @@ object AppContainer {
     val setHighValueProtectionEnabledUseCase: SetHighValueProtectionEnabledUseCase by lazy {
         SetHighValueProtectionEnabledUseCase(securitySettingsRepository)
     }
+
+    // --- NEW VIEW MODEL FACTORIES ---
+    val otpVerificationViewModelFactory by lazy {
+        com.example.moneytracker.presentation.viewmodel.OtpVerificationViewModel.Factory(
+            verifyPhoneOtpUseCase,
+            sendPhoneOtpUseCase,
+            linkPhoneUseCase
+        )
+    }
+
+
+    val newPasswordViewModelFactory by lazy {
+        com.example.moneytracker.presentation.viewmodel.NewPasswordViewModel.Factory(
+            resetPasswordWithPhoneUseCase,
+            loginUseCase
+        )
+    }
+    // --------------------------------
 }

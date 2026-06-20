@@ -45,7 +45,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:contentDescription="@null"
-        android:src="@drawable/ic_mail"
+        android:src="@drawable/ic_arrow_back"
         app:layout_constraintBottom_toBottomOf="@+id/iconBackground"
         app:layout_constraintEnd_toEndOf="@+id/iconBackground"
         app:layout_constraintStart_toStartOf="@+id/iconBackground"
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:gravity="center"
-        android:text="@string/recovery_phone_title"
+        android:text="@string/otp_title"
         android:textColor="@color/text_primary"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -65,30 +65,74 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iconBackground" />
 
-    <EditText
-        android:id="@+id/etInput"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/bg_input_field"
-        android:hint="@string/hint_phone_or_email"
-        android:inputType="text"
-        android:paddingHorizontal="16dp"
-        android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_secondary"
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/otp_subtitle"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHeader" />
 
+    <EditText
+        android:id="@+id/pinViewOtp"
+        android:layout_width="240dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_input_field"
+        android:cursorVisible="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="6"
+        android:paddingHorizontal="16dp"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSubtitle" />
+
+    <TextView
+        android:id="@+id/tvCountdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/resend_countdown"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pinViewOtp" />
+
     <Button
-        android:id="@+id/btnConfirm"
+        android:id="@+id/btnResend"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/btn_resend"
+        android:textAllCaps="false"
+        android:textColor="@color/primary_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCountdown" />
+
+    <Button
+        android:id="@+id/btnVerify"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/primary_color"
-        android:text="@string/confirm"
+        android:text="@string/btn_verify"
         android:textAllCaps="false"
         android:textColor="@color/text_primary"
         android:textSize="18sp"
@@ -97,7 +141,7 @@
         app:icon="@drawable/ic_arrow_right"
         app:iconGravity="textEnd"
         app:iconTint="@color/text_primary"
-        app:layout_constraintTop_toBottomOf="@+id/etInput" />
+        app:layout_constraintTop_toBottomOf="@+id/btnResend" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -107,17 +151,6 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnConfirm" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/helpCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="24dp"
-        app:cardBackgroundColor="@color/surface_variant"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btnVerify" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
