@@ -42,20 +42,6 @@
     <string name="title_export1">Export data</string>
     <string name="text_term">Terms &amp; policies</string>
     <string name="text_term2">Application policies &amp; terms</string>
-    <string name="about_changelog_title">Changelog</string>
-    <string name="about_changelog_body">v2.5.0 - Current\n• Live exchange rates with offline cache\n• Budget alerts and saving goals\n• Export reports to CSV/PDF\n\nv2.4.0\n• Dashboard, history, reports, profile, and security center improvements</string>
-    <string name="about_rate_title">Rate Financier</string>
-    <string name="about_rate_body">4.9\nThanks for helping us improve the app.</string>
-    <string name="about_legal_title">Legal &amp; privacy</string>
-    <string name="about_privacy_title">Privacy policy</string>
-    <string name="about_privacy_message">Financier stores only the data needed to operate your account, protect your profile, and keep your transaction history available across sessions.</string>
-    <string name="about_terms_title">Terms of use</string>
-    <string name="about_terms_message">By using Financier, you are responsible for the financial information you enter and for keeping your sign-in credentials secure.</string>
-    <string name="about_support_title">Need support?</string>
-    <string name="about_support_action">Email support</string>
-    <string name="about_support_message">Support email: support@financier.app</string>
-    <string name="about_rate_thanks">Thanks for rating Financier</string>
-    <string name="about_exchange_attribution">Exchange rates by ExchangeRate-API</string>
     <string name="text_logout">Log out</string>
     <string name="settings_section_account">Account</string>
     <string name="settings_section_app">App</string>
@@ -119,7 +105,7 @@
     <string name="security_authentication">Authentication</string>
     <string name="security_change_password">Change password</string>
     <string name="security_change_password_subtitle">Send a password update email through Firebase</string>
-    <string name="security_password_reset_sending">Sending password reset email…</string>
+    <string name="security_password_reset_sending">Sending password reset email...</string>
     <string name="security_new_password">New password</string>
     <string name="security_confirm_new_password">Confirm new password</string>
     <string name="security_confirm_password_change">Confirm password change</string>
@@ -158,9 +144,6 @@
     <string name="export_report_printing">Preparing print...</string>
     <string name="export_report_print_pdf_only">Printing is available for PDF reports only</string>
     <string name="export_report_print_error">Could not open print screen</string>
-    <string name="export_report_share_action">Share report</string>
-    <string name="export_report_share_title">Share report</string>
-    <string name="export_report_share_error">Could not share report</string>
     <string name="reports_no_spending">No spending yet</string>
     <string name="report_period_week">Week</string>
     <string name="report_period_month">Month</string>
@@ -195,7 +178,7 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_save">Save</string>
     <string name="action_delete">Delete</string>
-    <string name="action_ok">OK</string>
+    <string name="add_money">Add money</string>
     <string name="budget_limit_dialog_subtitle">Set a monthly cap for one spending type.</string>
     <string name="budget_limit_add_title">Add spending limit</string>
     <string name="budget_limit_edit_title">Edit spending limit</string>
@@ -228,7 +211,6 @@
     <string name="security_app_lock_confirm_title">Unlock Money Tracker</string>
     <string name="security_app_lock_confirm_subtitle">Confirm your device security to protect your financial data</string>
     <string name="register_email_verification_sent">Account created. Check your email to verify it before enabling 2FA.</string>
-    <string name="add_money">Add money</string>
     <string name="add_transaction_saved">Transaction saved</string>
     <string name="notification_budget_channel_name">Budget alerts</string>
     <string name="notification_budget_channel_description">Alerts when spending exceeds a budget limit</string>
@@ -249,6 +231,24 @@
     <string name="notification_weekly_digest_message_with_change">This week your savings changed by %1$d%% compared with last week.</string>
     <string name="notification_monthly_digest_title">Monthly spending summary</string>
     <string name="notification_monthly_digest_message">This month you spent %1$s. Open Money Tracker for the full breakdown.</string>
+    <string name="about_changelog_title">Changelog</string>
+    <string name="about_changelog_body">v2.5.0 - Current\n• Live exchange rates with offline cache\n• Budget alerts and saving goals\n• Export reports to CSV/PDF\n\nv2.4.0\n• Dashboard, history, reports, profile, and security center improvements</string>
+    <string name="about_rate_title">Rate Financier</string>
+    <string name="about_rate_body">4.9\nThanks for helping us improve the app.</string>
+    <string name="about_legal_title">Legal &amp; privacy</string>
+    <string name="about_privacy_title">Privacy policy</string>
+    <string name="about_privacy_message">Financier stores only the data needed to operate your account, protect your profile, and keep your transaction history available across sessions.</string>
+    <string name="about_terms_title">Terms of use</string>
+    <string name="about_terms_message">By using Financier, you are responsible for the financial information you enter and for keeping your sign-in credentials secure.</string>
+    <string name="about_support_title">Need support?</string>
+    <string name="about_support_action">Email support</string>
+    <string name="about_support_message">Support email: support@financier.app</string>
+    <string name="about_rate_thanks">Thanks for rating Financier</string>
+    <string name="about_exchange_attribution">Exchange rates by ExchangeRate-API</string>
+    <string name="export_report_share_action">Share report</string>
+    <string name="export_report_share_title">Share report</string>
+    <string name="export_report_share_error">Could not share report</string>
+    <string name="action_ok">OK</string>
     <string name="balance_rate_saved_placeholder">Saved 0.0% of income</string>
     <string name="dashboard_zero_balance">$0.00</string>
     <string name="transaction_type_income">INCOME</string>
@@ -267,7 +267,7 @@
     <string name="budget_limit_preview">Limit: 5,000,000 VND</string>
     <string name="budget_percent_preview">80%</string>
     <string name="budget_spent_preview">Spent: 4,000,000 VND</string>
-    <!-- Strings merged from master -->
+    <!-- Strings synchronized across locales -->
     <string name="phone">Phone number</string>
     <string name="recovery_phone_title">Enter phone number</string>
     <string name="security_two_factor">Two-factor authentication (2FA)\nVerification code by message or app</string>
@@ -319,7 +319,8 @@
     <string name="error_network">No network connection, please try again</string>
     <string name="error_too_many_requests">Too many requests, please try again later</string>
     <string name="error_unknown">Authentication failed</string>
-    <string name="error_recent_login_required">Phiên đăng nhập đã cũ. Vui lòng Đăng xuất và đăng nhập lại để thực hiện thao tác này.</string>
+    <string name="confirm">Confirm</string>
+    <!-- Strings synchronized across locales -->
     <string name="otp_title">Verification Code</string>
     <string name="otp_subtitle">Code sent to %1$s</string>
     <string name="resend_countdown">Resend in %1$d s</string>
@@ -330,7 +331,7 @@
     <string name="hint_new_password">New password</string>
     <string name="hint_confirm_new_password">Confirm new password</string>
     <string name="btn_reset_password">Reset Password</string>
-    <string name="hint_phone_or_email">Email or Phone number</string>
+    <string name="hint_phone_or_email">Email or phone number</string>
     <string name="hint_register_phone">Phone number</string>
     <string name="email_reset_sent">Verification code sent</string>
     <string name="password_reset_done">Password reset successfully</string>
@@ -338,5 +339,5 @@
     <string name="phone_linked_success">Phone number linked successfully</string>
     <string name="error_reset_password_failed">Failed to reset password</string>
     <string name="error_verify_failed">Verification failed</string>
-    <string name="confirm">Confirm</string>
+    <string name="error_recent_login_required">Your sign-in session is old. Please sign out and sign in again to continue.</string>
 </resources>

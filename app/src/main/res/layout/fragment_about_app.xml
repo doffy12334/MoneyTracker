@@ -13,14 +13,13 @@
         android:padding="20dp"
         android:paddingBottom="120dp">
 
-        <TextView
+        <ImageView
             android:id="@+id/btnBack"
             android:layout_width="48dp"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:text="@string/export_back"
-            android:textColor="@color/primary_color"
-            android:textSize="36sp" />
+            android:layout_height="48dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/primary_color" />
 
         <FrameLayout
             android:layout_width="116dp"

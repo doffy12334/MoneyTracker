@@ -267,7 +267,7 @@
     <string name="budget_limit_preview">Limite : 5 000 000 VND</string>
     <string name="budget_percent_preview">80%</string>
     <string name="budget_spent_preview">Dépensé : 4 000 000 VND</string>
-    <!-- Strings merged from master -->
+    <!-- Strings synchronized across locales -->
     <string name="phone">Numéro de téléphone</string>
     <string name="recovery_phone_title">Entrez le numéro de téléphone</string>
     <string name="password_reset_success">Code de vérification envoyé. Veuillez vérifier vos messages.</string>
@@ -320,4 +320,24 @@
     <string name="all">Tout</string>
     <string name="filter_by_type">Filtrer par type</string>
     <string name="delete">Supprimer</string>
+    <!-- Strings synchronized across locales -->
+    <string name="otp_title">Code de vérification</string>
+    <string name="otp_subtitle">Code envoyé à %1$s</string>
+    <string name="resend_countdown">Renvoyer dans %1$d s</string>
+    <string name="btn_resend">Renvoyer le code</string>
+    <string name="btn_verify">Vérifier</string>
+    <string name="new_password_title">Nouveau mot de passe</string>
+    <string name="new_password_subtitle">Saisissez votre nouveau mot de passe</string>
+    <string name="hint_new_password">Nouveau mot de passe</string>
+    <string name="hint_confirm_new_password">Confirmer le nouveau mot de passe</string>
+    <string name="btn_reset_password">Réinitialiser le mot de passe</string>
+    <string name="hint_phone_or_email">E-mail ou numéro de téléphone</string>
+    <string name="hint_register_phone">Numéro de téléphone</string>
+    <string name="email_reset_sent">Code de vérification envoyé</string>
+    <string name="password_reset_done">Mot de passe réinitialisé</string>
+    <string name="error_invalid_otp">Code de vérification invalide</string>
+    <string name="phone_linked_success">Numéro de téléphone lié avec succès</string>
+    <string name="error_reset_password_failed">Impossible de réinitialiser le mot de passe</string>
+    <string name="error_verify_failed">Échec de la vérification</string>
+    <string name="error_recent_login_required">Votre session est trop ancienne. Veuillez vous déconnecter puis vous reconnecter.</string>
 </resources>

@@ -267,7 +267,7 @@
     <string name="budget_limit_preview">Limit: 5,000,000 VND</string>
     <string name="budget_percent_preview">80%</string>
     <string name="budget_spent_preview">Spent: 4,000,000 VND</string>
-    <!-- Strings merged from master -->
+    <!-- Strings synchronized across locales -->
     <string name="phone">Phone number</string>
     <string name="recovery_phone_title">Enter phone number</string>
     <string name="security_two_factor">Two-factor authentication (2FA)\nVerification code by message or app</string>
@@ -320,4 +320,24 @@
     <string name="error_too_many_requests">Too many requests, please try again later</string>
     <string name="error_unknown">Authentication failed</string>
     <string name="confirm">Confirm</string>
+    <!-- Strings synchronized across locales -->
+    <string name="otp_title">Verification Code</string>
+    <string name="otp_subtitle">Code sent to %1$s</string>
+    <string name="resend_countdown">Resend in %1$d s</string>
+    <string name="btn_resend">Resend Code</string>
+    <string name="btn_verify">Verify</string>
+    <string name="new_password_title">New Password</string>
+    <string name="new_password_subtitle">Enter your new password</string>
+    <string name="hint_new_password">New password</string>
+    <string name="hint_confirm_new_password">Confirm new password</string>
+    <string name="btn_reset_password">Reset Password</string>
+    <string name="hint_phone_or_email">Email or phone number</string>
+    <string name="hint_register_phone">Phone number</string>
+    <string name="email_reset_sent">Verification code sent</string>
+    <string name="password_reset_done">Password reset successfully</string>
+    <string name="error_invalid_otp">Invalid verification code</string>
+    <string name="phone_linked_success">Phone number linked successfully</string>
+    <string name="error_reset_password_failed">Failed to reset password</string>
+    <string name="error_verify_failed">Verification failed</string>
+    <string name="error_recent_login_required">Your sign-in session is old. Please sign out and sign in again to continue.</string>
 </resources>

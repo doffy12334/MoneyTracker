@@ -25,9 +25,9 @@ import com.example.moneytracker.databinding.FragmentAddTransactionBinding
 import com.example.moneytracker.di.AppContainer
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.domain.model.transaction.TransactionType
+import com.example.moneytracker.presentation.uistate.AddTransactionUiState
 import com.example.moneytracker.presentation.util.BudgetNotificationHelper
 import com.example.moneytracker.presentation.util.NotificationStateTracker
-import com.example.moneytracker.presentation.uistate.AddTransactionUiState
 import com.example.moneytracker.presentation.viewmodel.AddTransactionViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -91,7 +91,8 @@ class AddTransactionFragment : Fragment() {
     }
 
     private fun updateAmountHint() {
-        binding.etAmount.hint = "Amount (${AppContainer.getSettingsUseCase().currency.code})"
+        binding.etAmount.hint =
+            "${getString(R.string.add_transaction_amount_hint)} (${AppContainer.getSettingsUseCase().currency.code})"
     }
 
     private fun showDatePicker() {
@@ -117,7 +118,8 @@ class AddTransactionFragment : Fragment() {
         if (value.isBlank()) return null
         return runCatching {
             Calendar.getInstance().apply {
-                time = SimpleDateFormat(INPUT_DATE_PATTERN, currentLocale()).parse(value) ?: return null
+                time = SimpleDateFormat(INPUT_DATE_PATTERN, currentLocale()).parse(value)
+                    ?: return null
             }
         }.getOrNull()
     }
@@ -134,16 +136,21 @@ class AddTransactionFragment : Fragment() {
         binding.spType.adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
-            listOf(getString(R.string.add_transaction_type_placeholder)) + TransactionType.entries.map { it.name }
+            listOf(getString(R.string.add_transaction_type_placeholder)) + TransactionType.entries.map { getLocalizedTypeName(it) }
         )
         binding.spCategory.adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
-            listOf(getString(R.string.add_transaction_category_placeholder)) + TransactionCategory.entries.map { it.name }
+            listOf(getString(R.string.add_transaction_category_placeholder)) + TransactionCategory.entries.map { getLocalizedCategoryName(it) }
         )
 
         binding.spType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 if (position == 0) {
                     viewModel.onTypeCleared()
                 } else {
@@ -155,7 +162,12 @@ class AddTransactionFragment : Fragment() {
         }
 
         binding.spCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 if (position == 0) {
                     viewModel.onCategoryCleared()
                 } else {
@@ -185,7 +197,8 @@ class AddTransactionFragment : Fragment() {
     }
 
     private fun handleSavedTransaction(state: AddTransactionUiState) {
-        Toast.makeText(context, getString(R.string.add_transaction_saved), Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, getString(R.string.add_transaction_saved), Toast.LENGTH_SHORT)
+            .show()
         if (state.selectedType != TransactionType.EXPENSE || state.selectedCategory == null) {
             findNavController().navigateUp()
             return
@@ -270,4 +283,22 @@ class AddTransactionFragment : Fragment() {
         val limitAmount: Double,
         val threshold: Int
     )
+
+    private fun getLocalizedTypeName(type: TransactionType): String {
+        return when (type) {
+            TransactionType.INCOME -> getString(R.string.income)
+            TransactionType.EXPENSE -> getString(R.string.expense)
+        }
+    }
+
+    private fun getLocalizedCategoryName(category: TransactionCategory): String {
+        return when (category) {
+            TransactionCategory.FOOD -> getString(R.string.category_food)
+            TransactionCategory.TRANSPORT -> getString(R.string.category_transport)
+            TransactionCategory.SHOPPING -> getString(R.string.category_shopping)
+            TransactionCategory.SALARY -> getString(R.string.category_salary)
+            TransactionCategory.ENTERTAINMENT -> getString(R.string.category_entertainment)
+            TransactionCategory.OTHER -> getString(R.string.category_other)
+        }
+    }
 }

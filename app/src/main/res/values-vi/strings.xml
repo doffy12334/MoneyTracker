@@ -267,7 +267,7 @@
     <string name="budget_limit_preview">Giới hạn: 5.000.000 ₫</string>
     <string name="budget_percent_preview">80%</string>
     <string name="budget_spent_preview">Đã tiêu: 4.000.000 ₫</string>
-    <!-- Strings merged from master -->
+    <!-- Strings synchronized across locales -->
     <string name="phone">Số điện thoại</string>
     <string name="recovery_phone_title">Nhập số điện thoại</string>
     <string name="security_two_factor">Xác thực 2 yếu tố (2FA)\nMã xác nhận qua tin nhắn hoặc ứng dụng</string>
@@ -320,4 +320,24 @@
     <string name="error_too_many_requests">Bạn thao tác quá nhiều lần, vui lòng thử lại sau</string>
     <string name="error_unknown">Không thể xác thực tài khoản</string>
     <string name="confirm">Xác nhận</string>
+    <!-- Strings synchronized across locales -->
+    <string name="otp_title">Mã xác thực</string>
+    <string name="otp_subtitle">Mã đã được gửi tới %1$s</string>
+    <string name="resend_countdown">Gửi lại sau %1$d giây</string>
+    <string name="btn_resend">Gửi lại mã</string>
+    <string name="btn_verify">Xác thực</string>
+    <string name="new_password_title">Mật khẩu mới</string>
+    <string name="new_password_subtitle">Nhập mật khẩu mới của bạn</string>
+    <string name="hint_new_password">Mật khẩu mới</string>
+    <string name="hint_confirm_new_password">Xác nhận mật khẩu mới</string>
+    <string name="btn_reset_password">Đặt lại mật khẩu</string>
+    <string name="hint_phone_or_email">Email hoặc số điện thoại</string>
+    <string name="hint_register_phone">Số điện thoại</string>
+    <string name="email_reset_sent">Mã xác thực đã được gửi</string>
+    <string name="password_reset_done">Đặt lại mật khẩu thành công</string>
+    <string name="error_invalid_otp">Mã xác thực không hợp lệ</string>
+    <string name="phone_linked_success">Liên kết số điện thoại thành công</string>
+    <string name="error_reset_password_failed">Không thể đặt lại mật khẩu</string>
+    <string name="error_verify_failed">Xác thực thất bại</string>
+    <string name="error_recent_login_required">Phiên đăng nhập đã cũ. Vui lòng đăng xuất và đăng nhập lại để tiếp tục.</string>
 </resources>
