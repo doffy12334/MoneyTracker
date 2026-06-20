@@ -10,7 +10,8 @@
     <string name="forgot_password">Mot de passe oublié ?</string>
     <string name="password">Mot de passe</string>
     <string name="email">E-mail</string>
-    <string name="account_hint">E-mail ou nom d\'utilisateur</string>
+    <string name="phone">Numéro de téléphone</string>
+    <string name="account_hint">Numéro de téléphone</string>
     <string name="register_title">Créer un compte</string>
     <string name="confirm_password">Confirmer le mot de passe</string>
     <string name="sign_up">S\'inscrire</string>
@@ -34,8 +35,17 @@
     <string name="total_spending">DÉPENSES TOTALES</string>
     <string name="gui_ma">Renvoyer le code</string>
     <string name="hello_blank_fragment">Écran vide</string>
-    <string name="input_email">Saisissez l’e-mail de récupération</string>
-    <string name="info_version">Version 1.0</string>
+    <string name="recovery_phone_title">Entrez le numéro de téléphone</string>
+    <string name="password_reset_success">Code de vérification envoyé. Veuillez vérifier vos messages.</string>
+    <string name="error_send_code_failed">Impossible d\'envoyer le code de vérification</string>
+    <string name="error_invalid_user">Le compte n\'existe pas ou a été désactivé</string>
+    <string name="error_invalid_credentials">Numéro de téléphone ou mot de passe incorrect</string>
+    <string name="error_user_collision">Ce numéro de téléphone est déjà enregistré</string>
+    <string name="error_weak_password">Le mot de passe est trop faible, veuillez utiliser au moins 6 caractères</string>
+    <string name="error_network">Pas de connexion réseau, veuillez réessayer</string>
+    <string name="error_too_many_requests">Trop de requêtes, veuillez réessayer plus tard</string>
+    <string name="error_unknown">Échec de l\'authentification</string>
+    <string name="confirm">Confirmer</string>
     <string name="info_app">À propos de l’application</string>
     <string name="title_export">Télécharger le rapport CSV/PDF</string>
     <string name="title_export1">Exporter les données</string>
@@ -183,4 +193,5 @@
     <string name="category_salary">Salaire</string>
     <string name="category_entertainment">Divertissement</string>
     <string name="category_other">Autre</string>
+    <string name="info_version">Version 1.0</string>
 </resources>

@@ -24,12 +24,8 @@ import kotlinx.coroutines.tasks.await
 
 class SecurityCenterViewModel(
     private val getSecuritySettingsUseCase: GetSecuritySettingsUseCase,
-    private val setTwoFactorEnabledUseCase: SetTwoFactorEnabledUseCase,
     private val setBiometricEnabledUseCase: SetBiometricEnabledUseCase,
-    private val setHighValueProtectionEnabledUseCase: SetHighValueProtectionEnabledUseCase,
     private val getProfileUseCase: GetProfileUseCase,
-    private val sendPasswordResetEmailUseCase: SendPasswordResetEmailUseCase,
-    private val isCurrentUserGoogleAccountUseCase: IsCurrentUserGoogleAccountUseCase,
     private val updatePasswordUseCase: UpdatePasswordUseCase,
     private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
@@ -42,66 +38,10 @@ class SecurityCenterViewModel(
 
     fun loadSecuritySettings() {
         val settings = getSecuritySettingsUseCase()
-        _uiState.value = SecurityCenterUiState(
-            twoFactorEnabled = settings.twoFactorEnabled,
-            biometricEnabled = settings.biometricEnabled,
-            highValueProtectionEnabled = settings.highValueProtectionEnabled
-        )
-    }
-
-    fun onTwoFactorChanged(enabled: Boolean) {
-        if (!enabled) {
-            setTwoFactorEnabledUseCase(false)
-            _uiState.update {
-                it.copy(
-                    twoFactorEnabled = false,
-                    messageResId = R.string.security_two_factor_disabled,
-                    message = null,
-                    errorMessage = null
-                )
-            }
-            return
-        }
-
-        viewModelScope.launch {
-            runCatching {
-                val user = FirebaseAuth.getInstance().currentUser
-                    ?: throw IllegalStateException("Tai khoan chua dang nhap")
-                user.reload().await()
-                val refreshedUser = FirebaseAuth.getInstance().currentUser ?: user
-                if (!refreshedUser.isEmailVerified) {
-                    refreshedUser.sendEmailVerification().await()
-                    throw IllegalStateException("EMAIL_VERIFICATION_REQUIRED")
-                }
-            }.onSuccess {
-                setTwoFactorEnabledUseCase(true)
-                _uiState.update {
-                    it.copy(
-                        twoFactorEnabled = true,
-                        messageResId = R.string.security_two_factor_enabled,
-                        message = null,
-                        errorMessage = null
-                    )
-                }
-            }.onFailure { exception ->
-                setTwoFactorEnabledUseCase(false)
-                _uiState.update {
-                    it.copy(
-                        twoFactorEnabled = false,
-                        messageResId = if (exception.message == "EMAIL_VERIFICATION_REQUIRED") {
-                            R.string.security_two_factor_verify_email_first
-                        } else {
-                            null
-                        },
-                        message = null,
-                        errorMessage = if (exception.message == "EMAIL_VERIFICATION_REQUIRED") {
-                            null
-                        } else {
-                            exception.message ?: "Khong the bat xac thuc 2 yeu to"
-                        }
-                    )
-                }
-            }
+        _uiState.update {
+            it.copy(
+                biometricEnabled = settings.biometricEnabled
+            )
         }
     }
 
@@ -117,65 +57,15 @@ class SecurityCenterViewModel(
         }
     }
 
-    fun onHighValueProtectionChanged(enabled: Boolean) {
-        setHighValueProtectionEnabledUseCase(enabled)
+    fun showPasswordForm() {
+        if (_uiState.value.isPasswordResetLoading) return
         _uiState.update {
             it.copy(
-                highValueProtectionEnabled = enabled,
-                messageResId = if (enabled) R.string.security_high_value_enabled else R.string.security_high_value_disabled,
+                isPasswordFormVisible = true,
+                messageResId = null,
                 message = null,
                 errorMessage = null
             )
-        }
-    }
-
-    fun sendChangePasswordEmail() {
-        if (_uiState.value.isPasswordResetLoading) return
-        if (!isCurrentUserGoogleAccountUseCase()) {
-            _uiState.update {
-                it.copy(
-                    isPasswordFormVisible = true,
-                    messageResId = null,
-                    message = null,
-                    errorMessage = null
-                )
-            }
-            return
-        }
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    isPasswordResetLoading = true,
-                    messageResId = null,
-                    message = null,
-                    errorMessage = null
-                )
-            }
-            runCatching {
-                val email = getProfileUseCase().email
-                sendPasswordResetEmailUseCase(email)
-                logoutUseCase()
-            }.onSuccess {
-                _uiState.update {
-                    it.copy(
-                        isPasswordResetLoading = false,
-                        passwordResetSent = true,
-                        shouldLogoutAfterPasswordReset = true,
-                        messageResId = R.string.security_password_reset_sent,
-                        message = null,
-                        errorMessage = null
-                    )
-                }
-            }.onFailure { exception ->
-                _uiState.update {
-                    it.copy(
-                        isPasswordResetLoading = false,
-                        errorMessage = exception.message ?: "Khong the gui email doi mat khau",
-                        messageResId = null,
-                        message = null
-                    )
-                }
-            }
         }
     }
 
@@ -238,12 +128,8 @@ class SecurityCenterViewModel(
 
     class Factory(
         private val getSecuritySettingsUseCase: GetSecuritySettingsUseCase,
-        private val setTwoFactorEnabledUseCase: SetTwoFactorEnabledUseCase,
         private val setBiometricEnabledUseCase: SetBiometricEnabledUseCase,
-        private val setHighValueProtectionEnabledUseCase: SetHighValueProtectionEnabledUseCase,
         private val getProfileUseCase: GetProfileUseCase,
-        private val sendPasswordResetEmailUseCase: SendPasswordResetEmailUseCase,
-        private val isCurrentUserGoogleAccountUseCase: IsCurrentUserGoogleAccountUseCase,
         private val updatePasswordUseCase: UpdatePasswordUseCase,
         private val logoutUseCase: LogoutUseCase
     ) : ViewModelProvider.Factory {
@@ -252,12 +138,8 @@ class SecurityCenterViewModel(
             if (modelClass.isAssignableFrom(SecurityCenterViewModel::class.java)) {
                 return SecurityCenterViewModel(
                     getSecuritySettingsUseCase,
-                    setTwoFactorEnabledUseCase,
                     setBiometricEnabledUseCase,
-                    setHighValueProtectionEnabledUseCase,
                     getProfileUseCase,
-                    sendPasswordResetEmailUseCase,
-                    isCurrentUserGoogleAccountUseCase,
                     updatePasswordUseCase,
                     logoutUseCase
                 ) as T

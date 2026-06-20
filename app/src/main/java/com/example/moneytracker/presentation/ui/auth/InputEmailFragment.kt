@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -24,7 +25,10 @@ class InputEmailFragment : Fragment() {
     private var _binding: FragmentInputEmailBinding? = null
     private val binding get() = _binding!!
     private val viewModel: InputEmailViewModel by viewModels {
-        InputEmailViewModel.Factory(AppContainer.sendPasswordResetEmailUseCase)
+        InputEmailViewModel.Factory(
+            AppContainer.sendPasswordResetEmailUseCase,
+            AppContainer.sendPhoneOtpUseCase
+        )
     }
 
     override fun onCreateView(
@@ -42,11 +46,11 @@ class InputEmailFragment : Fragment() {
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
-        binding.etEmail.addTextChangedListener {
-            viewModel.onEmailChanged(it.toString().trim())
+        binding.etInput.addTextChangedListener {
+            viewModel.onInputChanged(it.toString().trim())
         }
         binding.btnConfirm.setOnClickListener {
-            viewModel.sendResetEmail()
+            viewModel.sendResetCode(requireActivity())
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -60,17 +64,40 @@ class InputEmailFragment : Fragment() {
         binding.progressBar.isVisible = state.isLoading
         binding.btnConfirm.isEnabled = !state.isLoading
 
-        state.errorMessage?.let {
+        val errorMsg = if (state.errorMessageResId == R.string.error_unknown && state.errorMessage != null) {
+            state.errorMessage
+        } else {
+            state.errorMessageResId?.let { getString(it) } ?: state.errorMessage
+        }
+        
+        errorMsg?.let {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            viewModel.clearError()
         }
 
+        // Email flow: show toast and pop back to login
         if (state.isEmailSent) {
             Toast.makeText(
                 context,
-                "Email khôi phục mật khẩu đã được gửi. Vui lòng kiểm tra hộp thư.",
+                getString(R.string.email_reset_sent),
                 Toast.LENGTH_LONG
             ).show()
+            viewModel.resetNavigation()
             findNavController().popBackStack(R.id.loginFragment, false)
+        }
+
+        // Phone flow: navigate to OTP verification
+        if (state.isCodeSent && state.verificationId != null) {
+            val bundle = bundleOf(
+                OtpVerificationFragment.ARG_VERIFICATION_ID to state.verificationId,
+                OtpVerificationFragment.ARG_PHONE_NUMBER to state.input,
+                OtpVerificationFragment.ARG_FLOW_TYPE to OtpVerificationFragment.FLOW_FORGOT_PASSWORD
+            )
+            viewModel.resetNavigation()
+            findNavController().navigate(
+                R.id.action_inputEmail_to_otpVerification,
+                bundle
+            )
         }
     }
 

@@ -19,6 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.FragmentSecurityCenterBinding
 import com.example.moneytracker.di.AppContainer
+import com.example.moneytracker.presentation.ui.auth.NewPasswordFragment
 import com.example.moneytracker.presentation.uistate.SecurityCenterUiState
 import com.example.moneytracker.presentation.viewmodel.SecurityCenterViewModel
 import kotlinx.coroutines.launch
@@ -40,12 +41,8 @@ class SecurityCenterFragment : Fragment() {
     private val viewModel: SecurityCenterViewModel by viewModels {
         SecurityCenterViewModel.Factory(
             AppContainer.getSecuritySettingsUseCase,
-            AppContainer.setTwoFactorEnabledUseCase,
             AppContainer.setBiometricEnabledUseCase,
-            AppContainer.setHighValueProtectionEnabledUseCase,
             AppContainer.getProfileUseCase,
-            AppContainer.sendPasswordResetEmailUseCase,
-            AppContainer.isCurrentUserGoogleAccountUseCase,
             AppContainer.updatePasswordUseCase,
             AppContainer.logoutUseCase
         )
@@ -64,15 +61,11 @@ class SecurityCenterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnBack.setOnClickListener { findNavController().navigateUp() }
-        binding.rowChangePassword.setOnClickListener { viewModel.sendChangePasswordEmail() }
-        binding.btnConfirmNewPassword.setOnClickListener {
-            viewModel.updatePassword(
-                binding.etNewPassword.text.toString(),
-                binding.etConfirmNewPassword.text.toString()
-            )
-        }
-        binding.switchTwoFactor.setOnCheckedChangeListener { _, isChecked ->
-            if (!isRendering) viewModel.onTwoFactorChanged(isChecked)
+        binding.rowChangePassword.setOnClickListener {
+            val args = Bundle().apply {
+                putBoolean(NewPasswordFragment.ARG_IS_FROM_SECURITY_CENTER, true)
+            }
+            findNavController().navigate(R.id.action_securityCenter_to_newPassword, args)
         }
         binding.switchBiometric.setOnCheckedChangeListener { _, isChecked ->
             if (!isRendering) {
@@ -82,9 +75,6 @@ class SecurityCenterFragment : Fragment() {
                     viewModel.onBiometricChanged(false)
                 }
             }
-        }
-        binding.switchHighValue.setOnCheckedChangeListener { _, isChecked ->
-            if (!isRendering) viewModel.onHighValueProtectionChanged(isChecked)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -96,12 +86,8 @@ class SecurityCenterFragment : Fragment() {
 
     private fun renderState(state: SecurityCenterUiState) {
         isRendering = true
-        binding.switchTwoFactor.isChecked = state.twoFactorEnabled
         binding.switchBiometric.isChecked = state.biometricEnabled
-        binding.switchHighValue.isChecked = state.highValueProtectionEnabled
         isRendering = false
-        renderPasswordResetLoading(state.isPasswordResetLoading)
-        renderPasswordForm(state)
 
         val message = state.errorMessage
             ?: state.messageResId?.let { getString(it) }
@@ -114,23 +100,6 @@ class SecurityCenterFragment : Fragment() {
             viewModel.consumeLogoutEvent()
             navigateToLogin()
         }
-    }
-
-    private fun renderPasswordResetLoading(isLoading: Boolean) {
-        binding.rowChangePassword.isEnabled = !isLoading
-        binding.btnConfirmNewPassword.isEnabled = !isLoading
-        binding.etNewPassword.isEnabled = !isLoading
-        binding.etConfirmNewPassword.isEnabled = !isLoading
-        binding.rowChangePassword.alpha = if (isLoading) 0.72f else 1f
-        binding.progressChangePassword.visibility = if (isLoading) View.VISIBLE else View.GONE
-        binding.ivChangePasswordArrow.visibility = if (isLoading) View.GONE else View.VISIBLE
-        binding.tvChangePasswordSubtitle.text = getString(
-            if (isLoading) R.string.security_password_reset_sending else R.string.security_change_password_subtitle
-        )
-    }
-
-    private fun renderPasswordForm(state: SecurityCenterUiState) {
-        binding.layoutNewPassword.visibility = if (state.isPasswordFormVisible) View.VISIBLE else View.GONE
     }
 
     private fun navigateToLogin() {

@@ -10,7 +10,8 @@
     <string name="forgot_password">Quên mật khẩu?</string>
     <string name="password">Mật khẩu</string>
     <string name="email">Email</string>
-    <string name="account_hint">Email hoặc tài khoản</string>
+    <string name="phone">Số điện thoại</string>
+    <string name="account_hint">Số điện thoại</string>
     <string name="register_title">Tạo tài khoản</string>
     <string name="confirm_password">Xác nhận mật khẩu</string>
     <string name="sign_up">Đăng ký</string>
@@ -34,7 +35,7 @@
     <string name="total_spending">TỔNG CHI TIÊU</string>
     <string name="gui_ma">Gửi lại mã ngay</string>
     <string name="hello_blank_fragment">Màn hình trống</string>
-    <string name="input_email">Nhập email khôi phục mật khẩu</string>
+    <string name="recovery_phone_title">Nhập số điện thoại</string>
     <string name="info_version">Phiên bản 1.0</string>
     <string name="info_app">Thông tin ứng dụng</string>
     <string name="title_export">Tải báo cáo CSV/PDF</string>
@@ -183,4 +184,14 @@
     <string name="category_salary">Lương</string>
     <string name="category_entertainment">Giải trí</string>
     <string name="category_other">Khác</string>
+    <string name="password_reset_success">Mã xác thực đã được gửi. Vui lòng kiểm tra tin nhắn của bạn.</string>
+    <string name="error_send_code_failed">Không thể gửi mã xác thực</string>
+    <string name="error_invalid_user">Tài khoản không tồn tại hoặc đã bị vô hiệu hóa</string>
+    <string name="error_invalid_credentials">Số điện thoại hoặc mật khẩu không đúng</string>
+    <string name="error_user_collision">Số điện thoại này đã được đăng ký</string>
+    <string name="error_weak_password">Mật khẩu quá yếu, vui lòng dùng ít nhất 6 ký tự</string>
+    <string name="error_network">Không có kết nối mạng, vui lòng thử lại</string>
+    <string name="error_too_many_requests">Bạn thao tác quá nhiều lần, vui lòng thử lại sau</string>
+    <string name="error_unknown">Không thể xác thực tài khoản</string>
+    <string name="confirm">Xác nhận</string>
 </resources>
