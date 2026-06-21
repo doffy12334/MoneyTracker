@@ -81,6 +81,8 @@
         android:layout_width="0dp"
         android:layout_height="85dp"
         android:background="@drawable/bg_bottom_nav"
+        android:elevation="0dp"
+        app:elevation="0dp"
         app:itemIconSize="24dp"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
