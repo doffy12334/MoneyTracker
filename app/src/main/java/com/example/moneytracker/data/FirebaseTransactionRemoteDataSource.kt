@@ -45,6 +45,7 @@ class FirebaseTransactionRemoteDataSource(
                         ?: doc.getString("date")
                         ?: return@mapNotNull null,
                     category = category,
+                    customCategory = doc.getString("customCategory"),
                     type = type,
                     createdAt = doc.getTimestamp("createdAt")?.toDate()?.let(createdAtFormatter::format)
                         ?: doc.getString("createdAt")
@@ -65,6 +66,7 @@ class FirebaseTransactionRemoteDataSource(
             "date" to Timestamp(transactionDate),
             "createdAt" to FieldValue.serverTimestamp(),
             "category" to transaction.category.name,
+            "customCategory" to transaction.customCategory,
             "type" to transaction.type.name
         )
         firestore.collection("users")

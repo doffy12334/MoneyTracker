@@ -70,8 +70,13 @@ class AddTransactionFragment : Fragment() {
 
         setupSpinners()
         updateAmountHint()
+        
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
         binding.etName.addTextChangedListener { viewModel.onNameChanged(it.toString()) }
         binding.etAmount.addTextChangedListener { viewModel.onAmountChanged(it.toString()) }
+        binding.etCustomCategory.addTextChangedListener { viewModel.onCustomCategoryChanged(it.toString()) }
         binding.etDate.setOnClickListener { showDatePicker() }
         binding.btnSaveTransaction.setOnClickListener {
             hasHandledSavedState = false
@@ -186,8 +191,13 @@ class AddTransactionFragment : Fragment() {
             binding.etDate.setText(state.date)
         }
 
+        binding.etCustomCategory.visibility = if (state.selectedCategory == TransactionCategory.OTHER) View.VISIBLE else View.GONE
+        if (binding.etCustomCategory.text.toString() != state.customCategory) {
+            binding.etCustomCategory.setText(state.customCategory)
+        }
+
         state.errorMessage?.let {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(it), Toast.LENGTH_SHORT).show()
         }
 
         if (state.isSaved && !hasHandledSavedState) {

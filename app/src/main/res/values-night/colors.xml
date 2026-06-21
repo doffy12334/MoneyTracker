@@ -7,7 +7,7 @@
     <color name="text_primary">#F2F3F7</color>
     <color name="text_secondary">#B7B9C9</color>
     <color name="text_tertiary">#8E90A3</color>
-    <color name="inverse_text">#1A1B2E</color>
+    <color name="inverse_text">#FFFFFF</color>
     <color name="divider_color">#3A3954</color>
     <color name="input_background">#2E2D47</color>
     <color name="input_stroke">#3A3954</color>

@@ -4,10 +4,12 @@ import com.example.moneytracker.domain.model.transaction.Transaction
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.domain.model.transaction.TransactionType
 import com.example.moneytracker.domain.repository.TransactionRepository
+import com.example.moneytracker.domain.exception.AppException
+import com.example.moneytracker.R
+import java.util.UUID
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.util.UUID
 
 class AddTransactionUseCase(
     private val transactionRepository: TransactionRepository
@@ -17,11 +19,12 @@ class AddTransactionUseCase(
         amount: Double,
         date: String,
         category: TransactionCategory,
+        customCategory: String? = null,
         type: TransactionType
     ) {
-        require(name.isNotBlank()) { "Ten giao dich khong duoc de trong" }
-        require(amount > 0.0) { "So tien phai lon hon 0" }
-        require(date.isNotBlank()) { "Ngay giao dich khong duoc de trong" }
+        if (name.isBlank()) throw AppException(R.string.error_empty_transaction_name)
+        if (amount <= 0.0) throw AppException(R.string.error_amount_must_be_positive)
+        if (date.isBlank()) throw AppException(R.string.error_empty_transaction_date)
 
         transactionRepository.addTransaction(
             Transaction(
@@ -30,6 +33,7 @@ class AddTransactionUseCase(
                 amount = amount,
                 date = date.trim(),
                 category = category,
+                customCategory = customCategory?.trim()?.takeIf { it.isNotBlank() },
                 type = type,
                 createdAt = SimpleDateFormat(CREATED_AT_PATTERN, Locale.US).format(Date())
             )

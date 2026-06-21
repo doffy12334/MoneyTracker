@@ -58,6 +58,7 @@ class SharedPreferencesTransactionLocalDataSource(
                         .put("date", transaction.date)
                         .put("createdAt", transaction.createdAt)
                         .put("category", transaction.category.name)
+                        .put("customCategory", transaction.customCategory ?: JSONObject.NULL)
                         .put("type", transaction.type.name)
                 )
             }
@@ -74,6 +75,7 @@ class SharedPreferencesTransactionLocalDataSource(
                 value = optString("category"),
                 defaultValue = TransactionCategory.OTHER
             ),
+            customCategory = optString("customCategory", "").takeIf { it.isNotBlank() && it != "null" },
             type = enumValueOrDefault(
                 value = optString("type"),
                 defaultValue = TransactionType.EXPENSE

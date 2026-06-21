@@ -251,12 +251,13 @@ Current behavior:
 - `SharedPreferencesTransactionLocalDataSource` keeps a per-user local cache and guest fallback.
 - `TransactionRepositoryImp` merges remote and local data, pushes local-only entries, and falls back to local data if remote fetch fails.
 - Dashboard, History, Reports, and Export all read through `TransactionRepository`.
+- Multi-currency support is integrated via `OpenExchangeRateRepository` and `AppCurrency`.
 
 Current flow:
 
 ```text
-Dashboard -> Add Transaction -> Save -> navigate back -> Dashboard refreshes
-History -> loads transactions -> supports text search by name/category
+Dashboard -> Add Transaction -> Select Date/Category -> Budget Notification Check -> Save -> navigate back
+History -> loads transactions -> supports swipe-to-delete, text search, Date filters (Weekly/Monthly/Yearly), Type filters (Income/Expense)
 Reports -> groups expense transactions by category
 Export -> exports current repository data to internal app files
 ```
@@ -456,37 +457,19 @@ item_terms.xml
 
 ## Recommended Next Work Order
 
-1. Add persistent transaction storage.
-   - Firestore if cloud sync across devices is required.
-   - Room if offline-first local persistence is required.
+1. Add persistent transaction storage (Room Database).
+   - Currently, local persistence uses `SharedPreferences` which is not scalable. Migrate `Transaction`, `Budget`, and `SavingGoal` to Room.
 
-2. Improve AddTransaction.
-   - Date picker
-   - Category UI
-   - Better validation
-   - Currency formatting
+2. Edit Transaction functionality.
+   - History currently supports swipe-to-delete, but editing an existing transaction is missing.
 
-3. Improve History.
-   - filter by income/expense
-   - filter by category/date/month
-   - transaction detail screen
-   - delete/edit transaction
+3. Multiple Wallets/Accounts.
+   - Support for managing different sources of funds (e.g., Cash, Bank, Credit Card).
 
-4. Improve Dashboard.
-   - monthly income
-   - monthly expense
-   - real balance from persisted data
-   - recent transactions
-
-5. Improve Reports and Export.
+4. Improve Reports and Export.
    - monthly income/expense chart
-   - file sharing/opening for exported CSV/PDF
+   - file sharing/opening UX for exported CSV/PDF files
    - better empty states
-
-6. Improve Budget.
-   - budget model/entity
-   - monthly budget by category
-   - progress and warning
 
 ## Coding Conventions To Keep
 
@@ -523,6 +506,11 @@ viewLifecycleOwner.lifecycleScope.launch {
     }
 }
 ```
+
+Preferred Error Handling pattern (i18n safe):
+- Throw `AppException(@StringRes val messageResId: Int)` in `UseCase`.
+- Catch `AppException` in `ViewModel` and set the resource ID to `UiState`'s `errorMessage` (type `Int?`).
+- In `Fragment`, use `getString(state.errorMessage)` to display the error.
 
 Avoid:
 - repository implementation in `domain`

@@ -97,6 +97,7 @@ class BudgetFragment : Fragment() {
         savingGoalAdapter = SavingGoalAdapter(
             onEdit = { showSavingGoalDialog(it) },
             onDeposit = { showDepositDialog(it) },
+            onWithdraw = { showWithdrawDialog(it) },
             onDelete = { confirmDeleteSavingGoal(it) }
         )
 
@@ -124,7 +125,13 @@ class BudgetFragment : Fragment() {
 
     private fun renderState(state: BudgetUiState) {
         when (state) {
-            BudgetUiState.Loading -> renderOverview(BudgetOverview(0.0, 0.0, emptyList(), emptyList()))
+            BudgetUiState.Loading -> renderOverview(
+                BudgetOverview(
+                    0.0,
+                    0.0,
+                    emptyList(),
+                    emptyList()))
+
             is BudgetUiState.Success -> renderOverview(state.overview)
             is BudgetUiState.Error -> {
                 renderOverview(BudgetOverview(0.0, 0.0, emptyList(), emptyList()))
@@ -168,15 +175,20 @@ class BudgetFragment : Fragment() {
                 android.R.layout.simple_spinner_dropdown_item,
                 TransactionCategory.entries.map { it.localizedName() }
             )
-            spCategory.setSelection(TransactionCategory.entries.indexOf(item?.category ?: TransactionCategory.FOOD))
+            spCategory.setSelection(
+                TransactionCategory.entries.indexOf(
+                    item?.category ?: TransactionCategory.FOOD))
             etAmount.hint = getString(R.string.budget_limit_amount_hint, appCurrency.code)
-            etAmount.setText(item?.limitAmount?.takeIf { it > 0.0 }?.let { appCurrency.fromVnd(it).toPlainAmount() }.orEmpty())
+            etAmount.setText(item?.limitAmount?.takeIf { it > 0.0 }
+                ?.let { appCurrency.fromVnd(it).toPlainAmount() }
+                .orEmpty())
         }
         val dialog = createThemedDialog(dialogBinding.root)
         dialogBinding.btnCancel.setOnClickListener { dialog.dismiss() }
         dialogBinding.btnSave.setOnClickListener {
             val amount = dialogBinding.etAmount.text.toString().toDoubleOrNull() ?: 0.0
-            val category = TransactionCategory.entries[dialogBinding.spCategory.selectedItemPosition]
+            val category =
+                TransactionCategory.entries[dialogBinding.spCategory.selectedItemPosition]
             viewModel.saveBudgetLimit(category, appCurrency.toVnd(amount))
             dialog.dismiss()
         }
@@ -189,10 +201,16 @@ class BudgetFragment : Fragment() {
                 if (item == null) R.string.saving_wallet_add_title else R.string.saving_wallet_edit_title
             )
             etTitle.setText(item?.goal?.title.orEmpty())
-            etTargetAmount.hint = getString(R.string.saving_wallet_target_amount_hint, appCurrency.code)
-            etTargetAmount.setText(item?.goal?.targetAmount?.takeIf { it > 0.0 }?.let { appCurrency.fromVnd(it).toPlainAmount() }.orEmpty())
-            etCurrentAmount.hint = getString(R.string.saving_wallet_saved_amount_hint, appCurrency.code)
-            etCurrentAmount.setText(item?.goal?.currentAmount?.takeIf { it > 0.0 }?.let { appCurrency.fromVnd(it).toPlainAmount() }.orEmpty())
+            etTargetAmount.hint =
+                getString(R.string.saving_wallet_target_amount_hint, appCurrency.code)
+            etTargetAmount.setText(item?.goal?.targetAmount?.takeIf { it > 0.0 }
+                ?.let { appCurrency.fromVnd(it).toPlainAmount() }
+                .orEmpty())
+            etCurrentAmount.hint =
+                getString(R.string.saving_wallet_saved_amount_hint, appCurrency.code)
+            etCurrentAmount.setText(item?.goal?.currentAmount?.takeIf { it > 0.0 }
+                ?.let { appCurrency.fromVnd(it).toPlainAmount() }
+                .orEmpty())
         }
         val dialog = createThemedDialog(dialogBinding.root)
         dialogBinding.btnCancel.setOnClickListener { dialog.dismiss() }
@@ -200,8 +218,12 @@ class BudgetFragment : Fragment() {
             viewModel.saveSavingGoal(
                 id = item?.goal?.id,
                 title = dialogBinding.etTitle.text.toString(),
-                targetAmount = appCurrency.toVnd(dialogBinding.etTargetAmount.text.toString().toDoubleOrNull() ?: 0.0),
-                currentAmount = appCurrency.toVnd(dialogBinding.etCurrentAmount.text.toString().toDoubleOrNull() ?: 0.0)
+                targetAmount = appCurrency.toVnd(
+                    dialogBinding.etTargetAmount.text.toString()
+                        .toDoubleOrNull() ?: 0.0),
+                currentAmount = appCurrency.toVnd(
+                    dialogBinding.etCurrentAmount.text.toString()
+                        .toDoubleOrNull() ?: 0.0)
             )
             dialog.dismiss()
         }
@@ -217,14 +239,19 @@ class BudgetFragment : Fragment() {
                 formatMoney(item.goal.currentAmount),
                 formatMoney(item.goal.targetAmount)
             )
-            etDepositAmount.hint = getString(R.string.saving_wallet_deposit_amount_hint, appCurrency.code)
+            etDepositAmount.hint =
+                getString(R.string.saving_wallet_deposit_amount_hint, appCurrency.code)
         }
         val dialog = createThemedDialog(dialogBinding.root)
         dialogBinding.btnCancel.setOnClickListener { dialog.dismiss() }
         dialogBinding.btnDeposit.setOnClickListener {
-            val depositAmount = dialogBinding.etDepositAmount.text.toString().toDoubleOrNull() ?: 0.0
+            val depositAmount =
+                dialogBinding.etDepositAmount.text.toString().toDoubleOrNull() ?: 0.0
             if (depositAmount <= 0.0) {
-                Toast.makeText(requireContext(), R.string.amount_must_be_positive, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    R.string.amount_must_be_positive,
+                    Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             viewModel.saveSavingGoal(
@@ -238,10 +265,56 @@ class BudgetFragment : Fragment() {
         dialog.showThemed()
     }
 
+    private fun showWithdrawDialog(item: SavingGoalProgress) {
+        val dialogBinding = DialogDepositSavingBinding.inflate(layoutInflater).apply {
+            tvDialogTitle.text = getString(R.string.withdraw_money)
+            tvGoalSummary.text = getString(
+                R.string.saving_wallet_goal_summary,
+                item.goal.title,
+                formatMoney(item.goal.currentAmount),
+                formatMoney(item.goal.targetAmount)
+            )
+            etDepositAmount.hint =
+                getString(R.string.saving_wallet_withdraw_amount_hint, appCurrency.code)
+            btnDeposit.text = getString(R.string.withdraw_money)
+        }
+        val dialog = createThemedDialog(dialogBinding.root)
+        dialogBinding.btnCancel.setOnClickListener { dialog.dismiss() }
+        dialogBinding.btnDeposit.setOnClickListener {
+            val withdrawAmount =
+                dialogBinding.etDepositAmount.text.toString().toDoubleOrNull() ?: 0.0
+            if (withdrawAmount <= 0.0) {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.amount_must_be_positive,
+                    Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (appCurrency.toVnd(withdrawAmount) > item.goal.currentAmount) {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.amount_exceeds_savings,
+                    Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            viewModel.saveSavingGoal(
+                id = item.goal.id,
+                title = item.goal.title,
+                targetAmount = item.goal.targetAmount,
+                currentAmount = item.goal.currentAmount - appCurrency.toVnd(withdrawAmount)
+            )
+            dialog.dismiss()
+        }
+        dialog.showThemed()
+    }
+
     private fun confirmDeleteBudget(item: BudgetCategoryProgress) {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.budget_limit_delete_title)
-            .setMessage(getString(R.string.budget_limit_delete_message, item.category.localizedName()))
+            .setMessage(
+                getString(
+                    R.string.budget_limit_delete_message,
+                    item.category.localizedName()))
             .setPositiveButton(R.string.action_delete) { _, _ -> viewModel.deleteBudgetLimit(item.category) }
             .setNegativeButton(R.string.action_cancel, null)
             .show()

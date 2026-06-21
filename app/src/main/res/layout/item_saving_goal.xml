@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
@@ -27,14 +27,15 @@
                 android:background="@drawable/bg_circle_blue_soft"
                 android:padding="12dp"
                 android:src="@drawable/ic_wallet"
-                app:tint="@color/info_color" />
+                app:tint="@color/info_color"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_toEndOf="@id/ivGoalIcon"
                 android:layout_toStartOf="@id/btnDeleteGoal"
+                android:layout_toEndOf="@id/ivGoalIcon"
                 android:orientation="vertical">
 
                 <TextView
@@ -60,14 +61,15 @@
                 android:background="@drawable/bg_delete_button"
                 android:padding="7dp"
                 android:scaleType="center"
-                android:src="@drawable/ic_trash_red_bold" />
+                android:src="@drawable/ic_trash_red_bold"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tvGoalPercent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_below="@id/btnDeleteGoal"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/info_color"
                 android:textSize="18sp"
@@ -80,9 +82,9 @@
             android:layout_width="match_parent"
             android:layout_height="4dp"
             android:layout_marginTop="16dp"
+            android:max="100"
             android:progressBackgroundTint="@color/budget_progress_track"
-            android:progressTint="@color/info_color"
-            android:max="100" />
+            android:progressTint="@color/info_color" />
 
         <TextView
             android:id="@+id/tvGoalSavedInfo"
@@ -92,17 +94,39 @@
             android:textColor="@color/text_primary"
             android:textSize="12sp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnDepositGoal"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="@string/add_money"
-            android:textAllCaps="false"
-            android:textColor="@color/inverse_text"
-            android:textStyle="bold"
-            app:backgroundTint="@color/primary_color"
-            app:cornerRadius="24dp"
-            app:strokeWidth="0dp" />
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDepositGoal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:text="@string/add_money"
+                android:textAllCaps="false"
+                android:textColor="@color/inverse_text"
+                app:backgroundTint="@color/accent_blue"
+                app:cornerRadius="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnWithdrawGoal"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/delete_button_stroke"
+                android:text="@string/withdraw_money"
+                android:textAllCaps="false"
+                android:textColor="@color/text_primary"
+                app:cornerRadius="12dp"
+                app:strokeColor="@color/primary_color" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

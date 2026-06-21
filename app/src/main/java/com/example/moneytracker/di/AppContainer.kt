@@ -199,11 +199,11 @@ object AppContainer {
     }
 
     val saveSavingGoalUseCase: SaveSavingGoalUseCase by lazy {
-        SaveSavingGoalUseCase(budgetRepository)
+        SaveSavingGoalUseCase(budgetRepository, transactionRepository)
     }
 
     val deleteSavingGoalUseCase: DeleteSavingGoalUseCase by lazy {
-        DeleteSavingGoalUseCase(budgetRepository)
+        DeleteSavingGoalUseCase(budgetRepository, transactionRepository)
     }
 
     val getSettingsUseCase: GetSettingsUseCase by lazy {

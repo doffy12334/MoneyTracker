@@ -13,6 +13,7 @@ import com.example.moneytracker.presentation.util.CurrencyFormatter
 class SavingGoalAdapter(
     private val onEdit: (SavingGoalProgress) -> Unit,
     private val onDeposit: (SavingGoalProgress) -> Unit,
+    private val onWithdraw: (SavingGoalProgress) -> Unit,
     private val onDelete: (SavingGoalProgress) -> Unit
 ) : RecyclerView.Adapter<SavingGoalAdapter.SavingGoalViewHolder>() {
     private val items = mutableListOf<SavingGoalProgress>()
@@ -78,6 +79,7 @@ class SavingGoalAdapter(
             }
             binding.btnDeleteGoal.setOnClickListener { onDelete(item) }
             binding.btnDepositGoal.setOnClickListener { onDeposit(item) }
+            binding.btnWithdrawGoal.setOnClickListener { onWithdraw(item) }
         }
     }
 }

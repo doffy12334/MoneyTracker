@@ -9,7 +9,8 @@ data class AddTransactionUiState(
     val date: String = "",
     val selectedCategory: TransactionCategory? = null,
     val selectedType: TransactionType? = null,
+    val customCategory: String = "",
     val isSaving: Boolean = false,
-    val errorMessage: String? = null,
+    val errorMessage: Int? = null,
     val isSaved: Boolean = false
 )

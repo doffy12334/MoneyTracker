@@ -48,8 +48,14 @@ class TransactionAdapter : ListAdapter<Transaction, TransactionAdapter.ViewHolde
                 R.color.error_color
             }
 
+            val categoryName = if (item.category == TransactionCategory.OTHER && !item.customCategory.isNullOrBlank()) {
+                item.customCategory
+            } else {
+                item.category.localizedName(context)
+            }
+
             binding.tvTxName.text = item.name
-            binding.tvTxDetail.text = "${item.date} - ${item.category.name}"
+            binding.tvTxDetail.text = "${item.date} - $categoryName"
             binding.ivTxIcon.setImageResource(item.category.iconRes())
             binding.ivTxIcon.setColorFilter(ContextCompat.getColor(context, amountColor))
 
@@ -70,6 +76,17 @@ class TransactionAdapter : ListAdapter<Transaction, TransactionAdapter.ViewHolde
                 TransactionCategory.ENTERTAINMENT -> R.drawable.ic_wallet
                 TransactionCategory.OTHER -> R.drawable.ic_wallet
             }
+        }
+
+        private fun TransactionCategory.localizedName(context: android.content.Context): String {
+            return context.getString(when (this) {
+                TransactionCategory.FOOD -> R.string.category_food
+                TransactionCategory.TRANSPORT -> R.string.category_transport
+                TransactionCategory.SHOPPING -> R.string.category_shopping
+                TransactionCategory.SALARY -> R.string.category_salary
+                TransactionCategory.ENTERTAINMENT -> R.string.category_entertainment
+                TransactionCategory.OTHER -> R.string.category_other
+            })
         }
     }
 

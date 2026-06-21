@@ -66,7 +66,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.profileFragment,
                 R.id.securityCenterFragment,
                 R.id.exportReportFragment,
-                R.id.aboutAppFragment
+                R.id.aboutAppFragment,
+                R.id.addTransactionFragment
             )
             if (isAuthScreen) {
                 binding.bottomNav.fadeVisibility(View.GONE)

@@ -1,5 +1,8 @@
 package com.example.moneytracker.domain.usecase
 
+import com.example.moneytracker.domain.exception.AppException
+import com.example.moneytracker.R
+
 object AuthAccountNormalizer {
     private const val INTERNAL_ACCOUNT_DOMAIN = "moneytracker.local"
     private val EMAIL_REGEX = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
@@ -7,13 +10,13 @@ object AuthAccountNormalizer {
 
     fun normalize(account: String): String {
         val normalized = account.trim().lowercase()
-        require(normalized.isNotBlank()) { "Tài khoản không được để trống" }
+        if (normalized.isBlank()) throw AppException(R.string.error_empty_account)
         return if ("@" in normalized) {
-            require(EMAIL_REGEX.matches(normalized)) { "Email không hợp lệ" }
+            if (!EMAIL_REGEX.matches(normalized)) throw AppException(R.string.error_invalid_email)
             normalized
         } else {
-            require(USERNAME_REGEX.matches(normalized)) {
-                "Tài khoản phải có 3-32 ký tự, chỉ gồm chữ, số, dấu chấm, gạch dưới hoặc gạch ngang"
+            if (!USERNAME_REGEX.matches(normalized)) {
+                throw AppException(R.string.error_invalid_username_format)
             }
             "$normalized@$INTERNAL_ACCOUNT_DOMAIN"
         }

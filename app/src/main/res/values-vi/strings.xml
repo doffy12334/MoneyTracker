@@ -340,4 +340,8 @@
     <string name="error_reset_password_failed">Không thể đặt lại mật khẩu</string>
     <string name="error_verify_failed">Xác thực thất bại</string>
     <string name="error_recent_login_required">Phiên đăng nhập đã cũ. Vui lòng đăng xuất và đăng nhập lại để tiếp tục.</string>
+    <string name="withdraw_money">Rút tiền</string>
+    <string name="saving_wallet_withdraw_amount_hint">Số tiền rút (%s)</string>
+    <string name="amount_exceeds_savings">Số tiền rút vượt quá số dư trong ví</string>
+    <string name="add_transaction_custom_category_hint">Tên danh mục khác</string>
 </resources>

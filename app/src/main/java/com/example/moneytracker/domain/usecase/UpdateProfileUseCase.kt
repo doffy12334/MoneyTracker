@@ -3,6 +3,8 @@ package com.example.moneytracker.domain.usecase
 import com.example.moneytracker.domain.model.UserProfile
 import com.example.moneytracker.domain.model.ProfileUpdateResult
 import com.example.moneytracker.domain.repository.ProfileRepository
+import com.example.moneytracker.domain.exception.AppException
+import com.example.moneytracker.R
 
 class UpdateProfileUseCase(
     private val profileRepository: ProfileRepository
@@ -16,10 +18,10 @@ class UpdateProfileUseCase(
             avatarUri = profile.avatarUri.trim()
         )
 
-        require(normalized.fullName.isNotBlank()) { "Ho ten khong duoc de trong" }
-        require(EMAIL_REGEX.matches(normalized.email)) { "Email khong hop le" }
-        require(normalized.phone.isBlank() || PHONE_REGEX.matches(normalized.phone)) {
-            "So dien thoai khong hop le"
+        if (normalized.fullName.isBlank()) throw AppException(R.string.error_empty_full_name)
+        if (!EMAIL_REGEX.matches(normalized.email)) throw AppException(R.string.error_invalid_email)
+        if (normalized.phone.isNotBlank() && !PHONE_REGEX.matches(normalized.phone)) {
+            throw AppException(R.string.error_invalid_phone)
         }
 
         return profileRepository.updateProfile(normalized)

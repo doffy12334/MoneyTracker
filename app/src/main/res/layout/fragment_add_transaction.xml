@@ -10,11 +10,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:paddingHorizontal="24dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="120dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/primary_color" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
             android:text="@string/add_transaction_title"
             android:textColor="@color/text_primary"
             android:textSize="28sp"
@@ -74,6 +85,19 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/bg_input_field"
             android:paddingHorizontal="12dp" />
+
+        <EditText
+            android:id="@+id/etCustomCategory"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="@string/add_transaction_custom_category_hint"
+            android:inputType="textCapSentences"
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnSaveTransaction"

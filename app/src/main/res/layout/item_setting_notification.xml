@@ -11,10 +11,10 @@
     <FrameLayout
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/bg_circle_blue_soft">
+        android:background="@drawable/bg_circle_mint">
 
         <ImageView
-            android:layout_width="24dp"
+            android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_bell_outline"
@@ -38,6 +38,6 @@
         android:checked="true"
         app:thumbTint="@color/white"
         app:trackDecorationTint="@null"
-        app:trackTint="@color/switch_track_selector" />
+        app:trackTint="@color/switch_track_blue" />
 </LinearLayout>
 

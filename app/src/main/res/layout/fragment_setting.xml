@@ -51,8 +51,9 @@
                 android:paddingVertical="16dp">
 
                 <include layout="@layout/item_setting_profile" />
+
                 <include layout="@layout/item_setting_security" />
-                <include layout="@layout/item_setting_premium" />
+
             </LinearLayout>
 
             <TextView
@@ -76,8 +77,11 @@
                 android:paddingVertical="16dp">
 
                 <include layout="@layout/item_setting_notification" />
+
                 <include layout="@layout/item_setting_language" />
+
                 <include layout="@layout/item_setting_currency" />
+
                 <include layout="@layout/item_setting_theme" />
             </LinearLayout>
 
@@ -104,6 +108,7 @@
                 <include
                     android:id="@+id/rowExportData"
                     layout="@layout/item_export_data" />
+
                 <include
                     android:id="@+id/rowDeleteAccount"
                     layout="@layout/item_delete_account" />
@@ -130,6 +135,7 @@
                 android:paddingVertical="16dp">
 
                 <include layout="@layout/item_about_app" />
+
                 <include layout="@layout/item_terms" />
             </LinearLayout>
 

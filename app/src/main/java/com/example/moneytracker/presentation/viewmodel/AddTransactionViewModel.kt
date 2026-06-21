@@ -8,6 +8,8 @@ import com.example.moneytracker.domain.model.transaction.TransactionType
 import com.example.moneytracker.domain.usecase.AddTransactionUseCase
 import com.example.moneytracker.domain.usecase.GetSettingsUseCase
 import com.example.moneytracker.presentation.uistate.AddTransactionUiState
+import com.example.moneytracker.domain.exception.AppException
+import com.example.moneytracker.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -41,6 +43,10 @@ class AddTransactionViewModel(
         _uiState.update { it.copy(selectedCategory = null, isSaved = false) }
     }
 
+    fun onCustomCategoryChanged(customCategory: String) {
+        _uiState.update { it.copy(customCategory = customCategory, errorMessage = null, isSaved = false) }
+    }
+
     fun onTypeSelected(type: TransactionType) {
         _uiState.update { it.copy(selectedType = type, isSaved = false) }
     }
@@ -54,17 +60,17 @@ class AddTransactionViewModel(
         val amount = state.amount.toDoubleOrNull()
 
         if (amount == null) {
-            _uiState.update { it.copy(errorMessage = "So tien khong hop le") }
+            _uiState.update { it.copy(errorMessage = R.string.error_amount_must_be_positive) }
             return
         }
         val selectedCategory = state.selectedCategory
         if (selectedCategory == null) {
-            _uiState.update { it.copy(errorMessage = "Vui long chon danh muc") }
+            _uiState.update { it.copy(errorMessage = R.string.error_select_category) }
             return
         }
         val selectedType = state.selectedType
         if (selectedType == null) {
-            _uiState.update { it.copy(errorMessage = "Vui long chon loai giao dich") }
+            _uiState.update { it.copy(errorMessage = R.string.error_select_type) }
             return
         }
 
@@ -77,14 +83,22 @@ class AddTransactionViewModel(
                     amount = amountInVnd,
                     date = state.date,
                     category = selectedCategory,
+                    customCategory = if (selectedCategory == TransactionCategory.OTHER) state.customCategory else null,
                     type = selectedType
                 )
                 _uiState.update { it.copy(isSaving = false, isSaved = true) }
+            } catch (exception: AppException) {
+                _uiState.update {
+                    it.copy(
+                        isSaving = false,
+                        errorMessage = exception.messageResId
+                    )
+                }
             } catch (exception: Exception) {
                 _uiState.update {
                     it.copy(
                         isSaving = false,
-                        errorMessage = exception.message ?: "Khong the luu giao dich"
+                        errorMessage = R.string.error_save_failed
                     )
                 }
             }
