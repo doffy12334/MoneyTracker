@@ -18,7 +18,7 @@ class OnBoardingFragment : Fragment() {
 
     private val pages = listOf(
         OnboardingPage(
-            imageRes = R.drawable.img_intro_finance,
+            imageRes = R.drawable.ic_onboarding1,
             titleRes = R.string.onboarding_smart_finance_title,
             subtitleRes = R.string.onboarding_smart_finance_subtitle,
             buttonTextRes = R.string.onboarding_start,
@@ -27,7 +27,7 @@ class OnBoardingFragment : Fragment() {
             imagePaddingDp = 0
         ),
         OnboardingPage(
-            imageRes = R.drawable.img_finance,
+            imageRes = R.drawable.ic_onboarding2,
             titleRes = R.string.onboarding_manage_finance_title,
             subtitleRes = R.string.onboarding_manage_finance_subtitle,
             buttonTextRes = R.string.onboarding_continue,
@@ -36,7 +36,7 @@ class OnBoardingFragment : Fragment() {
             imagePaddingDp = 22
         ),
         OnboardingPage(
-            imageRes = R.drawable.img_savings_piggy,
+            imageRes = R.drawable.ic_onboarding3png,
             titleRes = R.string.onboarding_easy_saving_title,
             subtitleRes = R.string.onboarding_easy_saving_subtitle,
             buttonTextRes = R.string.onboarding_continue,
@@ -132,7 +132,8 @@ class OnBoardingFragment : Fragment() {
     }
 
     private fun renderIndicators(activeIndex: Int) {
-        val indicators = listOf(binding.indicatorFirst, binding.indicatorSecond, binding.indicatorThird)
+        val indicators =
+            listOf(binding.indicatorFirst, binding.indicatorSecond, binding.indicatorThird)
         indicators.forEachIndexed { index, indicator ->
             val isActive = index == activeIndex
             indicator.setBackgroundResource(

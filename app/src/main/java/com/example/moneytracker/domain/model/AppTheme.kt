@@ -1,11 +1,10 @@
 package com.example.moneytracker.domain.model
 
 enum class AppTheme(
-    val value: String,
-    val displayName: String
+    val value: String
 ) {
-    LIGHT("light", "Sáng"),
-    DARK("dark", "Tối");
+    LIGHT("light"),
+    DARK("dark");
 
     companion object {
         fun fromValue(value: String): AppTheme {

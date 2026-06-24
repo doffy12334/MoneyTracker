@@ -1,12 +1,11 @@
 package com.example.moneytracker.domain.model
 
 enum class AppLanguage(
-    val code: String,
-    val displayName: String
+    val code: String
 ) {
-    VIETNAMESE("vi", "Tiếng Việt"),
-    ENGLISH("en", "English"),
-    FRENCH("fr", "Français");
+    VIETNAMESE("vi"),
+    ENGLISH("en"),
+    FRENCH("fr");
 
     companion object {
         fun fromCode(code: String): AppLanguage {
