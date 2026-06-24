@@ -1,6 +1,6 @@
 package com.example.moneytracker.domain.usecase
 
-import com.example.moneytracker.domain.model.ExchangeRateCache
+import com.example.moneytracker.domain.model.exchange.ExchangeRateCache
 import com.example.moneytracker.domain.repository.ExchangeRateRepository
 
 class RefreshExchangeRatesUseCase(

@@ -1,18 +1,13 @@
 package com.example.moneytracker.domain.usecase
 
-import com.example.moneytracker.domain.model.BudgetCategoryProgress
-import com.example.moneytracker.domain.model.BudgetOverview
-import com.example.moneytracker.domain.model.SavingGoalProgress
-import com.example.moneytracker.domain.model.transaction.Transaction
+import com.example.moneytracker.domain.model.budget.BudgetCategoryProgress
+import com.example.moneytracker.domain.model.budget.BudgetOverview
+import com.example.moneytracker.domain.model.budget.SavingGoalProgress
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.domain.model.transaction.TransactionType
 import com.example.moneytracker.domain.model.transaction.isInCurrentMonth
 import com.example.moneytracker.domain.repository.BudgetRepository
 import com.example.moneytracker.domain.repository.TransactionRepository
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 import kotlin.math.roundToInt
 
 class GetBudgetOverviewUseCase(

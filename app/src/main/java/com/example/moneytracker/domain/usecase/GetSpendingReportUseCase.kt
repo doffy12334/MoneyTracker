@@ -1,8 +1,8 @@
 package com.example.moneytracker.domain.usecase
 
-import com.example.moneytracker.domain.model.ReportCategoryBreakdown
-import com.example.moneytracker.domain.model.ReportPeriod
-import com.example.moneytracker.domain.model.SpendingReportSummary
+import com.example.moneytracker.domain.model.report.ReportCategoryBreakdown
+import com.example.moneytracker.domain.model.report.ReportPeriod
+import com.example.moneytracker.domain.model.report.SpendingReportSummary
 import com.example.moneytracker.domain.model.transaction.Transaction
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.domain.model.transaction.TransactionType
@@ -61,7 +61,8 @@ class GetSpendingReportUseCase(
             ReportPeriod.WEEKLY -> transactionDate.isInSameWeek(anchorDate)
             ReportPeriod.MONTHLY ->
                 transactionDate.get(Calendar.YEAR) == anchorDate.get(Calendar.YEAR) &&
-                    transactionDate.get(Calendar.MONTH) == anchorDate.get(Calendar.MONTH)
+                        transactionDate.get(Calendar.MONTH) == anchorDate.get(Calendar.MONTH)
+
             ReportPeriod.YEARLY ->
                 transactionDate.get(Calendar.YEAR) == anchorDate.get(Calendar.YEAR)
         }
@@ -101,7 +102,7 @@ class GetSpendingReportUseCase(
             minimalDaysInFirstWeek = 4
         }
         return getWeekYear() == normalizedAnchor.getWeekYear() &&
-            get(Calendar.WEEK_OF_YEAR) == normalizedAnchor.get(Calendar.WEEK_OF_YEAR)
+                get(Calendar.WEEK_OF_YEAR) == normalizedAnchor.get(Calendar.WEEK_OF_YEAR)
     }
 
     private fun Calendar.copyAtEndOfDay(): Calendar {

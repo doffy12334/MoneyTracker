@@ -6,23 +6,23 @@ import com.example.moneytracker.domain.repository.AuthRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import kotlinx.coroutines.suspendCancellableCoroutine
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-import kotlinx.coroutines.suspendCancellableCoroutine
 
 class FirebaseAuthRepository(
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance(),
@@ -47,11 +47,16 @@ class FirebaseAuthRepository(
     }
 
     override suspend fun deleteAccount(password: String) {
-        val user = firebaseAuth.currentUser ?: throw IllegalArgumentException("Tài khoản chưa đăng nhập")
+        val user = firebaseAuth.currentUser ?: throw IllegalArgumentException(
+            "Tài khoản chưa đăng nhập")
         val email = user.email.orEmpty()
-        val hasPasswordProvider = user.providerData.any { it.providerId == EmailAuthProvider.PROVIDER_ID }
+        val hasPasswordProvider = user.providerData.any {
+            it.providerId == EmailAuthProvider.PROVIDER_ID
+        }
         if (email.isBlank() || !hasPasswordProvider) {
-            throw IllegalArgumentException("Tài khoản này không dùng mật khẩu. Vui lòng đăng nhập lại bằng Google để xóa tài khoản")
+            throw IllegalArgumentException(
+                "Tài khoản này không dùng mật khẩu. Vui lòng đăng nhập" +
+                        " lại bằng Google để xóa tài khoản")
         }
         val uid = user.uid
         val credential = EmailAuthProvider.getCredential(email, password)

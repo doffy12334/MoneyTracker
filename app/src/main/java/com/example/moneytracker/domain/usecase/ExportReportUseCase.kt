@@ -1,8 +1,8 @@
 package com.example.moneytracker.domain.usecase
 
-import com.example.moneytracker.domain.model.ExportPeriod
-import com.example.moneytracker.domain.model.ExportReportRequest
-import com.example.moneytracker.domain.model.ExportReportResult
+import com.example.moneytracker.domain.model.report.ExportPeriod
+import com.example.moneytracker.domain.model.report.ExportReportRequest
+import com.example.moneytracker.domain.model.report.ExportReportResult
 import com.example.moneytracker.domain.model.transaction.Transaction
 import com.example.moneytracker.domain.repository.ExportReportRepository
 import com.example.moneytracker.domain.repository.TransactionRepository
@@ -27,7 +27,7 @@ class ExportReportUseCase(
             val startDate = request.customStartDate?.let(::parseDate) ?: return false
             val endDate = request.customEndDate?.let(::parseDate) ?: return false
             return !transactionDate.before(startDate.startOfDay()) &&
-                !transactionDate.after(endDate.endOfDay())
+                    !transactionDate.after(endDate.endOfDay())
         }
         val transactionCalendar = Calendar.getInstance().apply { time = transactionDate }
         val targetCalendar = Calendar.getInstance().apply {
@@ -36,11 +36,13 @@ class ExportReportUseCase(
             }
         }
         return transactionCalendar.get(Calendar.YEAR) == targetCalendar.get(Calendar.YEAR) &&
-            transactionCalendar.get(Calendar.MONTH) == targetCalendar.get(Calendar.MONTH)
+                transactionCalendar.get(Calendar.MONTH) == targetCalendar.get(Calendar.MONTH)
     }
 
     private fun Transaction.parseExportDate(): Date? {
-        return parseDate(date) ?: parseDate(createdAt).takeIf { createdAt.isNotBlank() }
+        return parseDate(date) ?: parseDate(createdAt).takeIf {
+            createdAt.isNotBlank()
+        }
     }
 
     private fun parseDate(value: String): Date? {

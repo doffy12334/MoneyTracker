@@ -1,6 +1,6 @@
 package com.example.moneytracker.domain.usecase
 
-import com.example.moneytracker.domain.model.AppTheme
+import com.example.moneytracker.domain.model.settings.AppTheme
 import com.example.moneytracker.domain.repository.SettingsRepository
 
 class SetThemeUseCase(

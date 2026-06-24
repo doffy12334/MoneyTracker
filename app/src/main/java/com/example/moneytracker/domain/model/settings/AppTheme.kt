@@ -1,4 +1,5 @@
-package com.example.moneytracker.domain.model
+package com.example.moneytracker.domain.model.settings
+
 
 enum class AppTheme(
     val value: String

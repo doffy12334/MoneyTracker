@@ -1,10 +1,10 @@
 package com.example.moneytracker.domain.usecase
 
-import com.example.moneytracker.domain.model.UserProfile
-import com.example.moneytracker.domain.model.ProfileUpdateResult
-import com.example.moneytracker.domain.repository.ProfileRepository
-import com.example.moneytracker.domain.exception.AppException
 import com.example.moneytracker.R
+import com.example.moneytracker.domain.exception.AppException
+import com.example.moneytracker.domain.model.user.ProfileUpdateResult
+import com.example.moneytracker.domain.model.user.UserProfile
+import com.example.moneytracker.domain.repository.ProfileRepository
 
 class UpdateProfileUseCase(
     private val profileRepository: ProfileRepository

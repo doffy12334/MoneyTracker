@@ -1,7 +1,7 @@
 package com.example.moneytracker.domain.repository
 
-import com.example.moneytracker.domain.model.UserProfile
-import com.example.moneytracker.domain.model.ProfileUpdateResult
+import com.example.moneytracker.domain.model.user.ProfileUpdateResult
+import com.example.moneytracker.domain.model.user.UserProfile
 
 interface ProfileRepository {
     suspend fun getProfile(): UserProfile

@@ -1,6 +1,6 @@
 package com.example.moneytracker.domain.repository
 
-import com.example.moneytracker.domain.model.SecuritySettings
+import com.example.moneytracker.domain.model.settings.SecuritySettings
 
 interface SecuritySettingsRepository {
     fun getSecuritySettings(): SecuritySettings

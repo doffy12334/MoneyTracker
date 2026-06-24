@@ -3,10 +3,10 @@ package com.example.moneytracker.data
 import android.content.Context
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
-import com.example.moneytracker.domain.model.ExportFileFormat
-import com.example.moneytracker.domain.model.ExportPeriod
-import com.example.moneytracker.domain.model.ExportReportRequest
-import com.example.moneytracker.domain.model.ExportReportResult
+import com.example.moneytracker.domain.model.report.ExportFileFormat
+import com.example.moneytracker.domain.model.report.ExportPeriod
+import com.example.moneytracker.domain.model.report.ExportReportRequest
+import com.example.moneytracker.domain.model.report.ExportReportResult
 import com.example.moneytracker.domain.model.transaction.Transaction
 import com.example.moneytracker.domain.repository.ExportReportRepository
 import java.io.File

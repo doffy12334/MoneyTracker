@@ -1,7 +1,7 @@
 package com.example.moneytracker.domain.repository
 
-import com.example.moneytracker.domain.model.BudgetLimit
-import com.example.moneytracker.domain.model.SavingGoal
+import com.example.moneytracker.domain.model.budget.BudgetLimit
+import com.example.moneytracker.domain.model.budget.SavingGoal
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 
 interface BudgetRepository {

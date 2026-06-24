@@ -1,6 +1,6 @@
 package com.example.moneytracker.domain.usecase
 
-import com.example.moneytracker.domain.model.AppCurrency
+import com.example.moneytracker.domain.model.settings.AppCurrency
 import com.example.moneytracker.domain.repository.SettingsRepository
 
 class SetCurrencyUseCase(

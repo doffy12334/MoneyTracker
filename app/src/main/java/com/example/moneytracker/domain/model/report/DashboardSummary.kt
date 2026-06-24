@@ -1,4 +1,5 @@
-package com.example.moneytracker.domain.model
+package com.example.moneytracker.domain.model.report
+
 
 import com.example.moneytracker.domain.model.transaction.Transaction
 

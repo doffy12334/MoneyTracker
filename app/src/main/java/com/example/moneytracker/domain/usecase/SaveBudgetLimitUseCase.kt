@@ -1,6 +1,6 @@
 package com.example.moneytracker.domain.usecase
 
-import com.example.moneytracker.domain.model.BudgetLimit
+import com.example.moneytracker.domain.model.budget.BudgetLimit
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.domain.repository.BudgetRepository
 

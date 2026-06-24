@@ -1,6 +1,6 @@
 package com.example.moneytracker.domain.usecase
 
-import com.example.moneytracker.domain.model.AppSettings
+import com.example.moneytracker.domain.model.settings.AppSettings
 import com.example.moneytracker.domain.repository.SettingsRepository
 
 class GetSettingsUseCase(

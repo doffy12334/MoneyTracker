@@ -2,7 +2,7 @@ package com.example.moneytracker.domain.usecase
 
 import com.example.moneytracker.R
 import com.example.moneytracker.domain.exception.AppException
-import com.example.moneytracker.domain.model.SavingGoal
+import com.example.moneytracker.domain.model.budget.SavingGoal
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.domain.model.transaction.TransactionType
 import com.example.moneytracker.domain.repository.BudgetRepository
@@ -25,11 +25,11 @@ class SaveSavingGoalUseCase(
         if (title.isBlank()) throw AppException(R.string.error_empty_saving_goal_name)
         if (targetAmount <= 0.0) throw AppException(R.string.error_saving_goal_target_positive)
         if (currentAmount < 0.0) throw AppException(R.string.error_saving_goal_saved_negative)
-        
+
         val actualId = id?.takeIf { it.isNotBlank() } ?: UUID.randomUUID().toString()
         val oldGoal = budgetRepository.getSavingGoals().find { it.id == actualId }
         val difference = currentAmount - (oldGoal?.currentAmount ?: 0.0)
-        
+
         budgetRepository.saveSavingGoal(
             SavingGoal(
                 id = actualId,
@@ -38,7 +38,7 @@ class SaveSavingGoalUseCase(
                 currentAmount = currentAmount
             )
         )
-        
+
         if (difference != 0.0) {
             val dateString = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US).format(Date())
             if (difference > 0) {

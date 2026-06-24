@@ -2,8 +2,8 @@ package com.example.moneytracker.data
 
 import android.content.Context
 import androidx.core.content.edit
-import com.example.moneytracker.domain.model.BudgetLimit
-import com.example.moneytracker.domain.model.SavingGoal
+import com.example.moneytracker.domain.model.budget.BudgetLimit
+import com.example.moneytracker.domain.model.budget.SavingGoal
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.domain.repository.BudgetRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -45,10 +45,7 @@ class SharedPreferencesBudgetRepository(
         sharedPreferences.edit {
             putString(
                 currentBudgetLimitsKey(),
-                nextLimits.
-                sortedBy { it.category.name }.
-                toBudgetJsonArray().
-                toString())
+                nextLimits.sortedBy { it.category.name }.toBudgetJsonArray().toString())
         }
     }
 
@@ -56,13 +53,16 @@ class SharedPreferencesBudgetRepository(
         sharedPreferences.edit {
             putString(
                 currentBudgetLimitsKey(),
-                getBudgetLimits().filterNot { it.category == category }.toBudgetJsonArray().toString()
+                getBudgetLimits().filterNot { it.category == category }
+                    .toBudgetJsonArray()
+                    .toString()
             )
         }
     }
 
     override suspend fun getSavingGoals(): List<SavingGoal> {
-        val rawGoals = sharedPreferences.getString(currentSavingGoalsKey(), null) ?: return emptyList()
+        val rawGoals =
+            sharedPreferences.getString(currentSavingGoalsKey(), null) ?: return emptyList()
         return runCatching {
             val jsonArray = JSONArray(rawGoals)
             buildList {
@@ -76,7 +76,8 @@ class SharedPreferencesBudgetRepository(
                             id = jsonObject.optString("id", title),
                             title = title,
                             targetAmount = targetAmount,
-                            currentAmount = jsonObject.optDouble("currentAmount", 0.0).coerceAtLeast(0.0)
+                            currentAmount = jsonObject.optDouble("currentAmount", 0.0)
+                                .coerceAtLeast(0.0)
                         )
                     )
                 }

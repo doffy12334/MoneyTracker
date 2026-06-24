@@ -1,4 +1,5 @@
-package com.example.moneytracker.domain.model
+package com.example.moneytracker.domain.model.user
+
 
 data class UserProfile(
     val fullName: String,

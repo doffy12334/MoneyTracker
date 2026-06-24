@@ -1,7 +1,7 @@
 package com.example.moneytracker.data
 
 import com.example.moneytracker.data.local.SharedPrefsManager
-import com.example.moneytracker.domain.model.AppCurrency
+import com.example.moneytracker.domain.model.settings.AppCurrency
 import com.example.moneytracker.domain.repository.ExchangeRateRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

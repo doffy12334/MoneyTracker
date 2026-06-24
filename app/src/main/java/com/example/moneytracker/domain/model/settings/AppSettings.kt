@@ -1,4 +1,5 @@
-package com.example.moneytracker.domain.model
+package com.example.moneytracker.domain.model.settings
+
 
 data class AppSettings(
     val notificationsEnabled: Boolean,

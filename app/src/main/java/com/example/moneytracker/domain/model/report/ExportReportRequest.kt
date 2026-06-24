@@ -1,4 +1,5 @@
-package com.example.moneytracker.domain.model
+package com.example.moneytracker.domain.model.report
+
 
 enum class ExportPeriod {
     CURRENT_MONTH,
