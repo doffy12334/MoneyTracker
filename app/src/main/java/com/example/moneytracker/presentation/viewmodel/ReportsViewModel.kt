@@ -3,7 +3,7 @@ package com.example.moneytracker.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.moneytracker.domain.model.ReportPeriod
+import com.example.moneytracker.domain.model.report.ReportPeriod
 import com.example.moneytracker.domain.usecase.GetSpendingReportUseCase
 import com.example.moneytracker.presentation.uistate.ReportsUiState
 import kotlinx.coroutines.flow.MutableStateFlow

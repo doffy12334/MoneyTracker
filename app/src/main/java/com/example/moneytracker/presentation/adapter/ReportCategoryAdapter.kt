@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moneytracker.databinding.ItemReportCategoryBinding
-import com.example.moneytracker.domain.model.AppCurrency
-import com.example.moneytracker.domain.model.ReportCategoryBreakdown
+import com.example.moneytracker.domain.model.settings.AppCurrency
+import com.example.moneytracker.domain.model.report.ReportCategoryBreakdown
 import com.example.moneytracker.presentation.util.CurrencyFormatter
 
 class ReportCategoryAdapter : RecyclerView.Adapter<ReportCategoryAdapter.ReportCategoryViewHolder>() {

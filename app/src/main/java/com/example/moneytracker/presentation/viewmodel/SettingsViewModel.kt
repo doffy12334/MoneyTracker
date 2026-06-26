@@ -2,9 +2,9 @@ package com.example.moneytracker.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.moneytracker.domain.model.AppCurrency
-import com.example.moneytracker.domain.model.AppLanguage
-import com.example.moneytracker.domain.model.AppTheme
+import com.example.moneytracker.domain.model.settings.AppCurrency
+import com.example.moneytracker.domain.model.settings.AppLanguage
+import com.example.moneytracker.domain.model.settings.AppTheme
 import com.example.moneytracker.domain.usecase.GetSettingsUseCase
 import com.example.moneytracker.domain.usecase.LogoutUseCase
 import com.example.moneytracker.domain.usecase.RefreshExchangeRatesUseCase

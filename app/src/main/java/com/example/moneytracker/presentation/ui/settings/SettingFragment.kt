@@ -2,14 +2,14 @@ package com.example.moneytracker.presentation.ui.settings
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Bundle
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -28,9 +28,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.FragmentSettingBinding
 import com.example.moneytracker.di.AppContainer
-import com.example.moneytracker.domain.model.AppCurrency
-import com.example.moneytracker.domain.model.AppLanguage
-import com.example.moneytracker.domain.model.AppTheme
+import com.example.moneytracker.domain.model.settings.AppCurrency
+import com.example.moneytracker.domain.model.settings.AppLanguage
+import com.example.moneytracker.domain.model.settings.AppTheme
 import com.example.moneytracker.presentation.ui.activities.MainActivity
 import com.example.moneytracker.presentation.uistate.SettingsUiState
 import com.example.moneytracker.presentation.viewmodel.SettingsViewModel
@@ -54,6 +54,7 @@ class SettingFragment : Fragment() {
 
     private var appliedLanguage: AppLanguage? = null
     private var appliedTheme: AppTheme? = null
+    private var isRendering = false
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -101,10 +102,6 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        switchNotification.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.onNotificationsChanged(isChecked)
-            if (isChecked) requestNotificationPermissionIfNeeded()
-        }
         rowLanguage.setSmoothClickListener {
             showLanguageDialog()
         }
@@ -143,10 +140,27 @@ class SettingFragment : Fragment() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        switchNotification.setOnCheckedChangeListener { _, isChecked ->
+            if (!isRendering) {
+                viewModel.onNotificationsChanged(isChecked)
+                if (isChecked) requestNotificationPermissionIfNeeded()
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        switchNotification.setOnCheckedChangeListener(null)
+    }
+
     private fun renderState(state: SettingsUiState) {
+        isRendering = true
         if (switchNotification.isChecked != state.notificationsEnabled) {
             switchNotification.isChecked = state.notificationsEnabled
         }
+        isRendering = false
 
         tvLanguageValue.text = languageLabel(state.language)
         tvThemeValue.text = themeLabel(state.theme)
@@ -258,11 +272,15 @@ class SettingFragment : Fragment() {
     private fun deleteAccount(password: String) {
         viewLifecycleOwner.lifecycleScope.launch {
             rowDeleteAccount.isEnabled = false
-            Toast.makeText(requireContext(), R.string.delete_account_deleting, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.delete_account_deleting, Toast.LENGTH_SHORT)
+                .show()
             runCatching {
                 AppContainer.deleteAccountUseCase(password)
             }.onSuccess {
-                Toast.makeText(requireContext(), R.string.delete_account_success, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    R.string.delete_account_success,
+                    Toast.LENGTH_SHORT).show()
                 navigateToLogin()
             }.onFailure { throwable ->
                 rowDeleteAccount.isEnabled = true

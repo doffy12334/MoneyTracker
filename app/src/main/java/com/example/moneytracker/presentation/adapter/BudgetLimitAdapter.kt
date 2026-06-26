@@ -6,8 +6,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.ItemBudgetBinding
-import com.example.moneytracker.domain.model.AppCurrency
-import com.example.moneytracker.domain.model.BudgetCategoryProgress
+import com.example.moneytracker.domain.model.settings.AppCurrency
+import com.example.moneytracker.domain.model.budget.BudgetCategoryProgress
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.presentation.util.CurrencyFormatter
 

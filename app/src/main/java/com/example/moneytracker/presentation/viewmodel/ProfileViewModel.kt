@@ -3,7 +3,7 @@ package com.example.moneytracker.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.moneytracker.domain.model.UserProfile
+import com.example.moneytracker.domain.model.user.UserProfile
 import com.example.moneytracker.domain.usecase.GetProfileUseCase
 import com.example.moneytracker.domain.usecase.UpdateProfileUseCase
 import com.example.moneytracker.presentation.uistate.ProfileUiState

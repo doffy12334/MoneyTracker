@@ -1,10 +1,10 @@
 package com.example.moneytracker.data
 
 import com.example.moneytracker.data.local.SharedPrefsManager
-import com.example.moneytracker.domain.model.AppCurrency
-import com.example.moneytracker.domain.model.AppLanguage
-import com.example.moneytracker.domain.model.AppSettings
-import com.example.moneytracker.domain.model.AppTheme
+import com.example.moneytracker.domain.model.settings.AppCurrency
+import com.example.moneytracker.domain.model.settings.AppLanguage
+import com.example.moneytracker.domain.model.settings.AppSettings
+import com.example.moneytracker.domain.model.settings.AppTheme
 import com.example.moneytracker.domain.repository.SettingsRepository
 
 class SharedPreferencesSettingsRepository(

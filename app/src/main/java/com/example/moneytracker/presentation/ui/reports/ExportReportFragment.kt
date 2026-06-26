@@ -32,9 +32,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.FragmentExportReportBinding
 import com.example.moneytracker.di.AppContainer
-import com.example.moneytracker.domain.model.ExportFileFormat
-import com.example.moneytracker.domain.model.ExportPeriod
-import com.example.moneytracker.domain.model.ExportReportResult
+import com.example.moneytracker.domain.model.report.ExportFileFormat
+import com.example.moneytracker.domain.model.report.ExportPeriod
+import com.example.moneytracker.domain.model.report.ExportReportResult
 import com.example.moneytracker.presentation.uistate.ExportReportUiState
 import com.example.moneytracker.presentation.viewmodel.ExportReportViewModel
 import java.io.FileOutputStream

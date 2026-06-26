@@ -76,6 +76,16 @@ class SecurityCenterFragment : Fragment() {
             }
             findNavController().navigate(R.id.action_securityCenter_to_newPassword, args)
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect(::renderState)
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
         binding.switchBiometric.setOnCheckedChangeListener { _, isChecked ->
             if (!isRendering) {
                 if (isChecked) {
@@ -94,12 +104,12 @@ class SecurityCenterFragment : Fragment() {
                 }
             }
         }
+    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect(::renderState)
-            }
-        }
+    override fun onStop() {
+        super.onStop()
+        binding.switchBiometric.setOnCheckedChangeListener(null)
+        binding.switchHighValue.setOnCheckedChangeListener(null)
     }
 
     private fun renderState(state: SecurityCenterUiState) {

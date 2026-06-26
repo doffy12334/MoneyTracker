@@ -1,6 +1,8 @@
 package com.example.moneytracker.domain.model.settings
 
 
+import com.example.moneytracker.domain.model.exchange.ExchangeRateCache
+
 enum class AppCurrency(
     val code: String,
     val localeTag: String,

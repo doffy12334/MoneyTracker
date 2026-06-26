@@ -23,10 +23,10 @@ import com.example.moneytracker.databinding.DialogDepositSavingBinding
 import com.example.moneytracker.databinding.DialogSavingGoalBinding
 import com.example.moneytracker.databinding.FragmentBudgetBinding
 import com.example.moneytracker.di.AppContainer
-import com.example.moneytracker.domain.model.AppCurrency
-import com.example.moneytracker.domain.model.BudgetCategoryProgress
-import com.example.moneytracker.domain.model.BudgetOverview
-import com.example.moneytracker.domain.model.SavingGoalProgress
+import com.example.moneytracker.domain.model.settings.AppCurrency
+import com.example.moneytracker.domain.model.budget.BudgetCategoryProgress
+import com.example.moneytracker.domain.model.budget.BudgetOverview
+import com.example.moneytracker.domain.model.budget.SavingGoalProgress
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.presentation.adapter.BudgetLimitAdapter
 import com.example.moneytracker.presentation.adapter.SavingGoalAdapter

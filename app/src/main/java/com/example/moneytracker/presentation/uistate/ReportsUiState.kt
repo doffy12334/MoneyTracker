@@ -1,7 +1,7 @@
 package com.example.moneytracker.presentation.uistate
 
-import com.example.moneytracker.domain.model.ReportCategoryBreakdown
-import com.example.moneytracker.domain.model.ReportPeriod
+import com.example.moneytracker.domain.model.report.ReportCategoryBreakdown
+import com.example.moneytracker.domain.model.report.ReportPeriod
 
 data class ReportsUiState(
     val selectedPeriod: ReportPeriod = ReportPeriod.MONTHLY,

@@ -1,6 +1,6 @@
 package com.example.moneytracker.presentation.util
 
-import com.example.moneytracker.domain.model.AppCurrency
+import com.example.moneytracker.domain.model.settings.AppCurrency
 import java.text.NumberFormat
 import java.util.Currency
 import java.util.Locale

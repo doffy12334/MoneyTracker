@@ -13,7 +13,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.example.moneytracker.R
-import com.example.moneytracker.domain.model.AppCurrency
+import com.example.moneytracker.domain.model.settings.AppCurrency
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.presentation.ui.activities.MainActivity
 
@@ -89,7 +89,6 @@ class BudgetNotificationHelper(
     }
 
     private fun createChannel() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
         val channel = NotificationChannel(
             CHANNEL_ID,
             context.getString(R.string.notification_budget_channel_name),
@@ -114,10 +113,10 @@ class BudgetNotificationHelper(
 
     private fun canNotify(): Boolean {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
-            ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
+                ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun TransactionCategory.localizedName(): String {

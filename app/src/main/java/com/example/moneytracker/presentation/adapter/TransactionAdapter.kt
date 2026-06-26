@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.ItemTransactionBinding
-import com.example.moneytracker.domain.model.AppCurrency
+import com.example.moneytracker.domain.model.settings.AppCurrency
 import com.example.moneytracker.domain.model.transaction.Transaction
 import com.example.moneytracker.domain.model.transaction.TransactionCategory
 import com.example.moneytracker.domain.model.transaction.TransactionType

@@ -1,6 +1,6 @@
 package com.example.moneytracker.presentation.uistate
 
-import com.example.moneytracker.domain.model.BudgetOverview
+import com.example.moneytracker.domain.model.budget.BudgetOverview
 
 sealed interface BudgetUiState {
     data object Loading : BudgetUiState

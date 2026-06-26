@@ -6,8 +6,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.ItemSavingGoalBinding
-import com.example.moneytracker.domain.model.AppCurrency
-import com.example.moneytracker.domain.model.SavingGoalProgress
+import com.example.moneytracker.domain.model.settings.AppCurrency
+import com.example.moneytracker.domain.model.budget.SavingGoalProgress
 import com.example.moneytracker.presentation.util.CurrencyFormatter
 
 class SavingGoalAdapter(

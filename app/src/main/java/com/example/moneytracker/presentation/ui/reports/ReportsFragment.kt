@@ -19,9 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.moneytracker.R
 import com.example.moneytracker.databinding.FragmentReportsBinding
 import com.example.moneytracker.di.AppContainer
-import com.example.moneytracker.domain.model.AppCurrency
-import com.example.moneytracker.domain.model.ReportCategoryBreakdown
-import com.example.moneytracker.domain.model.ReportPeriod
+import com.example.moneytracker.domain.model.settings.AppCurrency
+import com.example.moneytracker.domain.model.report.ReportCategoryBreakdown
+import com.example.moneytracker.domain.model.report.ReportPeriod
 import com.example.moneytracker.presentation.adapter.ReportCategoryAdapter
 import com.example.moneytracker.presentation.uistate.ReportsUiState
 import com.example.moneytracker.presentation.util.CurrencyFormatter
