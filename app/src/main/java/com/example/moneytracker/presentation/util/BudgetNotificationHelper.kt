@@ -50,15 +50,21 @@ class BudgetNotificationHelper(
             .setContentIntent(mainActivityIntent())
             .build()
 
-        showNotification(NOTIFICATION_ID_BUDGET_BASE + category.ordinal + threshold, notification)
+        showNotification(
+            NOTIFICATION_ID_BUDGET_BASE + category.ordinal
+                    + threshold, notification)
     }
 
     fun showReminder(title: String, message: String, notificationId: Int) {
-        showSimpleNotification(title, message, notificationId, NotificationCompat.PRIORITY_DEFAULT)
+        showSimpleNotification(
+            title, message, notificationId,
+            NotificationCompat.PRIORITY_DEFAULT)
     }
 
     fun showDigest(title: String, message: String, notificationId: Int) {
-        showSimpleNotification(title, message, notificationId, NotificationCompat.PRIORITY_DEFAULT)
+        showSimpleNotification(
+            title, message, notificationId,
+            NotificationCompat.PRIORITY_DEFAULT)
     }
 
     private fun showSimpleNotification(
