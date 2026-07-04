@@ -1,0 +1,117 @@
+package com.example.moneytracker.presentation.auth
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.example.moneytracker.R
+import com.example.moneytracker.databinding.FragmentRegisterBinding
+import com.example.moneytracker.di.AppContainer
+import kotlinx.coroutines.launch
+
+class RegisterFragment : Fragment() {
+    private var _binding: FragmentRegisterBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: RegisterViewModel by viewModels {
+        RegisterViewModel.Factory(
+            AppContainer.registerUseCase,
+            AppContainer.sendPhoneOtpUseCase,
+            AppContainer.authRepository
+        )
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnRegister.setOnClickListener {
+            viewModel.register(
+                email = binding.etEmail.text.toString().trim(),
+                password = binding.etPassword.text.toString(),
+                confirmPassword = binding.etConfirmPassword.text.toString(),
+                phoneNumber = binding.etRegisterPhone.text.toString().trim(),
+                activity = requireActivity()
+            )
+        }
+
+        binding.tvLogin.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect(::renderState)
+            }
+        }
+    }
+
+    private fun renderState(state: RegisterUiState) {
+        val isLoading = state is RegisterUiState.Loading
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.btnRegister.isEnabled = !isLoading
+        binding.etEmail.isEnabled = !isLoading
+        binding.etPassword.isEnabled = !isLoading
+        binding.etConfirmPassword.isEnabled = !isLoading
+        binding.etRegisterPhone.isEnabled = !isLoading
+        binding.tvLogin.isEnabled = !isLoading
+        binding.btnRegister.text = if (isLoading) "" else getString(R.string.sign_up)
+
+        when (state) {
+            RegisterUiState.Idle,
+            RegisterUiState.Loading -> Unit
+
+            is RegisterUiState.OtpSent -> {
+                val bundle = bundleOf(
+                    OtpVerificationFragment.ARG_VERIFICATION_ID to state.verificationId,
+                    OtpVerificationFragment.ARG_PHONE_NUMBER to state.phoneNumber,
+                    OtpVerificationFragment.ARG_FLOW_TYPE to OtpVerificationFragment.FLOW_REGISTRATION
+                )
+                viewModel.resetState()
+                findNavController().navigate(
+                    R.id.action_register_to_otpVerification,
+                    bundle
+                )
+            }
+
+            RegisterUiState.Registered -> {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.register_email_verification_sent),
+                    Toast.LENGTH_LONG
+                ).show()
+                findNavController().navigate(R.id.action_register_to_dashboard)
+            }
+
+            is RegisterUiState.Error -> {
+                val errorMsg = if (state.messageResId == R.string.error_unknown && state.message != null) {
+                    state.message
+                } else {
+                    state.messageResId?.let { getString(it) } ?: state.message ?: "Đăng ký thất bại"
+                }
+                Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+                viewModel.resetState()
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}
