@@ -51,15 +51,8 @@ app/google-services.json
 ```text
 data/
   local/
-  FirebaseAuthRepository.kt
-  FirebaseTransactionRemoteDataSource.kt
-  InternalStorageExportReportRepository.kt
-  SharedPreferencesBudgetRepository.kt
-  SharedPreferencesProfileRepository.kt
-  SharedPreferencesSecuritySettingsRepository.kt
-  SharedPreferencesSettingsRepository.kt
-  SharedPreferencesTransactionLocalDataSource.kt
-  TransactionRepositoryImp.kt
+  remote/
+  repository/
 
 domain/
   model/
@@ -67,26 +60,24 @@ domain/
   usecase/
 
 presentation/
-  adapter/
+  about/
+  addtransaction/
+  auth/
+  budget/
+  dashboard/
+  history/
+  onboarding/
+  profile/
+  reports/
+  security/
+  settings/
   ui/
-    about/
     activities/
-    addtransaction/
-    auth/
-    budget/
-    dashboard/
-    history/
-    onboarding/
-    profile/
-    reports/
-    security/
-    settings/
     views/
-  uistate/
-  viewmodel/
+  util/
 ```
 
-Important: do not reintroduce `presentation/ui/fragments`. Auth and onboarding fragments now live in feature packages.
+Important: do not reintroduce `presentation/ui/fragments` or type-based packages (`viewmodel/`, `uistate/`, `adapter/`). Presentation is organized by feature.
 
 ## Dependency Container
 
@@ -134,18 +125,18 @@ addTransactionFragment
 Current fragment class paths:
 
 ```text
-presentation/ui/onboarding/OnBoardingFragment.kt
-presentation/ui/auth/LoginFragment.kt
-presentation/ui/auth/RegisterFragment.kt
-presentation/ui/auth/InputEmailFragment.kt
-presentation/ui/dashboard/DashBoardFragment.kt
-presentation/ui/history/HistoryFragment.kt
-presentation/ui/reports/ReportsFragment.kt
-presentation/ui/reports/ExportReportFragment.kt
-presentation/ui/settings/SettingFragment.kt
-presentation/ui/profile/ProfileFragment.kt
-presentation/ui/security/SecurityCenterFragment.kt
-presentation/ui/about/AboutAppFragment.kt
+presentation/onboarding/OnBoardingFragment.kt
+presentation/auth/LoginFragment.kt
+presentation/auth/RegisterFragment.kt
+presentation/auth/InputEmailFragment.kt
+presentation/dashboard/DashBoardFragment.kt
+presentation/history/HistoryFragment.kt
+presentation/reports/ReportsFragment.kt
+presentation/reports/ExportReportFragment.kt
+presentation/settings/SettingFragment.kt
+presentation/profile/ProfileFragment.kt
+presentation/security/SecurityCenterFragment.kt
+presentation/about/AboutAppFragment.kt
 ```
 
 Do not reference removed or old destinations/classes:
@@ -187,15 +178,15 @@ data/FirebaseAuthRepository.kt
 Presentation:
 
 ```text
-presentation/ui/auth/LoginFragment.kt
-presentation/ui/auth/RegisterFragment.kt
-presentation/ui/auth/InputEmailFragment.kt
-presentation/viewmodel/LoginViewModel.kt
-presentation/viewmodel/RegisterViewModel.kt
-presentation/viewmodel/InputEmailViewModel.kt
-presentation/uistate/LoginUiState.kt
-presentation/uistate/RegisterUiState.kt
-presentation/uistate/InputEmailUiState.kt
+presentation/auth/LoginFragment.kt
+presentation/auth/RegisterFragment.kt
+presentation/auth/InputEmailFragment.kt
+presentation/auth/LoginViewModel.kt
+presentation/auth/RegisterViewModel.kt
+presentation/auth/InputEmailViewModel.kt
+presentation/auth/LoginUiState.kt
+presentation/auth/RegisterUiState.kt
+presentation/auth/InputEmailUiState.kt
 ```
 
 Current auth flow:
@@ -280,13 +271,13 @@ data/InternalStorageExportReportRepository.kt
 Presentation:
 
 ```text
-presentation/ui/reports/ReportsFragment.kt
-presentation/ui/reports/ExportReportFragment.kt
-presentation/viewmodel/ReportsViewModel.kt
-presentation/viewmodel/ExportReportViewModel.kt
-presentation/uistate/ReportsUiState.kt
-presentation/uistate/ExportReportUiState.kt
-presentation/adapter/ReportCategoryAdapter.kt
+presentation/reports/ReportsFragment.kt
+presentation/reports/ExportReportFragment.kt
+presentation/reports/ReportsViewModel.kt
+presentation/reports/ExportReportViewModel.kt
+presentation/reports/ReportsUiState.kt
+presentation/reports/ExportReportUiState.kt
+presentation/reports/ReportCategoryAdapter.kt
 res/layout/fragment_reports.xml
 res/layout/fragment_export_report.xml
 res/layout/item_report_category.xml
@@ -322,9 +313,9 @@ data/SharedPreferencesSettingsRepository.kt
 Presentation:
 
 ```text
-presentation/ui/settings/SettingFragment.kt
-presentation/viewmodel/SettingsViewModel.kt
-presentation/uistate/SettingsUiState.kt
+presentation/settings/SettingFragment.kt
+presentation/settings/SettingsViewModel.kt
+presentation/settings/SettingsUiState.kt
 res/layout/fragment_setting.xml
 ```
 
@@ -356,9 +347,9 @@ data/SharedPreferencesProfileRepository.kt
 Presentation:
 
 ```text
-presentation/ui/profile/ProfileFragment.kt
-presentation/viewmodel/ProfileViewModel.kt
-presentation/uistate/ProfileUiState.kt
+presentation/profile/ProfileFragment.kt
+presentation/profile/ProfileViewModel.kt
+presentation/profile/ProfileUiState.kt
 res/layout/fragment_profile.xml
 ```
 
@@ -380,9 +371,9 @@ data/SharedPreferencesSecuritySettingsRepository.kt
 Presentation:
 
 ```text
-presentation/ui/security/SecurityCenterFragment.kt
-presentation/viewmodel/SecurityCenterViewModel.kt
-presentation/uistate/SecurityCenterUiState.kt
+presentation/security/SecurityCenterFragment.kt
+presentation/security/SecurityCenterViewModel.kt
+presentation/security/SecurityCenterUiState.kt
 res/layout/fragment_security_center.xml
 ```
 
@@ -397,7 +388,7 @@ Security currently includes:
 Presentation:
 
 ```text
-presentation/ui/about/AboutAppFragment.kt
+presentation/about/AboutAppFragment.kt
 res/layout/fragment_about_app.xml
 ```
 
@@ -480,9 +471,9 @@ domain/model/...
 domain/repository/...
 domain/usecase/...
 data/...
-presentation/uistate/FeatureUiState.kt
-presentation/viewmodel/FeatureViewModel.kt
-presentation/ui/<feature>/FeatureFragment.kt
+presentation/<feature>/FeatureUiState.kt
+presentation/<feature>/FeatureViewModel.kt
+presentation/<feature>/FeatureFragment.kt
 res/layout/fragment_feature.xml
 ```
 
