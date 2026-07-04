@@ -61,6 +61,7 @@
         android:importantForAutofill="no"/>
 
     <LinearLayout
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -69,19 +70,19 @@
 
         <Button
             android:id="@+id/btnCancel"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:backgroundTint="@color/surface_variant"
             android:text="@string/action_cancel"
             android:textColor="@color/text_primary" />
 
         <Button
             android:id="@+id/btnSave"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginStart="10dp"
-            android:backgroundTint="@color/info_color"
             android:text="@string/action_save"
-            android:textColor="@color/white" />
+            android:textColor="@color/info_color" />
     </LinearLayout>
 </LinearLayout>
