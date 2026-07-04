@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog_surface"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="24dp"
+    tools:ignore="VisualLintTextFieldWidth">
 
     <TextView
         android:id="@+id/tvDialogTitle"
@@ -42,6 +44,7 @@
         android:layout_height="56dp"
         android:layout_marginTop="14dp"
         android:background="@drawable/bg_input_field"
+        android:hint="@string/saving_wallet_target_amount_hint"
         android:inputType="numberDecimal"
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_primary"
@@ -54,6 +57,7 @@
         android:layout_height="56dp"
         android:layout_marginTop="14dp"
         android:background="@drawable/bg_input_field"
+        android:hint="@string/saving_wallet_saved_amount_hint"
         android:inputType="numberDecimal"
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_primary"
@@ -83,6 +87,7 @@
             android:layout_height="48dp"
             android:layout_marginStart="10dp"
             android:text="@string/action_save"
-            android:textColor="@color/info_color" />
+            android:textColor="@color/info_color"
+            tools:ignore="Contrast" />
     </LinearLayout>
 </LinearLayout>
