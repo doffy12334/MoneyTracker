@@ -20,7 +20,8 @@
             android:layout_height="48dp"
             android:padding="8dp"
             android:src="@drawable/ic_arrow_back"
-            app:tint="@color/primary_color" />
+            app:tint="@color/primary_color"
+        android:contentDescription="@null"/>
 
         <TextView
             android:layout_width="match_parent"

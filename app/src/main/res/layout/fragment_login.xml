@@ -42,7 +42,8 @@
         app:layout_constraintTop_toBottomOf="@id/tvLoginTitle"
         android:layout_marginTop="24dp"
         android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_secondary" />
+        android:textColorHint="@color/text_secondary"
+        android:importantForAutofill="no"/>
 
     <FrameLayout
         android:id="@+id/passwordContainer"
@@ -62,7 +63,8 @@
             android:paddingStart="16dp"
             android:paddingEnd="56dp"
         android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_secondary" />
+        android:textColorHint="@color/text_secondary"
+        android:importantForAutofill="no"/>
 
         <ImageButton
             android:id="@+id/btnTogglePassword"

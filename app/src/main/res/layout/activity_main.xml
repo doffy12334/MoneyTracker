@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -26,7 +25,8 @@
             android:layout_height="28dp"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_menu"
-            app:tint="@color/profile_avatar_border" />
+            app:tint="@color/profile_avatar_border"
+            tools:ignore="ContentDescription" />
 
         <!-- Tiêu đề ở chính giữa -->
         <TextView
@@ -37,7 +37,8 @@
             android:text="@string/money_tracker"
             android:textColor="@color/profile_avatar_border"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
 
         <!-- Icon Profile bên phải (Bo tròn) -->
         <com.google.android.material.card.MaterialCardView
@@ -57,7 +58,8 @@
                 android:padding="4dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_profile"
-                app:tint="@color/profile_avatar_border" />
+                app:tint="@color/profile_avatar_border"
+                tools:ignore="ContentDescription" />
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
 
@@ -88,7 +90,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu"
+        tools:ignore="BottomNavigation,VisualLintBottomNav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

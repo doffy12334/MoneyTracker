@@ -19,7 +19,8 @@
             android:layout_height="48dp"
             android:padding="8dp"
             android:src="@drawable/ic_arrow_back"
-            app:tint="@color/primary_color" />
+            app:tint="@color/primary_color"
+        android:contentDescription="@null"/>
 
         <FrameLayout
             android:layout_width="116dp"
@@ -33,7 +34,8 @@
                 android:layout_height="58dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_wallet"
-                app:tint="@color/primary_color" />
+                app:tint="@color/primary_color"
+        android:contentDescription="@null"/>
         </FrameLayout>
 
         <TextView

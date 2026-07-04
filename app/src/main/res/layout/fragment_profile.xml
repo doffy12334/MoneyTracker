@@ -20,7 +20,8 @@
             android:layout_height="48dp"
             android:padding="8dp"
             android:src="@drawable/ic_arrow_back"
-            app:tint="@color/primary_color" />
+            app:tint="@color/primary_color"
+        android:contentDescription="@null"/>
 
         <FrameLayout
             android:layout_width="150dp"
@@ -49,7 +50,8 @@
                 android:background="@drawable/bg_circle_primary"
                 android:padding="14dp"
                 android:src="@drawable/ic_edit"
-                app:tint="@color/white" />
+                app:tint="@color/white"
+        android:contentDescription="@null"/>
         </FrameLayout>
 
         <TextView
@@ -93,7 +95,8 @@
             android:paddingHorizontal="16dp"
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_secondary"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+        android:importantForAutofill="no"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -118,7 +121,8 @@
             android:paddingHorizontal="16dp"
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_secondary"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+        android:importantForAutofill="no"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -143,7 +147,8 @@
             android:paddingHorizontal="16dp"
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_secondary"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+        android:importantForAutofill="no"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -168,7 +173,8 @@
             android:paddingHorizontal="16dp"
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_secondary"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+        android:importantForAutofill="no"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEditProfile"

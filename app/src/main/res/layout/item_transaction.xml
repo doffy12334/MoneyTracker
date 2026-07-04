@@ -33,7 +33,8 @@
                 android:layout_height="24dp"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_cart"
-                app:tint="@color/text_primary" />
+                app:tint="@color/text_primary"
+        android:contentDescription="@null"/>
         </com.google.android.material.card.MaterialCardView>
 
         <!-- Text container -->

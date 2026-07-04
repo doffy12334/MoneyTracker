@@ -26,7 +26,8 @@
                 android:layout_height="48dp"
                 android:background="@drawable/bg_circle_blue_soft"
                 android:padding="12dp"
-                app:tint="@color/info_color" />
+                app:tint="@color/info_color"
+        android:contentDescription="@null"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -60,7 +61,8 @@
                 android:background="@drawable/bg_delete_button"
                 android:padding="7dp"
                 android:scaleType="center"
-                android:src="@drawable/ic_trash_red_bold" />
+                android:src="@drawable/ic_trash_red_bold"
+        android:contentDescription="@null"/>
 
             <TextView
                 android:id="@+id/tvBudgetPercent"

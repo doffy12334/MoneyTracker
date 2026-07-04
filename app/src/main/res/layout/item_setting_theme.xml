@@ -18,7 +18,8 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_moon_outline"
-            app:tint="@color/profile_avatar_border" />
+            app:tint="@color/profile_avatar_border"
+        android:contentDescription="@null"/>
     </FrameLayout>
 
     <TextView
@@ -44,6 +45,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
-        android:src="@drawable/ic_chevron_right" />
+        android:src="@drawable/ic_chevron_right"
+        android:contentDescription="@null"/>
 </LinearLayout>
 

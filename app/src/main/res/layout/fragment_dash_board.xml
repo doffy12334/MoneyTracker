@@ -133,7 +133,8 @@
                             android:background="@drawable/bg_arrow_down"
                             android:padding="10dp"
                             android:src="@drawable/ic_arrow_down"
-                            app:tint="@color/text_primary" />
+                            app:tint="@color/text_primary"
+        android:contentDescription="@null"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -179,7 +180,8 @@
                             android:background="@drawable/bg_arrow_up"
                             android:padding="10dp"
                             android:src="@drawable/ic_arrow_up"
-                            app:tint="@color/error_color" />
+                            app:tint="@color/error_color"
+        android:contentDescription="@null"/>
 
                         <TextView
                             android:layout_width="wrap_content"

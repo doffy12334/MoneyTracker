@@ -17,7 +17,8 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_trash"
-            app:tint="@color/error_color" />
+            app:tint="@color/error_color"
+        android:contentDescription="@null"/>
     </FrameLayout>
 
     <LinearLayout
@@ -47,5 +48,6 @@
     <ImageView
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/ic_chevron_right" />
+        android:src="@drawable/ic_chevron_right"
+        android:contentDescription="@null"/>
 </LinearLayout>

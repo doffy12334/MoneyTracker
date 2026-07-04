@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog_surface"
@@ -40,7 +40,9 @@
         android:inputType="numberDecimal"
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_secondary" />
+        android:textColorHint="@color/text_secondary"
+        tools:ignore="Autofill,LabelFor"
+        android:importantForAutofill="no"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,11 +51,11 @@
         android:gravity="end"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnCancel"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:backgroundTint="@color/surface_variant"
             android:text="@string/action_cancel"
             android:textColor="@color/text_primary" />
 

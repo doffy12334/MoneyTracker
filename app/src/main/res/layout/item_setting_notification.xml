@@ -18,7 +18,8 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_bell_outline"
-            app:tint="@color/profile_avatar_border" />
+            app:tint="@color/profile_avatar_border"
+        android:contentDescription="@null"/>
     </FrameLayout>
 
     <TextView
