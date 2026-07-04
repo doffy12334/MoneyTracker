@@ -27,14 +27,6 @@ class SecurityCenterFragment : Fragment() {
     private val binding get() = _binding!!
     private var isRendering = false
 
-    private val biometricEnableLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        viewModel.onBiometricChanged(result.resultCode == Activity.RESULT_OK)
-        if (result.resultCode != Activity.RESULT_OK) {
-            Toast.makeText(requireContext(), R.string.security_biometric_cancelled, Toast.LENGTH_SHORT).show()
-        }
-    }
     private val appLockEnableLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -47,7 +39,6 @@ class SecurityCenterFragment : Fragment() {
     private val viewModel: SecurityCenterViewModel by viewModels {
         SecurityCenterViewModel.Factory(
             AppContainer.getSecuritySettingsUseCase,
-            AppContainer.setBiometricEnabledUseCase,
             AppContainer.setHighValueProtectionEnabledUseCase,
             AppContainer.getProfileUseCase,
             AppContainer.updatePasswordUseCase,
@@ -84,15 +75,6 @@ class SecurityCenterFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        binding.switchBiometric.setOnCheckedChangeListener { _, isChecked ->
-            if (!isRendering) {
-                if (isChecked) {
-                    requestBiometricConfirmation()
-                } else {
-                    viewModel.onBiometricChanged(false)
-                }
-            }
-        }
         binding.switchHighValue.setOnCheckedChangeListener { _, isChecked ->
             if (!isRendering) {
                 if (isChecked) {
@@ -106,13 +88,11 @@ class SecurityCenterFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        binding.switchBiometric.setOnCheckedChangeListener(null)
         binding.switchHighValue.setOnCheckedChangeListener(null)
     }
 
     private fun renderState(state: SecurityCenterUiState) {
         isRendering = true
-        binding.switchBiometric.isChecked = state.biometricEnabled
         binding.switchHighValue.isChecked = state.highValueProtectionEnabled
         isRendering = false
 
@@ -141,25 +121,6 @@ class SecurityCenterFragment : Fragment() {
                 .setPopUpTo(R.id.nav_graph, true)
                 .build()
         )
-    }
-
-    private fun requestBiometricConfirmation() {
-        val keyguardManager = requireContext().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-        if (!keyguardManager.isKeyguardSecure) {
-            viewModel.onBiometricChanged(false)
-            Toast.makeText(requireContext(), R.string.security_biometric_not_available, Toast.LENGTH_SHORT).show()
-            return
-        }
-        val intent = keyguardManager.createConfirmDeviceCredentialIntent(
-            getString(R.string.security_biometric_confirm_title),
-            getString(R.string.security_biometric_confirm_subtitle)
-        )
-        if (intent == null) {
-            viewModel.onBiometricChanged(false)
-            Toast.makeText(requireContext(), R.string.security_biometric_not_available, Toast.LENGTH_SHORT).show()
-            return
-        }
-        biometricEnableLauncher.launch(intent)
     }
 
     private fun requestAppLockConfirmation() {

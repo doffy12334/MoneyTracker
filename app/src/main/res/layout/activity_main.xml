@@ -11,12 +11,13 @@
     <!-- 1. THANH TOP BAR - Thêm nội dung vào đây -->
     <RelativeLayout
         android:id="@+id/topBar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="64dp"
         android:paddingHorizontal="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="600dp">
 
         <!-- Icon Menu bên trái -->
         <ImageView
@@ -74,6 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintWidth_max="600dp"
         app:navGraph="@navigation/nav_graph" />
 
     <!-- 3. THANH ĐIỀU HƯỚNG DƯỚI (BOTTOM NAVIGATION) -->
@@ -90,6 +92,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_max="600dp"
         app:menu="@menu/bottom_nav_menu"
         tools:ignore="BottomNavigation,VisualLintBottomNav" />
 

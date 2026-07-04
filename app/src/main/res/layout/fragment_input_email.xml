@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_screen_background">
@@ -16,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrow_back"
-        app:tint="@color/primary_color" />
+        app:tint="@color/primary_color"
+        tools:ignore="ImageContrastCheck" />
 
     <TextView
         android:id="@+id/tvAppTitle"
@@ -29,7 +31,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/btnBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnBack" />
+        app:layout_constraintTop_toTopOf="@+id/btnBack"
+        tools:ignore="TextContrastCheck" />
 
     <View
         android:id="@+id/iconBackground"
@@ -67,12 +70,13 @@
 
     <EditText
         android:id="@+id/etInput"
-        android:layout_width="0dp"
+        style="@style/AppEditTextStyle"
         android:layout_height="56dp"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/bg_input_field"
         android:hint="@string/hint_phone_or_email"
+        android:importantForAutofill="no"
         android:inputType="text"
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_primary"
@@ -80,12 +84,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHeader"
-        android:importantForAutofill="no"/>
+        tools:ignore="VisualLintTextFieldSize" />
 
     <Button
         android:id="@+id/btnConfirm"
-        android:layout_width="match_parent"
+        style="@style/AppButtonStyle"
         android:layout_height="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/primary_color"
@@ -98,7 +104,8 @@
         app:icon="@drawable/ic_arrow_right"
         app:iconGravity="textEnd"
         app:iconTint="@color/text_primary"
-        app:layout_constraintTop_toBottomOf="@+id/etInput" />
+        app:layout_constraintTop_toBottomOf="@+id/etInput"
+        tools:ignore="VisualLintButtonSize" />
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -13,7 +13,8 @@ import kotlinx.coroutines.launch
 class RegisterViewModel(
     private val registerUseCase: RegisterUseCase,
     private val sendPhoneOtpUseCase: SendPhoneOtpUseCase,
-    private val authRepository: com.example.moneytracker.domain.repository.AuthRepository
+    private val authRepository: com.example.moneytracker.domain.repository.AuthRepository,
+    private val profileRepository: com.example.moneytracker.domain.repository.ProfileRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<RegisterUiState>(RegisterUiState.Idle)
     val uiState: StateFlow<RegisterUiState> = _uiState.asStateFlow()
@@ -31,15 +32,20 @@ class RegisterViewModel(
                 // Step 1: Create account with email/password
                 registerUseCase(email, password, confirmPassword)
 
-                // Step 2: Send OTP to phone for verification
+                // NOTE: Firebase Identity Platform SMS requires the Blaze plan.
+                // We bypass the OTP step here to avoid [BILLING_NOT_ENABLED] errors on the Spark plan.
                 val normalizedPhone = normalizePhoneNumber(phoneNumber)
-                val verificationId = sendPhoneOtpUseCase(normalizedPhone, activity)
-
-                // Navigate to OTP screen
-                RegisterUiState.OtpSent(
-                    verificationId = verificationId,
-                    phoneNumber = normalizedPhone
-                )
+                if (normalizedPhone.isNotBlank()) {
+                    try {
+                        val profile = profileRepository.getProfile()
+                        profileRepository.updateProfile(profile.copy(phone = normalizedPhone))
+                    } catch (e: Exception) {
+                        // Ignore any profile update errors so registration still succeeds
+                    }
+                }
+                
+                // Directly proceed to Registered state
+                RegisterUiState.Registered
             } catch (exception: Exception) {
                 // Rollback: if the account was created but phone OTP failed, delete the newly created account.
                 try {
@@ -75,12 +81,13 @@ class RegisterViewModel(
     class Factory(
         private val registerUseCase: RegisterUseCase,
         private val sendPhoneOtpUseCase: SendPhoneOtpUseCase,
-        private val authRepository: com.example.moneytracker.domain.repository.AuthRepository
+        private val authRepository: com.example.moneytracker.domain.repository.AuthRepository,
+        private val profileRepository: com.example.moneytracker.domain.repository.ProfileRepository
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
-                return RegisterViewModel(registerUseCase, sendPhoneOtpUseCase, authRepository) as T
+                return RegisterViewModel(registerUseCase, sendPhoneOtpUseCase, authRepository, profileRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

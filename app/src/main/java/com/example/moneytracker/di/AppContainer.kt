@@ -46,7 +46,6 @@ import com.example.moneytracker.domain.usecase.SaveBudgetLimitUseCase
 import com.example.moneytracker.domain.usecase.SaveSavingGoalUseCase
 import com.example.moneytracker.domain.usecase.SendPasswordResetEmailUseCase
 import com.example.moneytracker.domain.usecase.SendPhoneOtpUseCase
-import com.example.moneytracker.domain.usecase.SetBiometricEnabledUseCase
 import com.example.moneytracker.domain.usecase.SetCurrencyUseCase
 import com.example.moneytracker.domain.usecase.SetHighValueProtectionEnabledUseCase
 import com.example.moneytracker.domain.usecase.SetLanguageUseCase
@@ -99,7 +98,7 @@ object AppContainer {
         OpenExchangeRateRepository(sharedPrefsManager)
     }
 
-    private val profileRepository: ProfileRepository by lazy {
+    val profileRepository: ProfileRepository by lazy {
         SharedPreferencesProfileRepository(sharedPrefsManager)
     }
 
@@ -263,10 +262,6 @@ object AppContainer {
 
     val getSecuritySettingsUseCase: GetSecuritySettingsUseCase by lazy {
         GetSecuritySettingsUseCase(securitySettingsRepository)
-    }
-
-    val setBiometricEnabledUseCase: SetBiometricEnabledUseCase by lazy {
-        SetBiometricEnabledUseCase(securitySettingsRepository)
     }
 
     val setHighValueProtectionEnabledUseCase: SetHighValueProtectionEnabledUseCase by lazy {

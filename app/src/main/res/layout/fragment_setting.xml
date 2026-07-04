@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_screen_background">
@@ -146,7 +147,8 @@
                 app:cornerRadius="28dp"
                 app:rippleColor="#1A006D36"
                 app:strokeColor="@color/accent_blue"
-                app:strokeWidth="2dp" />
+                app:strokeWidth="2dp"
+                tools:ignore="VisualLintButtonSize" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

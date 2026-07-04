@@ -68,9 +68,8 @@
                 android:id="@+id/tvGoalPercent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btnDeleteGoal"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="8dp"
+                android:layout_marginEnd="44dp"
                 android:textColor="@color/info_color"
                 android:textSize="18sp"
                 android:textStyle="bold" />

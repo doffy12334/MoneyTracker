@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.MoneyTracker" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Bottom navigation style for the app -->
@@ -46,7 +46,8 @@
 
     <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
-        <item name="indicatorColor">@color/icon_circle</item> <item name="itemActiveIndicatorStyle">@style/App.ActiveIndicator.Square</item>
+        <item name="indicatorColor">@color/icon_circle</item>
+        <item name="itemActiveIndicatorStyle">@style/App.ActiveIndicator.Square</item>
     </style>
 
     <style name="App.ActiveIndicator.Square" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
@@ -58,13 +59,31 @@
     </style>
 
     <style name="ShapeAppearance.RoundedBox" parent="">
-        <item name="cornerSize">16dp</item> </style>
+        <item name="cornerSize">16dp</item>
+    </style>
 
     <style name="ShapeAppearance.MoneyTracker.Circle" parent="">
         <item name="cornerSize">50%</item>
     </style>
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-        <item name="colorPrimary">@color/text_primary</item> <item name="colorOnSurfaceVariant">@color/text_secondary</item> </style>
+        <item name="colorPrimary">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+    </style>
+
     <style name="Theme.MoneyTracker" parent="Base.Theme.MoneyTracker" />
+    <!-- Style cho các ô nhập liệu -->
+    <style name="AppEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:maxWidth">488dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
+    <!-- Style cho các nút bấm -->
+    <style name="AppButtonStyle" parent="Widget.Material3.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:maxWidth">488dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+
 </resources>

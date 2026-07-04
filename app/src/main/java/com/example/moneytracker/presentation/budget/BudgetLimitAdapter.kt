@@ -56,7 +56,11 @@ class BudgetLimitAdapter(
             binding.tvBudgetPercent.setTextColor(
                 ContextCompat.getColor(
                     binding.root.context,
-                    if (item.isExceeded) R.color.error_color else R.color.info_color
+                    when {
+                        item.isExceeded -> R.color.error_color
+                        item.progressPercent >= 100 -> R.color.success_color
+                        else -> R.color.info_color
+                    }
                 )
             )
             binding.pbBudget.progress = item.progressPercent.coerceIn(0, 100)

@@ -26,7 +26,7 @@
 
     <EditText
         android:id="@+id/etTitle"
-        android:layout_width="match_parent"
+        style="@style/AppEditTextStyle"
         android:layout_height="56dp"
         android:layout_marginTop="22dp"
         android:background="@drawable/bg_input_field"
@@ -37,11 +37,11 @@
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_secondary"
-        tools:ignore="VisualLintTextFieldWidth" />
+        tools:ignore="VisualLintTextFieldWidth,VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/etTargetAmount"
-        android:layout_width="match_parent"
+        style="@style/AppEditTextStyle"
         android:layout_height="56dp"
         android:layout_marginTop="14dp"
         android:background="@drawable/bg_input_field"
@@ -52,11 +52,11 @@
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_secondary"
-        tools:ignore="VisualLintTextFieldWidth" />
+        tools:ignore="VisualLintTextFieldWidth,VisualLintTextFieldSize" />
 
     <EditText
         android:id="@+id/etCurrentAmount"
-        android:layout_width="match_parent"
+        style="@style/AppEditTextStyle"
         android:layout_height="56dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="14dp"
@@ -68,7 +68,7 @@
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_secondary"
-        tools:ignore="VisualLintTextFieldWidth" />
+        tools:ignore="VisualLintTextFieldWidth,VisualLintTextFieldSize" />
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"

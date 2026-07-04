@@ -67,7 +67,7 @@
     <string name="setting_profile_title">Profil</string>
     <string name="setting_profile_subtitle">Coordonnées &amp; avatar</string>
     <string name="setting_security_title">Sécurité</string>
-    <string name="setting_security_subtitle">Authentification à deux facteurs, changer le mot de passe</string>
+    <string name="setting_security_subtitle">Changer le mot de passe, verrouillage d\'application</string>
     <string name="setting_premium_title">Forfait Premium</string>
     <string name="setting_premium_active">Actif</string>
     <string name="delete_account_title">Supprimer le compte</string>

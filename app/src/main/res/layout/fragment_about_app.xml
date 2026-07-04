@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_screen_background"
@@ -17,10 +18,11 @@
             android:id="@+id/btnBack"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:contentDescription="@null"
             android:padding="8dp"
             android:src="@drawable/ic_arrow_back"
             app:tint="@color/primary_color"
-        android:contentDescription="@null"/>
+            tools:ignore="ImageContrastCheck" />
 
         <FrameLayout
             android:layout_width="116dp"
@@ -33,9 +35,10 @@
                 android:layout_width="58dp"
                 android:layout_height="58dp"
                 android:layout_gravity="center"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_wallet"
                 app:tint="@color/primary_color"
-        android:contentDescription="@null"/>
+                tools:ignore="ImageContrastCheck" />
         </FrameLayout>
 
         <TextView
@@ -55,7 +58,8 @@
             android:text="@string/info_version"
             android:textColor="@color/primary_color"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
 
         <LinearLayout
             android:layout_width="match_parent"

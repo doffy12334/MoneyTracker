@@ -67,7 +67,7 @@
     <string name="setting_profile_title">Profile</string>
     <string name="setting_profile_subtitle">Contact info &amp; avatar</string>
     <string name="setting_security_title">Security</string>
-    <string name="setting_security_subtitle">Two-factor auth, change password</string>
+    <string name="setting_security_subtitle">Change password, app lock</string>
     <string name="setting_premium_title">Premium plan</string>
     <string name="setting_premium_active">Active</string>
     <string name="delete_account_title">Delete account</string>

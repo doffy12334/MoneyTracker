@@ -24,7 +24,8 @@ class RegisterFragment : Fragment() {
         RegisterViewModel.Factory(
             AppContainer.registerUseCase,
             AppContainer.sendPhoneOtpUseCase,
-            AppContainer.authRepository
+            AppContainer.authRepository,
+            AppContainer.profileRepository
         )
     }
 

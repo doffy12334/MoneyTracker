@@ -83,7 +83,7 @@
 
         <EditText
             android:id="@+id/etFullName"
-            android:layout_width="match_parent"
+            style="@style/AppEditTextStyle"
             android:layout_height="56dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_input_field"
@@ -109,7 +109,7 @@
 
         <EditText
             android:id="@+id/etEmail"
-            android:layout_width="match_parent"
+            style="@style/AppEditTextStyle"
             android:layout_height="56dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_input_field"
@@ -135,7 +135,7 @@
 
         <EditText
             android:id="@+id/etPhone"
-            android:layout_width="match_parent"
+            style="@style/AppEditTextStyle"
             android:layout_height="56dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_input_field"
@@ -161,7 +161,7 @@
 
         <EditText
             android:id="@+id/etOccupation"
-            android:layout_width="match_parent"
+            style="@style/AppEditTextStyle"
             android:layout_height="56dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_input_field"
@@ -178,7 +178,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEditProfile"
-            android:layout_width="match_parent"
+            style="@style/AppButtonStyle"
             android:layout_height="60dp"
             android:layout_marginTop="36dp"
             android:backgroundTint="@color/primary_color"
@@ -194,7 +194,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSaveProfile"
-            android:layout_width="match_parent"
+            style="@style/AppButtonStyle"
             android:layout_height="60dp"
             android:layout_marginTop="12dp"
             android:backgroundTint="@color/success_color"

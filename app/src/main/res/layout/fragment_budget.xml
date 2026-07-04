@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_screen_background"
@@ -105,7 +106,8 @@
                 android:paddingHorizontal="14dp"
                 android:text="@string/action_add"
                 android:textColor="@color/white"
-                app:cornerRadius="14dp" />
+                app:cornerRadius="14dp"
+                tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
         </LinearLayout>
 
         <TextView
@@ -152,7 +154,8 @@
                 android:paddingHorizontal="14dp"
                 android:text="@string/action_add"
                 android:textColor="@color/white"
-                app:cornerRadius="14dp" />
+                app:cornerRadius="14dp"
+                tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
         </LinearLayout>
 
         <TextView

@@ -80,11 +80,6 @@ class SharedPrefsManager(context: Context) {
         return if (userId.isBlank()) baseKey else "${baseKey}_$userId"
     }
 
-    fun setBiometricEnabled(enabled: Boolean) {
-        sharedPref.edit { putBoolean(KEY_BIOMETRIC_ENABLED, enabled) }
-    }
-
-    fun isBiometricEnabled(): Boolean = sharedPref.getBoolean(KEY_BIOMETRIC_ENABLED, false)
 
     fun setHighValueProtectionEnabled(enabled: Boolean) {
         sharedPref.edit { putBoolean(KEY_HIGH_VALUE_PROTECTION_ENABLED, enabled) }
@@ -106,7 +101,6 @@ class SharedPrefsManager(context: Context) {
         const val KEY_PROFILE_PHONE = "profile_phone"
         const val KEY_PROFILE_OCCUPATION = "profile_occupation"
         const val KEY_PROFILE_AVATAR_URI = "profile_avatar_uri"
-        const val KEY_BIOMETRIC_ENABLED = "biometric_enabled"
         const val KEY_HIGH_VALUE_PROTECTION_ENABLED = "high_value_protection_enabled"
     }
 }

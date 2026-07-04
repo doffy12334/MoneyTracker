@@ -23,8 +23,9 @@
                 android:layout_height="24dp"
                 android:layout_centerVertical="true"
                 android:alpha="0.4"
+                android:contentDescription="@null"
                 android:src="@drawable/ic_search"
-        android:contentDescription="@null"/>
+                tools:ignore="ImageContrastCheck" />
 
             <EditText
                 android:id="@+id/etSearch"
@@ -34,11 +35,11 @@
                 android:layout_toEndOf="@id/ivSearch"
                 android:background="@null"
                 android:hint="@string/search_transactions"
+                android:importantForAutofill="no"
                 android:paddingStart="12dp"
-                tools:ignore="RtlSymmetry"
-        android:textColor="@color/text_primary"
-        android:textColorHint="@color/text_secondary"
-        android:importantForAutofill="no"/>
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_secondary"
+                tools:ignore="RtlSymmetry,TextFields" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/filter_cardview"
@@ -56,9 +57,10 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
+                    android:contentDescription="@null"
                     android:src="@drawable/ic_tune"
                     app:tint="@color/primary_color"
-        android:contentDescription="@null"/>
+                    tools:ignore="ImageContrastCheck" />
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
 

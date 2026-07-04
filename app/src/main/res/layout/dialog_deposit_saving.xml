@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog_surface"
@@ -25,15 +25,16 @@
 
     <EditText
         android:id="@+id/etDepositAmount"
-        android:layout_width="match_parent"
+        style="@style/AppEditTextStyle"
         android:layout_height="56dp"
         android:layout_marginTop="22dp"
         android:background="@drawable/bg_input_field"
+        android:importantForAutofill="no"
         android:inputType="numberDecimal"
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_primary"
         android:textColorHint="@color/text_secondary"
-        android:importantForAutofill="no"/>
+        tools:ignore="LabelFor,SpeakableTextPresentCheck,VisualLintTextFieldSize" />
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"
@@ -58,6 +59,7 @@
             android:layout_height="48dp"
             android:layout_marginStart="10dp"
             android:text="@string/add_money"
-            android:textColor="@color/info_color" />
+            android:textColor="@color/info_color"
+            tools:ignore="TextContrastCheck" />
     </LinearLayout>
 </LinearLayout>

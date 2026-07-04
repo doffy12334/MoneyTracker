@@ -90,7 +90,6 @@ class DashBoardFragment : Fragment() {
                 binding.tvTotalBalance.text = formatMoney(0.0)
                 binding.tvIncomeAmount.text = formatMoney(0.0)
                 binding.tvExpenseAmount.text = formatMoney(0.0)
-                binding.tvBalanceRate.text = formatBalanceRate(0.0)
                 binding.tvSeeAllTransactions.text = getString(R.string.xem_t_t_c)
             }
 
@@ -98,7 +97,6 @@ class DashBoardFragment : Fragment() {
                 binding.tvTotalBalance.text = formatMoney(state.totalBalance)
                 binding.tvIncomeAmount.text = formatMoney(state.totalIncome)
                 binding.tvExpenseAmount.text = formatMoney(state.totalExpense)
-                binding.tvBalanceRate.text = formatBalanceRate(state.balanceRate)
                 binding.tvSeeAllTransactions.text = if (state.showAllTransactions) {
                     getString(R.string.show_less)
                 } else {
@@ -114,7 +112,6 @@ class DashBoardFragment : Fragment() {
                 binding.tvTotalBalance.text = state.message
                 binding.tvIncomeAmount.text = formatMoney(0.0)
                 binding.tvExpenseAmount.text = formatMoney(0.0)
-                binding.tvBalanceRate.text = formatBalanceRate(0.0)
                 binding.tvSeeAllTransactions.text = getString(R.string.xem_t_t_c)
             }
         }
@@ -124,14 +121,7 @@ class DashBoardFragment : Fragment() {
         return CurrencyFormatter.formatFromVnd(amountInVnd, appCurrency)
     }
 
-    private fun formatBalanceRate(rate: Double): String {
-        val formattedRate = String.format(Locale.getDefault(), "%.1f", kotlin.math.abs(rate))
-        return if (rate >= 0.0) {
-            getString(R.string.balance_rate_saved, formattedRate)
-        } else {
-            getString(R.string.balance_rate_over_income, formattedRate)
-        }
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

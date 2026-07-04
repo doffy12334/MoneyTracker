@@ -23,12 +23,12 @@
     <string name="or_continue_with">HOẶC TIẾP TỤC VỚI</string>
     <string name="google">Google</string>
     <string name="get_started">Bắt đầu</string>
-    <string name="good_morning">Chào buổi sáng</string>
+    <string name="good_morning">Xin chào</string>
     <string name="ch_o_m_ng_b_n_quay_tr_l_i">Chào mừng bạn quay trở lại!</string>
     <string name="t_ng_s_d">TỔNG SỐ DƯ</string>
     <string name="xem_t_t_c">Xem tất cả</string>
     <string name="show_less">Thu gọn</string>
-    <string name="balance_rate_saved">Giữ lại %1$s%% thu nhập</string>
+    <string name="balance_rate_saved">Tiết kiệm %1$s%% thu nhập</string>
     <string name="balance_rate_over_income">Vượt thu nhập %1$s%%</string>
     <string name="giao_d_ch_g_n_y">Giao dịch gần đây</string>
     <string name="search_transactions">Tìm giao dịch...</string>
@@ -67,7 +67,7 @@
     <string name="setting_profile_title">Hồ sơ cá nhân</string>
     <string name="setting_profile_subtitle">Thông tin liên hệ &amp; ảnh đại diện</string>
     <string name="setting_security_title">Bảo mật</string>
-    <string name="setting_security_subtitle">Xác thực 2 yếu tố, đổi mật khẩu</string>
+    <string name="setting_security_subtitle">Đổi mật khẩu, khóa ứng dụng</string>
     <string name="setting_premium_title">Gói Premium</string>
     <string name="setting_premium_active">Đang kích hoạt</string>
     <string name="delete_account_title">Xóa tài khoản</string>
@@ -249,7 +249,7 @@
     <string name="export_report_share_title">Chia sẻ báo cáo</string>
     <string name="export_report_share_error">Không thể chia sẻ báo cáo</string>
     <string name="action_ok">OK</string>
-    <string name="balance_rate_saved_placeholder">Giữ lại 0,0% thu nhập</string>
+    <string name="balance_rate_saved_placeholder">Tiết kiệm 0,0% thu nhập</string>
     <string name="dashboard_zero_balance">0 ₫</string>
     <string name="transaction_type_income">THU NHẬP</string>
     <string name="transaction_type_expense">CHI TIÊU</string>

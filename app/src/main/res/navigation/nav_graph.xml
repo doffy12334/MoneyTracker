@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/onboardingFragment"
-        android:name="com.example.moneytracker.presentation.ui.onboarding.OnBoardingFragment"
+        android:name="com.example.moneytracker.presentation.onboarding.OnBoardingFragment"
         tools:layout="@layout/fragment_on_boarding">
         <action
             android:id="@+id/action_onboarding_to_login"
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.moneytracker.presentation.ui.auth.LoginFragment"
+        android:name="com.example.moneytracker.presentation.auth.LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_login_to_dashboard"
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.moneytracker.presentation.ui.auth.RegisterFragment"
+        android:name="com.example.moneytracker.presentation.auth.RegisterFragment"
         tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_register_to_dashboard"
@@ -72,7 +72,7 @@
 
     <fragment
         android:id="@+id/inputEmailFragment"
-        android:name="com.example.moneytracker.presentation.ui.auth.InputEmailFragment"
+        android:name="com.example.moneytracker.presentation.auth.InputEmailFragment"
         android:label="InputEmailFragment">
         <action
             android:id="@+id/action_inputEmail_to_otpVerification"
@@ -85,7 +85,7 @@
 
     <fragment
         android:id="@+id/otpVerificationFragment"
-        android:name="com.example.moneytracker.presentation.ui.auth.OtpVerificationFragment"
+        android:name="com.example.moneytracker.presentation.auth.OtpVerificationFragment"
         android:label="OtpVerificationFragment"
         tools:layout="@layout/fragment_otp_verification">
         <action
@@ -108,7 +108,7 @@
 
     <fragment
         android:id="@+id/newPasswordFragment"
-        android:name="com.example.moneytracker.presentation.ui.auth.NewPasswordFragment"
+        android:name="com.example.moneytracker.presentation.auth.NewPasswordFragment"
         android:label="NewPasswordFragment"
         tools:layout="@layout/fragment_new_password">
         <action
@@ -133,7 +133,7 @@
 
     <fragment
         android:id="@+id/dashboardFragment"
-        android:name="com.example.moneytracker.presentation.ui.dashboard.DashBoardFragment"
+        android:name="com.example.moneytracker.presentation.dashboard.DashBoardFragment"
         tools:layout="@layout/fragment_dash_board">
 
         <action
@@ -168,17 +168,17 @@
 
     <fragment
         android:id="@+id/reportsFragment"
-        android:name="com.example.moneytracker.presentation.ui.reports.ReportsFragment"
+        android:name="com.example.moneytracker.presentation.reports.ReportsFragment"
         tools:layout="@layout/fragment_reports" />
 
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.example.moneytracker.presentation.ui.history.HistoryFragment"
+        android:name="com.example.moneytracker.presentation.history.HistoryFragment"
         tools:layout="@layout/fragment_history" />
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.moneytracker.presentation.ui.settings.SettingFragment"
+        android:name="com.example.moneytracker.presentation.settings.SettingFragment"
         tools:layout="@layout/fragment_setting">
         <action
             android:id="@+id/action_settingsFragment_to_securityCenterFragment"
@@ -205,17 +205,17 @@
 
     <fragment
         android:id="@+id/exportReportFragment"
-        android:name="com.example.moneytracker.presentation.ui.reports.ExportReportFragment"
+        android:name="com.example.moneytracker.presentation.reports.ExportReportFragment"
         tools:layout="@layout/fragment_export_report" />
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.moneytracker.presentation.ui.profile.ProfileFragment"
+        android:name="com.example.moneytracker.presentation.profile.ProfileFragment"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/securityCenterFragment"
-        android:name="com.example.moneytracker.presentation.ui.security.SecurityCenterFragment"
+        android:name="com.example.moneytracker.presentation.security.SecurityCenterFragment"
         tools:layout="@layout/fragment_security_center">
         <action
             android:id="@+id/action_securityCenter_to_newPassword"
@@ -228,17 +228,18 @@
 
     <fragment
         android:id="@+id/aboutAppFragment"
-        android:name="com.example.moneytracker.presentation.ui.about.AboutAppFragment"
+        android:name="com.example.moneytracker.presentation.about.AboutAppFragment"
         tools:layout="@layout/fragment_about_app" />
 
     <fragment
         android:id="@+id/budgetFragment"
-        android:name="com.example.moneytracker.presentation.ui.budget.BudgetFragment"
+        android:name="com.example.moneytracker.presentation.budget.BudgetFragment"
         tools:layout="@layout/fragment_budget" />
 
     <fragment
         android:id="@+id/addTransactionFragment"
-        android:name="com.example.moneytracker.presentation.ui.addtransaction.AddTransactionFragment"
+        android:name="com.example.moneytracker.presentation.addtransaction.AddTransactionFragment"
         tools:layout="@layout/fragment_add_transaction" />
 
 </navigation>
+

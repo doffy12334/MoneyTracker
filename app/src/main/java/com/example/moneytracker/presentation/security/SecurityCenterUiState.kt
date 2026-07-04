@@ -1,7 +1,6 @@
 package com.example.moneytracker.presentation.security
 
 data class SecurityCenterUiState(
-    val biometricEnabled: Boolean = false,
     val highValueProtectionEnabled: Boolean = false,
     val isPasswordResetLoading: Boolean = false,
     val isPasswordFormVisible: Boolean = false,

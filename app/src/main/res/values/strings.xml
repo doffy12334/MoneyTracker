@@ -67,7 +67,7 @@
     <string name="setting_profile_title">Profile</string>
     <string name="setting_profile_subtitle">Contact info &amp; avatar</string>
     <string name="setting_security_title">Security</string>
-    <string name="setting_security_subtitle">Two-factor auth, change password</string>
+    <string name="setting_security_subtitle">Change password, app lock</string>
     <string name="setting_premium_title">Premium plan</string>
     <string name="setting_premium_active">Active</string>
     <string name="delete_account_title">Delete account</string>
@@ -371,4 +371,5 @@
     <string name="withdraw_money">Withdraw money</string>
     <string name="saving_wallet_withdraw_amount_hint">Withdrawal amount (%s)</string>
     <string name="amount_exceeds_savings">Amount exceeds wallet balance</string>
+    <string name="onboarding_growth_percentage" translatable="false">+12.5%</string>
 </resources>

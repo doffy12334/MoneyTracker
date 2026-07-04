@@ -9,7 +9,6 @@ import com.example.moneytracker.domain.usecase.GetSecuritySettingsUseCase
 import com.example.moneytracker.domain.usecase.IsCurrentUserGoogleAccountUseCase
 import com.example.moneytracker.domain.usecase.LogoutUseCase
 import com.example.moneytracker.domain.usecase.SendPasswordResetEmailUseCase
-import com.example.moneytracker.domain.usecase.SetBiometricEnabledUseCase
 import com.example.moneytracker.domain.usecase.SetHighValueProtectionEnabledUseCase
 import com.example.moneytracker.domain.usecase.UpdatePasswordUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +19,6 @@ import kotlinx.coroutines.launch
 
 class SecurityCenterViewModel(
     private val getSecuritySettingsUseCase: GetSecuritySettingsUseCase,
-    private val setBiometricEnabledUseCase: SetBiometricEnabledUseCase,
     private val setHighValueProtectionEnabledUseCase: SetHighValueProtectionEnabledUseCase,
     private val getProfileUseCase: GetProfileUseCase,
     private val updatePasswordUseCase: UpdatePasswordUseCase,
@@ -37,20 +35,7 @@ class SecurityCenterViewModel(
         val settings = getSecuritySettingsUseCase()
         _uiState.update {
             it.copy(
-                biometricEnabled = settings.biometricEnabled,
                 highValueProtectionEnabled = settings.highValueProtectionEnabled
-            )
-        }
-    }
-
-    fun onBiometricChanged(enabled: Boolean) {
-        setBiometricEnabledUseCase(enabled)
-        _uiState.update {
-            it.copy(
-                biometricEnabled = enabled,
-                messageResId = if (enabled) R.string.security_biometric_enabled else R.string.security_biometric_disabled,
-                message = null,
-                errorMessage = null
             )
         }
     }
@@ -138,7 +123,6 @@ class SecurityCenterViewModel(
 
     class Factory(
         private val getSecuritySettingsUseCase: GetSecuritySettingsUseCase,
-        private val setBiometricEnabledUseCase: SetBiometricEnabledUseCase,
         private val setHighValueProtectionEnabledUseCase: SetHighValueProtectionEnabledUseCase,
         private val getProfileUseCase: GetProfileUseCase,
         private val updatePasswordUseCase: UpdatePasswordUseCase,
@@ -149,7 +133,6 @@ class SecurityCenterViewModel(
             if (modelClass.isAssignableFrom(SecurityCenterViewModel::class.java)) {
                 return SecurityCenterViewModel(
                     getSecuritySettingsUseCase,
-                    setBiometricEnabledUseCase,
                     setHighValueProtectionEnabledUseCase,
                     getProfileUseCase,
                     updatePasswordUseCase,
